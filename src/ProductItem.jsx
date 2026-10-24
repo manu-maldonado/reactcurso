@@ -1,0 +1,12 @@
+function ProductItem({ product }) {
+    return (
+      <tr>
+        <td>{product.id}</td>
+        <td>{product.nombre}</td>
+        <td>{product.categoria}</td>
+        <td>${product.precio}</td>
+      </tr>
+    );
+  }
+  
+  export default ProductItem;
