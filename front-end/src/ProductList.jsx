@@ -13,7 +13,10 @@ export function GetAllProducts({ products }) {
           <th>Categoria</th>
         </tr>
         {products.map((producto) => (
-          <ProductItem id={producto.id} producto={producto} /> // { id: 323123 , producto:{ name:"dasdas"}}
+          <>
+          <ProductItem id={producto.id} producto={producto} /> 
+
+          </>
         ))}
       </table>      
     </div>

@@ -5,10 +5,13 @@ import viteLogo from './assets/vite.svg'
 import './App.css'
 import { GetAllProducts } from './ProductList'
 import { allProducts }  from './productosMock.js'
+import { SearchProduct } from './assets/SearchProduct'
+import { Calculadora } from './assets/Calculadora.jsx'
 
 function App() {
   const [count, setCount] = useState(0)
   const [saludo, setSaludo] = useState("Hola desconocido")
+
 
   return (
     <>
@@ -24,7 +27,9 @@ function App() {
             Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
           </p>
         </div>
-        <GetAllProducts products={allProducts}/>
+        <Calculadora/>
+        <SearchProduct products={allProducts}/>
+        {/* <GetAllProducts products={allProducts}/> */}
         <label>Count is {count}</label>
         <button
           type="button"
