@@ -5,18 +5,23 @@ import viteLogo from './assets/vite.svg'
 import './App.css'
 import { GetAllProducts } from './ProductList'
 import { allProducts }  from './productosMock.js'
+import { SearchProduct } from './SearchProduct.jsx'
+import { SearchBox } from './SearchBox.jsx'
+import { Calculadora } from './calculadora.jsx'
 
 function App() {
   const [count, setCount] = useState(0)
   const [saludo, setSaludo] = useState("Hola desconocido")
+  const [name, setName] = useState("")
+  
 
   return (
     <>
       <section id="center">
         <div className="hero">
           <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
+          {/* <img src={reactLogo} className="framework" alt="React logo" />
+          <img src={viteLogo} className="vite" alt="Vite logo" /> */}
         </div>
         <div>
           <h1>Get started</h1>
@@ -24,7 +29,11 @@ function App() {
             Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
           </p>
         </div>
-        <GetAllProducts products={allProducts}/>
+        <SearchBox name={name} onNameChange={setName} />
+        <GetAllProducts products={allProducts} name={name} />
+            
+        <Calculadora />
+        
         <label>Count is {count}</label>
         <button
           type="button"
