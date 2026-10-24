@@ -4,7 +4,9 @@ import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import './App.css'
 import { GetAllProducts } from './ProductList'
-import { allProducts }  from './productosMock.js'
+import { allProducts } from './productosMock.js'
+import { SearchBox } from './searchBox.jsx'
+import { Calculadora } from './Calculadora.jsx'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -24,33 +26,38 @@ function App() {
             Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
           </p>
         </div>
+        <Calculadora/>
         <GetAllProducts products={allProducts}/>
-        <label>Count is {count}</label>
         <button
           type="button"
           className="counter"
           onClick={() => setCount((count) => count + 1)}
-        >+          
+        >
+          Sumar
         </button>
-          <button
+        <button
           type="button"
           className="counter"
           onClick={() => setCount((count) => count - 1)}
-        >-        
+        >
+          Restar
         </button>
-          <button
+        <button
           type="button"
           className="counter"
-          onClick={() => setCount(() => 0)}
-        > reset          
+          onClick={() => setCount(0)}
+        >
+          Reset
         </button>
+        <div> Count is {count} </div>
       </section>
 
-      <input onInput={(evt)=> { 
+      <input onInput={(evt)=> {
         setSaludo(evt.target.value)}
-      }></input>
-      
+      }/>
       <h4>{saludo}</h4>
+      <div className="ticks"></div>
+
       <div className="ticks"></div>
 
       <section id="next-steps">
