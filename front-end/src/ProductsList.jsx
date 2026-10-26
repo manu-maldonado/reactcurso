@@ -5,7 +5,15 @@ import { SearchBox } from "./SearchBox";
 export function GetAllProducts({ products }) {
   const [search, setSearch] = useState("");
 
+  {
+    /*
   const productosFiltrados = products.filter((p) =>
+    p.nombre.toLowerCase().includes(search.toLowerCase()),
+  );
+  */
+  }
+
+  const primerProductoEncontrado = products.find((p) =>
     p.nombre.toLowerCase().includes(search.toLowerCase()),
   );
 
@@ -23,14 +31,12 @@ export function GetAllProducts({ products }) {
           </tr>
         </thead>
         <tbody>
-          {productosFiltrados.length > 0 ? (
-            productosFiltrados.map((producto) => (
-              <ProductItem
-                key={producto.id}
-                id={producto.id}
-                producto={producto}
-              />
-            ))
+          {primerProductoEncontrado ? (
+            <ProductItem
+              key={primerProductoEncontrado.id}
+              id={primerProductoEncontrado.id}
+              producto={primerProductoEncontrado}
+            />
           ) : (
             <tr>
               <td colSpan={5}>NO se Encontraron Productos.</td>
