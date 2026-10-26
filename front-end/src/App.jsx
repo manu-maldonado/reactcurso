@@ -1,6 +1,9 @@
 import { useState } from "react";
 import "./App.css";
 
+import { GetAllProducts } from "./ProductsList";
+import { allProducts } from "./productsMock";
+
 function App() {
   const [contador, setContador] = useState(0);
   const [saludo, setSaludo] = useState("Hola Desconocido");
@@ -8,6 +11,8 @@ function App() {
   return (
     <>
       <section id="center">
+        <GetAllProducts products={allProducts} />
+
         <p>El Contador está en: {contador}</p>
         <button
           type="button"
