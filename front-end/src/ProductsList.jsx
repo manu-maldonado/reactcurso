@@ -5,17 +5,36 @@ import { SearchBox } from "./SearchBox";
 export function GetAllProducts({ products }) {
   const [search, setSearch] = useState("");
 
+  const [ordenAscendente, setOrdenAscendente] = useState(true);
+
+  const handleHeaderClick = (columnName) => {
+    //console.log(`Hiciste Clic en el Encabezado: ${columnName}`);
+    if (columnName === "Nombre") {
+      setOrdenAscendente(!ordenAscendente);
+    }
+    if (columnName === "Categoría") {
+      setOrdenAscendente(!ordenAscendente);
+    }
+  };
+
+  const productosOrdenados = [...products].sort((a, b) => {
+    const resultado = a.nombre.localeCompare(b.nombre, "es", {
+      sensitivity: "base",
+    });
+    return ordenAscendente ? resultado : -resultado;
+  });
+
   const productosFiltrados =
     search.trim() === ""
-      ? products
-      : products.filter((p) =>
-          p.nombre.toLowerCase().includes(search.toLowerCase()),
+      ? productosOrdenados
+      : productosOrdenados.filter((p) =>
+          p.nombre.toLowerCase().includes(search.trim().toLowerCase()),
         );
   const primerProductoEncontrado =
     search.trim() === ""
-      ? products
-      : products.find((p) =>
-          p.nombre.toLowerCase().includes(search.toLowerCase()),
+      ? productosOrdenados
+      : productosOrdenados.find((p) =>
+          p.nombre.toLowerCase().includes(search.trim().toLowerCase()),
         );
   const productosAMostrar =
     search.trim() === ""
@@ -31,10 +50,10 @@ export function GetAllProducts({ products }) {
         <thead>
           <tr>
             <th>#</th>
-            <th>Nombre</th>
+            <th onClick={() => handleHeaderClick("Nombre")}>Nombre</th>
             <th>Precio</th>
             <th>Stock</th>
-            <th>Categoría</th>
+            <th onClick={() => handleHeaderClick("Categoría")}>Categoría</th>
           </tr>
         </thead>
         <tbody>
