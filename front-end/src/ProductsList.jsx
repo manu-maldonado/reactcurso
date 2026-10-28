@@ -5,23 +5,42 @@ import { SearchBox } from "./SearchBox";
 export function GetAllProducts({ products }) {
   const [search, setSearch] = useState("");
 
-  const [ordenAscendente, setOrdenAscendente] = useState(true);
+  const [sortColumn, setSortColumn] = useState("");
+  const [sortDirection, setSortDirection] = useState("asc");
 
-  const handleHeaderClick = (columnName) => {
-    //console.log(`Hiciste Clic en el Encabezado: ${columnName}`);
-    if (columnName === "Nombre") {
-      setOrdenAscendente(!ordenAscendente);
-    }
-    if (columnName === "Categoría") {
-      setOrdenAscendente(!ordenAscendente);
+  const manejarClicEncabezado = (nombreColumna) => {
+    //console.log(`Hiciste Clic en el Encabezado: ${nombreColumna}`);
+    if (sortColumn === nombreColumna) {
+      setSortDirection(sortDirection === "asc" ? "desc" : "asc");
+    } else {
+      setSortColumn(nombreColumna);
+      setSortDirection("asc");
     }
   };
 
   const productosOrdenados = [...products].sort((a, b) => {
-    const resultado = a.nombre.localeCompare(b.nombre, "es", {
-      sensitivity: "base",
-    });
-    return ordenAscendente ? resultado : -resultado;
+    if (sortColumn === "") {
+      return 0;
+    }
+    //console.log(`La Columna es: ${sortColumn}`);
+    const valueA = a[sortColumn];
+    const valueB = b[sortColumn];
+    console.log(`El Valor A es: ${valueA}`);
+    console.log(`El Valor B es: ${valueB}`);
+
+    let comparacion;
+
+    if (sortColumn === "id") {
+      comparacion = Number(valueA) - Number(valueB);
+    } else if (typeof valueA === "number" && typeof valueB === "number") {
+      comparacion = valueA - valueB;
+    } else {
+      comparacion = String(valueA).localeCompare(String(valueB), "es", {
+        numeric: true,
+        sensitivity: "base",
+      });
+    }
+    return sortDirection === "asc" ? comparacion : -comparacion;
   });
 
   const productosFiltrados =
@@ -49,11 +68,13 @@ export function GetAllProducts({ products }) {
       <table>
         <thead>
           <tr>
-            <th>#</th>
-            <th onClick={() => handleHeaderClick("Nombre")}>Nombre</th>
-            <th>Precio</th>
-            <th>Stock</th>
-            <th onClick={() => handleHeaderClick("Categoría")}>Categoría</th>
+            <th onClick={() => manejarClicEncabezado("id")}>#</th>
+            <th onClick={() => manejarClicEncabezado("nombre")}>Nombre</th>
+            <th onClick={() => manejarClicEncabezado("precio")}>Precio</th>
+            <th onClick={() => manejarClicEncabezado("stock")}>Stock</th>
+            <th onClick={() => manejarClicEncabezado("categoria")}>
+              Categoría
+            </th>
           </tr>
         </thead>
         <tbody>
