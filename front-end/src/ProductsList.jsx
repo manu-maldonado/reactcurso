@@ -25,8 +25,8 @@ export function GetAllProducts({ products }) {
     //console.log(`La Columna es: ${sortColumn}`);
     const valueA = a[sortColumn];
     const valueB = b[sortColumn];
-    console.log(`El Valor A es: ${valueA}`);
-    console.log(`El Valor B es: ${valueB}`);
+    //console.log(`El Valor A es: ${valueA}`);
+    //console.log(`El Valor B es: ${valueB}`);
 
     let comparacion;
 
