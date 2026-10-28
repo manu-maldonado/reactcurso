@@ -3,6 +3,7 @@ import "./App.css";
 
 import { GetAllProducts } from "./ProductsList";
 import { allProducts } from "./productsMock";
+import { Calculadora } from "./Calculadora";
 
 function App() {
   const [contador, setContador] = useState(0);
@@ -11,6 +12,7 @@ function App() {
   return (
     <>
       <section id="center">
+        <Calculadora />
         <GetAllProducts products={allProducts} />
 
         <p>El Contador está en: {contador}</p>
