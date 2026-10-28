@@ -5,42 +5,55 @@ import { SearchBox } from "./SearchBox";
 export function GetAllProducts({ products }) {
   const [search, setSearch] = useState("");
 
-  const [sortColumn, setSortColumn] = useState("");
-  const [sortDirection, setSortDirection] = useState("asc");
+  const [sortConfig, setSortConfig] = useState({
+    columna: null,
+    direccion: "asc",
+  });
 
-  const manejarClicEncabezado = (nombreColumna) => {
-    //console.log(`Hiciste Clic en el Encabezado: ${nombreColumna}`);
-    if (sortColumn === nombreColumna) {
-      setSortDirection(sortDirection === "asc" ? "desc" : "asc");
-    } else {
-      setSortColumn(nombreColumna);
-      setSortDirection("asc");
+  function manejarClicTabla(event) {
+    const encabezado = event.target.closest("th[data-sort-key]");
+
+    if (!encabezado || !event.currentTarget.contains(encabezado)) {
+      return;
     }
-  };
+
+    const columna = encabezado.dataset.sortKey;
+    //console.log(`La Columna en la que hicieron Clic es: ${columna}`);
+
+    setSortConfig((ordenAnterior) => ({
+      columna,
+      direccion:
+        ordenAnterior.columna === columna && ordenAnterior.direccion === "asc"
+          ? "desc"
+          : "asc",
+    }));
+  }
 
   const productosOrdenados = [...products].sort((a, b) => {
-    if (sortColumn === "") {
+    if (sortConfig.columna === "") {
       return 0;
     }
-    //console.log(`La Columna es: ${sortColumn}`);
-    const valueA = a[sortColumn];
-    const valueB = b[sortColumn];
+    //console.log(`La Columna es: ${sortConfig.columna}`);
+    const valueA = a[sortConfig.columna];
+    const valueB = b[sortConfig.columna];
     //console.log(`El Valor A es: ${valueA}`);
     //console.log(`El Valor B es: ${valueB}`);
 
     let comparacion;
 
-    if (sortColumn === "id") {
-      comparacion = Number(valueA) - Number(valueB);
-    } else if (typeof valueA === "number" && typeof valueB === "number") {
+    if (typeof valueA === "number" && typeof valueB === "number") {
       comparacion = valueA - valueB;
     } else {
-      comparacion = String(valueA).localeCompare(String(valueB), "es", {
-        numeric: true,
-        sensitivity: "base",
-      });
+      comparacion = String(valueA ?? "").localeCompare(
+        String(valueB ?? ""),
+        "es",
+        {
+          numeric: true,
+          sensitivity: "base",
+        },
+      );
     }
-    return sortDirection === "asc" ? comparacion : -comparacion;
+    return sortConfig.direccion === "asc" ? comparacion : -comparacion;
   });
 
   const productosFiltrados =
@@ -65,16 +78,14 @@ export function GetAllProducts({ products }) {
   return (
     <div>
       <SearchBox value={search} onInputChange={setSearch} />
-      <table>
+      <table onClick={manejarClicTabla}>
         <thead>
           <tr>
-            <th onClick={() => manejarClicEncabezado("id")}>#</th>
-            <th onClick={() => manejarClicEncabezado("nombre")}>Nombre</th>
-            <th onClick={() => manejarClicEncabezado("precio")}>Precio</th>
-            <th onClick={() => manejarClicEncabezado("stock")}>Stock</th>
-            <th onClick={() => manejarClicEncabezado("categoria")}>
-              Categoría
-            </th>
+            <th data-sort-key="id">#</th>
+            <th data-sort-key="nombre">Nombre</th>
+            <th data-sort-key="precio">Precio</th>
+            <th data-sort-key="stock">Stock</th>
+            <th data-sort-key="categoria">Categoría</th>
           </tr>
         </thead>
         <tbody>
