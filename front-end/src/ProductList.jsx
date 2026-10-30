@@ -3,7 +3,6 @@ import { SearchBox } from "./searchBox";
 import { useState } from "react"
 
 export function GetAllProducts({ products }) {
-  // {products} --- props
   const [search, setSearch] = useState("")
   const [ascendente, setAsendente] = useState(true)
   const productosEncontrados = products.filter(
@@ -32,7 +31,6 @@ export function GetAllProducts({ products }) {
           <>
             <p>{producto.nombre === "Mouse Inalambrico" ? "Best Choise" : ""}</p>
             <ProductItem id={producto.id} producto={producto} />
-            {/* // { id: 323123 , producto:{ name:"dasdas"}} */}
           </>
         )) : (
           <p>no se encontraron productos</p>
