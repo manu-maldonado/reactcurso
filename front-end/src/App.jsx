@@ -4,54 +4,90 @@ import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import './App.css'
 import { GetAllProducts } from './ProductList'
-import { allProducts }  from './productosMock.js'
+import { allProducts } from './productosMock.js'
+import { Calculadora } from './calculadora.jsx'
+import { ProductList } from "./ProductList";
+
 
 function App() {
   const [count, setCount] = useState(0)
-  const [saludo, setSaludo] = useState("Hola desconocido")
+  const [saludo, setSaludo] = useState("Hola: sin dato")
+
 
   return (
     <>
       <section id="center">
+
         <div className="hero">
           <img src={heroImg} className="base" width="170" height="179" alt="" />
           <img src={reactLogo} className="framework" alt="React logo" />
           <img src={viteLogo} className="vite" alt="Vite logo" />
         </div>
+
         <div>
           <h1>Get started</h1>
           <p>
             Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
           </p>
         </div>
-        <GetAllProducts products={allProducts}/>
+
+        <ProductList products={allProducts} />
+
+        <h4>Lista con opción a ordenar por atributo:</h4>
+        <GetAllProducts products={allProducts} />
+
+
         <label>Count is {count}</label>
+
         <button
           type="button"
           className="counter"
           onClick={() => setCount((count) => count + 1)}
-        >+          
+        >+
         </button>
-          <button
+
+        <button
           type="button"
           className="counter"
           onClick={() => setCount((count) => count - 1)}
-        >-        
+        >-
         </button>
-          <button
+
+        <button
           type="button"
           className="counter"
           onClick={() => setCount(() => 0)}
-        > reset          
+        > reset
         </button>
+
+        <br></br>
+
+        <div>
+          <input onInput={(evt) => {
+            setSaludo(evt.target.value)
+          }
+          }>
+          </input>
+        </div>
+
+
+        <h4>¡Hola {saludo}!</h4>
+        <div className="ticks"></div>
+
+
+
+        <div>
+          <Calculadora />
+        </div>
+
+
+
       </section>
 
-      <input onInput={(evt)=> { 
-        setSaludo(evt.target.value)}
-      }></input>
-      
-      <h4>{saludo}</h4>
-      <div className="ticks"></div>
+
+
+
+
 
       <section id="next-steps">
         <div id="docs">

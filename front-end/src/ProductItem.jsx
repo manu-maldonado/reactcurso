@@ -2,7 +2,7 @@ export function ProductItem({ id, producto }) {
   return (
     <>
       <tr>
-        <td>{id}</td>
+        <td>{producto.id}</td>
         <td>{producto.nombre}</td>
         <td>{producto.precio}</td>
         <td>{producto.stock}</td>
