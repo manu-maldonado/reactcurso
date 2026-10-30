@@ -21,13 +21,15 @@ export function Calculator() {
 
   return (
     <div>
+      <p>Inserta dos numeros y selecciona un operador :)) </p>
+      <br />
       <input type="number" value={a} onChange={(e) => setA(e.target.value)} />
 
       <select value={operador} onChange={(e) => setOperador(e.target.value)}>
-        <option value="+">+</option>
-        <option value="-">-</option>
-        <option value="*">×</option>
-        <option value="/">÷</option>
+        <option value="+"> + </option>
+        <option value="-"> - </option>
+        <option value="*"> × </option>
+        <option value="/"> ÷ </option>
       </select>
 
       <input type="number" value={b} onChange={(e) => setB(e.target.value)} />
