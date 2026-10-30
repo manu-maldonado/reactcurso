@@ -1,14 +1,15 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
-import { GetAllProducts } from './ProductList'
-import { allProducts }  from './productosMock.js'
+import { useState } from "react";
+import heroImg from "./assets/hero.png";
+import reactLogo from "./assets/react.svg";
+import viteLogo from "./assets/vite.svg";
+import "./App.css";
+import { allProducts } from "./productosMock.js";
+import { SearchProduct } from "./SearchProduct";
+import { Calculadora } from "./Calculadora.jsx";
 
 function App() {
-  const [count, setCount] = useState(0)
-  const [saludo, setSaludo] = useState("Hola desconocido")
+  const [count, setCount] = useState(0);
+  const [saludo, setSaludo] = useState("Hola desconocido");
 
   return (
     <>
@@ -24,32 +25,39 @@ function App() {
             Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
           </p>
         </div>
-        <GetAllProducts products={allProducts}/>
+        <Calculadora />
+        <SearchProduct products={allProducts} />
         <label>Count is {count}</label>
         <button
           type="button"
           className="counter"
           onClick={() => setCount((count) => count + 1)}
-        >+          
+        >
+          +
         </button>
-          <button
+        <button
           type="button"
           className="counter"
           onClick={() => setCount((count) => count - 1)}
-        >-        
+        >
+          -
         </button>
-          <button
+        <button
           type="button"
           className="counter"
           onClick={() => setCount(() => 0)}
-        > reset          
+        >
+          {" "}
+          reset
         </button>
       </section>
 
-      <input onInput={(evt)=> { 
-        setSaludo(evt.target.value)}
-      }></input>
-      
+      <input
+        onInput={(evt) => {
+          setSaludo(evt.target.value);
+        }}
+      ></input>
+
       <h4>{saludo}</h4>
       <div className="ticks"></div>
 
@@ -137,7 +145,7 @@ function App() {
       <div className="ticks"></div>
       <section id="spacer"></section>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
