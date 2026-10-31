@@ -6,6 +6,7 @@ import { SearchProduct } from "./SearchProduct.jsx";
 import { allProducts } from "./productoMock.js";
 import { Calculator } from "./Calculator.jsx";
 import "./App.css";
+import { Catalogo } from "./Catalogo.jsx";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -27,6 +28,8 @@ function App() {
         </div>
         {/* Tabla Producto */}
         <SearchProduct allProducts={allProducts} />
+
+        <Catalogo allProducts={allProducts}/>
         {/* Contador */}
         <button
           type="button"
