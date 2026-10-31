@@ -1,121 +1,106 @@
-import { useState } from 'react';
-import { useProductForm } from './useproductForm';
+import { useProductForm } from './useProductForm'; // Asegúrate de respetar mayúsculas/minúsculas del archivo
 
-export function ProductForm({ id, products, callbackSetLoadingProducts }) {
+export function ProductForm({
+  productoAEditar,
+  products,
+  callbackSetLoadingProducts,
+  onSave,
+  onCancel,
+}) {
+  // 1. Llamamos al Custom Hook dentro de la función y pasándole las props correctas
   const { formData, handleChange, handleSubmit } = useProductForm(
     products,
     callbackSetLoadingProducts
   );
-  // const [formData, setFormData] = useState({
-  //   id: 0,
-  //   nombre: '',
-  //   precio: 0,
-  //   stock: 0,
-  //   categoria: '',
-  // });
 
-  // const handleChange = (evt) => {
-  //   const { name, value, type, checked } = evt.target;
-  //   setFormData((prevData) => ({
-  //     // ... significa que son spreads
-  //     ...prevData,
-  //     [name]: type == 'checkbox' ? checked : value,
-  //   }));
-  // };
+  // 2. El return DEBE ir aquí adentro, antes de que cierre la llave de la función
+  return (
+    <>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="radio"
+          name="step"
+          id="step1"
+          className="msf-radio"
+          defaultChecked
+        />
 
-  // const handleSubmit = (evt) => {
-  //   //evita que se manden los datos por cada click
-  //   evt.preventDefault();
+        <div className="msf-wrap">
+          <div className="msf-body">
+            <div className="msf-panel msf-panel-1">
+              <h3>Your Info</h3>
+              <h3>{productoAEditar ? 'Editar Producto' : 'Nuevo Producto'}</h3>
 
-  //   products.push(formData);
+              <input type="text" placeholder="ID" readOnly={true} />
 
-  //   callbackSetLoadingProducts(true);
+              <input
+                type="text"
+                name="nombre"
+                placeholder="Name"
+                value={formData.nombre}
+                onChange={handleChange}
+              />
 
-  // console.log(products);
-  // console.log(
-  //   'Datos estan listos para ser enviados al servidor',
-  //   formData,
-  //   products
-  // );
-}
+              <input
+                type="text"
+                name="precio"
+                placeholder="Precio"
+                value={formData.precio}
+                onChange={handleChange}
+              />
 
-return (
-  <>
-    <form onSubmit={handleSubmit}>
-      <input
-        type="radio"
-        name="step"
-        id="step1"
-        className="msf-radio"
-        defaultChecked
-      />
-      {/* <input type="radio" name="step" id="step2" className="msf-radio" />
-        <input type="radio" name="step" id="step3" className="msf-radio" /> */}
+              <input type="text" placeholder="ID" readOnly={true} />
 
-      <div className="msf-wrap">
-        {/* <div className="msf-progress">
-            <span className="msf-step-label">1. Your Info</span>
-            <span className="msf-step-label">2. Details</span>
-            <span className="msf-step-label">3. Done</span>
-          </div> */}
+              <div className="msf-actions">
+                <button type="submit">
+                  <span className="msf-btn">
+                    {productoAEditar ? 'Actualizar' : 'Guardar'}
+                  </span>
+                </button>
 
-        <div className="msf-body">
-          <div className="msf-panel msf-panel-1">
-            <h3>Your Info</h3>
-            <input type="text" placeholder="ID" readOnly="true" />
-            <input
-              type="text"
-              name="nombre"
-              placeholder="Name"
-              value={formData.nombre}
-              onChange={handleChange}
-            />
-            <input
-              type="text"
-              name="precio"
-              placeholder="Precio"
-              value={formData.precio}
-              onChange={handleChange}
-            />
-            <input type="text" placeholder="ID" readOnly="true" />
-            {/* to-do move */}
-            <input type="email" placeholder="Name" />
-            <input type="email" placeholder="Name" />
+                <button type="button" onClick={onCancel}>
+                  Cancelar
+                </button>
+              </div>
 
-            <button>
-              <label htmlFor="step2" className="msf-btn">
-                Next →
-              </label>
-            </button>
-          </div>
+              <input type="email" placeholder="Email 1" />
+              <input type="email" placeholder="Email 2" />
 
-          <div className="msf-panel msf-panel-2">
-            <h3>Details</h3>
-            <input type="text" placeholder="Company (optional)" />
-            <input type="tel" placeholder="Phone number" />
-            <div className="msf-actions">
-              <label htmlFor="step1" className="msf-btn msf-btn-back">
-                ← Back
-              </label>
-              <label htmlFor="step3" className="msf-btn">
-                Next →
-              </label>
+              <button type="button">
+                <label htmlFor="step2" className="msf-btn">
+                  Next →
+                </label>
+              </button>
             </div>
-          </div>
 
-          <div className="msf-panel msf-panel-3">
-            <h3>All done!</h3>
-            <p className="msf-success">
-              ✓ Form submitted, zero JavaScript used!
-            </p>
-            <div className="msf-actions">
-              <label htmlFor="step1" className="msf-btn">
-                Start Over
-              </label>
+            <div className="msf-panel msf-panel-2">
+              <h3>Details</h3>
+              <input type="text" placeholder="Company (optional)" />
+              <input type="tel" placeholder="Phone number" />
+              <div className="msf-actions">
+                <label htmlFor="step1" className="msf-btn msf-btn-back">
+                  ← Back
+                </label>
+                <label htmlFor="step3" className="msf-btn">
+                  Next →
+                </label>
+              </div>
+            </div>
+
+            <div className="msf-panel msf-panel-3">
+              <h3>All done!</h3>
+              <p className="msf-success">
+                ✓ Form submitted, zero JavaScript used!
+              </p>
+              <div className="msf-actions">
+                <label htmlFor="step1" className="msf-btn">
+                  Start Over
+                </label>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </form>
-  </>
-);
+      </form>
+    </>
+  );
+} // <-- Aquí cierra correctamente la función ProductForm

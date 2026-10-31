@@ -12,8 +12,12 @@ export function Catalogo({ products }) {
   // definir estado para productos, cargando
   const [productos, setProductos] = useState(products);
   const [cargando, setCargando] = useState(true);
-  const [canHandleForm, setCanHandleForm] = useState(false);
 
+  // controlar si elformulario esta siendo abierto, estamos editando o creando
+  const [showForm, setShowForm] = useState(false);
+  const [productoSeleccionado, setproductSeleccionado] = useState(null);
+
+  //useEffect se utiliza sobre todo para APIS
   useEffect(() => {
     let active = true;
     const timer = setTimeout(() => {
@@ -26,8 +30,42 @@ export function Catalogo({ products }) {
       //clearT es un funcion de js que resetea el contador
       clearTimeout(timer);
     };
-  });
+  }, []);
   // setTimeOut - podemos decirle que espere un determinado
+
+  //crud
+
+  const handlerSaveProduct = (nuevoOActualizado) => {
+    //update: reemplazar el producto seleccionado con el id
+    if (productoSeleccionado) {
+      setProductos((prev) =>
+        prev.map((p) =>
+          p.id == productoSeleccionado.id ? nuevoOActualizado : p
+        )
+      );
+    } else {
+      setProductos((prev) => [
+        ...prev,
+        { ...nuevoOActualizado, id: `p${Date.now()}` },
+      ]);
+    }
+
+    // cerrar formulario y limpiarlo
+    setShowForm(false);
+    setproductSeleccionado(null);
+  };
+
+  //borrar producto
+  const handlerRemoveProduct = (id) => {
+    //Elimine, filtre o saque de productos el id seleccionado
+    //podriamos eliminar con filter o con slice
+    setProductos((prev) => prev.filter((p) => p.id != id));
+  };
+
+  const handlerIniciarEdicion = (producto) => {
+    setproductSeleccionado(producto);
+    setShowForm(true);
+  };
 
   const handleCreate = () => {
     const copiarProducto = [...productos];
@@ -38,7 +76,11 @@ export function Catalogo({ products }) {
       {cargando ? (
         <h4>esta cargando</h4>
       ) : (
-        <GetAllProducts products={productos} />
+        <GetAllProducts
+          products={productos}
+          onEdit={handlerIniciarEdicion}
+          onRemove={handlerRemoveProduct}
+        />
       )}
       {/* {products.map((producto) => {
         return <h4>{producto.id}</h4>;
@@ -52,7 +94,10 @@ export function Catalogo({ products }) {
       ))} */}
       <div class="mag-btns">
         <button
-          onClick={() => setCanHandleForm(true)}
+          onClick={() => {
+            setproductSeleccionado(null);
+            setShowForm(true);
+          }}
           class="mag-btn mag-btn-primary"
         >
           Agregar producto
@@ -64,10 +109,16 @@ export function Catalogo({ products }) {
           Eliminar producto
         </button> */}
       </div>
-      {canHandleForm ? (
+      {showForm ? (
         <ProductForm
-          products={productos}
-          callbackSetLoadingProducts={setCargando}
+          // products={productos} 1:59t
+          productAEditar={productAEditar}
+          onSave={handlerSaveProduct}
+          onCancel={() => {
+            setShowForm(false);
+            setproductSeleccionado(null);
+          }}
+          // callbackSetLoadingProducts={setCargando}
         />
       ) : (
         ''

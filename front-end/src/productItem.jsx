@@ -8,6 +8,8 @@ export function ProductItem({
   stock,
   categoria,
   callbackSetCanHandlerForm,
+  onEdit,
+  onRemove,
 }) {
   return (
     // <p>
@@ -19,8 +21,7 @@ export function ProductItem({
         <img
           src={EditButton}
           onClick={() => {
-            alert(id);
-            onCallbackClick(true);
+            onEdit(producto);
           }}
           width={20}
           height={20}
@@ -31,7 +32,7 @@ export function ProductItem({
         <img
           src={DeleteButton}
           onClick={() => {
-            onCallbackClick(false);
+            onRemove(id);
           }}
           width={20}
           height={20}

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export function useProductForm(id, products, callbackSetLoadingProducts) {
+export function useProductForm(productoAEditar, onSave, onCancel) {
   const [formData, setFormData] = useState({
     id: 0,
     nombre: '',
@@ -8,6 +8,20 @@ export function useProductForm(id, products, callbackSetLoadingProducts) {
     stock: 0,
     categoria: '',
   });
+
+  //Si nosotros le pasamos un producto para editar, estariamos cargando sus datos en el estado local de nuestro form local
+
+  //   userEffect(() => {
+  //     if (productoAEditar) {
+  //       setFormData(productoAEditar);
+  //     }
+  //   }, [productoAEditar]);
+
+  if (productoAEditar) {
+    setFormData(productoAEditar);
+  } else {
+    setFormData(newProduct);
+  }
 
   const handleChange = (evt) => {
     const { name, value, type, checked } = evt.target;
@@ -21,15 +35,17 @@ export function useProductForm(id, products, callbackSetLoadingProducts) {
   const handleSubmit = (evt) => {
     //evita que se manden los datos por cada click
     evt.preventDefault();
-
-    products.push(formData);
-
-    callbackSetLoadingProducts(true);
-    console.log(
-      'Datos estan listos para ser enviados al servidor',
-      formData,
-      products
-    );
+    onSave({
+      ...formData,
+      precio: +formData.precio,
+    });
+    // products.push(formData);
+    // callbackSetLoadingProducts(true);
+    // console.log(
+    //   'Datos estan listos para ser enviados al servidor',
+    //   formData,
+    //   products
+    // );
 
     // console.log(products);
   };

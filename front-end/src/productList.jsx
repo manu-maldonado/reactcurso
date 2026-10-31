@@ -12,7 +12,7 @@
 import { allProducts } from './productosMock';
 import { ProductItem } from './productItem';
 
-export function GetAllProducts({ products }) {
+export function GetAllProducts({ products, onEdit, onRemove }) {
   // {products} --- props
   return (
     <div>
@@ -35,6 +35,8 @@ export function GetAllProducts({ products }) {
               precio={producto.precio}
               stock={producto.stock}
               categoria={producto.categoria}
+              onEdit={onEdit}
+              OnRemove={onRemove}
             />
           </>
         ))}
