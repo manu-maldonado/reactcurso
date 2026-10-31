@@ -8,7 +8,7 @@ import { allProducts }  from './productosMock.js'
 import { SearchBox } from './SearchBox.jsx'
 import { Calculadora } from './Calculadora.jsx'
 import { Catalogo } from './Catalogo.jsx'
-
+//import './form.css'
 function App() {
   const [count, setCount] = useState(0)
   const [saludo, setSaludo] = useState("Hola desconocido")
@@ -57,7 +57,7 @@ function App() {
       <h4>{saludo}</h4>
       <div className="ticks"></div>
 
-      <Catalogo/>
+      <Catalogo  products={allProducts}/>
 
       <section id="next-steps">
         <div id="docs">
