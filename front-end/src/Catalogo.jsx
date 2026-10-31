@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { allProducts } from "./productoMock.js";
 import { ProductoForm } from "./ProductoForm.jsx";
+import { GetAllProducts } from "./ProductList.jsx";
 import "./form.css";
 
 export function Catalogo() {
 
-  //definir estado catalogo, cargando
+  //definir estado catalogo, cargando //el padre administra el estado de los productos
   const [productos, setProductos] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
@@ -14,14 +15,14 @@ export function Catalogo() {
   //simular carga de productos
   useEffect(() => {
     const timer = setTimeout(() => {
-      setProductos(allProducts);
+      setProductos([...allProducts]);
       setLoading(false);
     }, 1500);
 
     return () => clearTimeout(timer);
   }, []);
 
-  //Crear producto
+  //Crear producto, el padre agrega el nuevo producto al estado
   function agregarProducto(nuevoProducto) {
     const producto = {
         id: crypto.randomUUID(),
@@ -29,22 +30,19 @@ export function Catalogo() {
     }
     setProductos((prevProductos) => {
       const nuevoProductos = prevProductos.slice();
-      nuevoProductos.push(producto);
+      nuevoProductos.push(producto); //el push lo estamos haciendo sobre una copia del arreglo, no sobre el estado directamente
       return nuevoProductos;
     });
     cerrarFormulario();
   }
 
   //Editar producto
-  function editarProducto(id) {
-    const productoEncontrado = productos.find((producto) => producto.id === id);
-  if (productoEncontrado) {
-    setProductoEditar(productoEncontrado);
+  function editarProducto(producto) {
+    setProductoEditar(producto);
     setMostrarFormulario(true);
   }
-  }
 
-    //Guardar cambios
+//Guardar cambio //el padre actualiza el estado con el producto modificado
   function actualizarProducto(productoActualizado) {
     if (!productoEditar) return;
     setProductos((prevProductos) =>
@@ -56,6 +54,15 @@ export function Catalogo() {
     );
     cerrarFormulario();
   }
+
+    //Guardar producto: crear o actualizar
+    function guardarProducto(datosProducto) {
+    if (productoEditar) {
+        actualizarProducto(datosProducto);
+    } else {
+        agregarProducto(datosProducto);
+    }
+    }
 
   //Eliminar producto
   function eliminarProducto(id) {
@@ -81,12 +88,10 @@ export function Catalogo() {
 
           <button
             type="button"
-
             onClick={() => {
               setProductoEditar(null);
               setMostrarFormulario(true);
             }}
-
           >
             Nuevo Producto
           </button>
@@ -95,32 +100,16 @@ export function Catalogo() {
             <ProductoForm
               key={productoEditar?.id ?? "nuevo"}
               productoEditar={productoEditar}
-              onAgregarProducto={agregarProducto}
-              onActualizarProducto={actualizarProducto}
+              onGuardarProducto={guardarProducto}
               onCancelar={cerrarFormulario}
             />
           )}
-          <ul>
-
-            {productos.map((producto) => (
-              <li key={producto.id}>
-                {producto.nombre} - ${producto.precio}
-                {" - "}Stock: {producto.stock}
-                {" - "}{producto.categoria}
-
-                <button
-                  type="button"
-                  onClick={() => editarProducto(producto.id)}
-                >
-                  Editar
-                </button>
-
-                <button type="button" onClick={() => eliminarProducto(producto.id)}>
-                  Eliminar
-                </button>
-              </li>
-            ))}
-          </ul>
+          
+          <GetAllProducts
+            products={productos}
+            onEditarProducto={editarProducto}
+            onEliminarProducto={eliminarProducto}
+          />
         </>
       )}
     </div>

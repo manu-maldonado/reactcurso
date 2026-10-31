@@ -2,8 +2,7 @@ import { useState } from "react";
 
 export function ProductoForm({
   productoEditar,
-  onAgregarProducto,
-  onActualizarProducto,
+  onGuardarProducto,
   onCancelar
 }) {
 
@@ -53,11 +52,7 @@ export function ProductoForm({
       return;
     }
 
-    if (productoEditar) {
-      onActualizarProducto(nuevoProducto);
-    } else {
-      onAgregarProducto(nuevoProducto);
-    }
+    onGuardarProducto(nuevoProducto);
   }
 
   return (

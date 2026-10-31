@@ -2,7 +2,7 @@ import { ProductItem } from "./ProductItem";
 import { SearchBox } from "./SearchBox.jsx";
 import { useState } from "react";
 
-export function GetAllProducts({ products }) {
+export function GetAllProducts({ products, onEditarProducto, onEliminarProducto}) {
   //{products} --- props
 
     const [search, setSearch] = useState("");
@@ -14,7 +14,7 @@ export function GetAllProducts({ products }) {
       p => p.nombre.toLowerCase().includes(search.toLowerCase())
     );
 
-    const [objAsc, setAscending] = useState({order:true, key:""});
+    const [objAsc, setAscending] = useState({order:true, key:"nombre"});
     const sorterProducts = [...productoEncontrados].sort((a, b) => {
       return setPredicatedSort(a[objAsc.key], b[objAsc.key], objAsc.order);
     });
@@ -65,6 +65,8 @@ export function GetAllProducts({ products }) {
       <table>
         <thead>
           <tr>
+            <th>Editar</th>
+            <th>Eliminar</th>
             <th>#</th>
             <th onClick={() => setAscending({order:!objAsc.order, key: "nombre"})}>Nombre</th>
             <th onClick={() => setAscending({order:!objAsc.order, key: "precio"})}>Precio</th>
@@ -73,19 +75,36 @@ export function GetAllProducts({ products }) {
           </tr>
         </thead>
         <tbody>
-          {sorterProducts.length > 0 ? (sorterProducts.map((producto, index) => (
-          <ProductItem key={producto.id} producto={producto} index={index + 1} 
-            bestChoice={producto.nombre === "Mouse Inalámbrico"
-              ? "Best Choice"
-              : ""
-            }
-          />
-        ))
-      ) : (
-        <tr>
-            <td colSpan="5">No se encontraron productos</td>
-        </tr>
-      )}
+          {sorterProducts.length > 0 ? (
+
+            sorterProducts.map((producto, index) => (
+
+              <ProductItem
+                key={producto.id}
+                producto={producto}
+                index={index + 1}
+
+                bestChoice={
+                  producto.nombre === "Mouse Inalámbrico"
+                  ? "Best Choice"
+                  : ""
+                }
+
+                onEditarProducto={onEditarProducto}
+                onEliminarProducto={onEliminarProducto}
+              />
+
+            ))
+
+          ) : (
+
+            <tr>
+              <td colSpan="7">
+                No se encontraron productos
+              </td>
+            </tr>
+
+          )}
         </tbody>
     </table>
   </div>

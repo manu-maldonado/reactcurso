@@ -33,6 +33,7 @@ function App() {
 
         {/* Ejercicio: productos */}
         <GetAllProducts products={allProducts}/>
+  
 
         {/* Ejercicio: contador */}
         <label>Count is {count}</label>
