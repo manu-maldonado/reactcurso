@@ -7,6 +7,7 @@ import { GetAllProducts } from './ProductList'
 import { allProducts } from './productosMock.js'
 import { SearchBox } from './searchBox.jsx'
 import { Calculadora } from './Calculadora.jsx'
+import { Catalogo } from './Catalogo.jsx'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -58,7 +59,7 @@ function App() {
       <h4>{saludo}</h4>
       <div className="ticks"></div>
 
-      <div className="ticks"></div>
+      <Catalogo products={allProducts}/>
 
       <section id="next-steps">
         <div id="docs">

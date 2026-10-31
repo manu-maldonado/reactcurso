@@ -2,7 +2,7 @@ import { ProductItem } from "./ProductItem";
 import { SearchBox } from "./searchBox";
 import { useState } from "react"
 
-export function GetAllProducts({ products }) {
+export function GetAllProducts({ products, callbackSetHandlerForm }) {
   // {products} --- props
   const [search, setSearch] = useState("")
   const [ascendente, setAsendente] = useState(true)
@@ -31,7 +31,7 @@ export function GetAllProducts({ products }) {
         (
           <>
             <p>{producto.nombre === "Mouse Inalambrico" ? "Best Choise" : ""}</p>
-            <ProductItem id={producto.id} producto={producto} />
+            <ProductItem id={producto.id} producto={producto} callbackSetHandlerForm={callbackSetHandlerForm} />
             {/* // { id: 323123 , producto:{ name:"dasdas"}} */}
           </>
         )) : (
