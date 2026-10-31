@@ -7,6 +7,8 @@ import { GetAllProducts } from './ProductList'
 import { allProducts } from './productosMock.js'
 import { Calculadora } from './calculadora.jsx'
 import { ProductList } from "./ProductList";
+import { Catalogo } from "./Catalogo";
+import { ProductForm } from "./ProductForm.jsx";
 
 
 function App() {
@@ -70,7 +72,7 @@ function App() {
           </input>
         </div>
 
-
+       
         <h4>¡Hola {saludo}!</h4>
         <div className="ticks"></div>
 
@@ -79,6 +81,15 @@ function App() {
         <div>
           <Calculadora />
         </div>
+
+         <div>
+          <Catalogo products={allProducts} />
+        </div>
+         <div>
+          <ProductForm products={allProducts} />
+        </div>
+
+        
 
 
 

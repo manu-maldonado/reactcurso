@@ -7,8 +7,7 @@ export function ProductList({ products }) {
 
   const [textoBusqueda, setTextoBusqueda] = useState("");
 
-  const productosFiltrados = products.filter(producto =>
-    producto.nombre
+  const productosFiltrados = products.filter(producto => producto.nombre
       .toLowerCase()
       .includes(textoBusqueda.toLowerCase())
   );
