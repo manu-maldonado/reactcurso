@@ -10,6 +10,8 @@ import { Calculadora } from './calculadora.jsx';
 import { Catalogo } from './catalogo.jsx';
 import { Crud } from './crudMock.jsx';
 import { useEffectSinArreglo } from './UseEffectSinArreglo.jsx';
+import { useEffectArregloVacio } from './useEffectArregloVacio.jsx';
+import { UseEffectVariables } from './useEffectVariables.jsx';
 // import ./form.css
 
 function App() {
@@ -30,10 +32,11 @@ function App() {
           <p>
             Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
           </p>
-          <useEffectSinArreglo />
         </div>
         <SearchProduct products={allProducts}></SearchProduct>
-
+        <useEffectSinArreglo />
+        <useEffectArregloVacio />
+        <UseEffectVariables />
         {/* <GetAllProducts products={allProducts}></GetAllProducts> */}
         {/* <div>
           <h3>Calculadora</h3>
