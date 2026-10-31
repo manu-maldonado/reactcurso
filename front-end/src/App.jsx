@@ -7,6 +7,7 @@ import { GetAllProducts } from './ProductList.jsx'
 import { allProducts}  from './productosMock.js'
 import { SearchProduct } from './SearchProduct.jsx'
 import { Calculator } from './Calculator.jsx'
+import { Catalogo } from './Catalogo.jsx'
 
 
 function App() {
@@ -104,6 +105,7 @@ function App() {
       <h4>{saludo}</h4>
       
       <div className="ticks"></div>
+      <Catalogo products={allProducts}/>
 
       <section id="next-steps">
         <div id="docs">
