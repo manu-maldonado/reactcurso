@@ -55,20 +55,14 @@ export function Catalogo({ products }) {
           onClick={() => setCanHandleForm(true)}
           class="mag-btn mag-btn-primary"
         >
-          Primary
+          Agregar producto
         </button>
-        <button
-          onClick={() => setCanHandleForm(true)}
-          class="mag-btn mag-btn-sky"
-        >
-          Blue
-        </button>
-        <button
+        {/* <button
           onClick={() => setCanHandleForm(true)}
           class="mag-btn mag-btn-ghost"
         >
-          Ghost
-        </button>
+          Eliminar producto
+        </button> */}
       </div>
       {canHandleForm ? (
         <ProductForm
