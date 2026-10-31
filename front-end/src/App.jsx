@@ -8,6 +8,11 @@ import { allProducts }  from './productosMock.js'
 import { SearchBox } from './SearchBox.jsx'
 import { Calculadora } from './Calculadora.jsx'
 import { Catalogo } from './Catalogo.jsx'
+import { UseEffectSinArreglo } from './UseEffectSinArreglo.jsx'
+import { UseEffectArregloVacio } from './UseEffectArregloVacio.jsx'
+import { UseEffectVariables } from './UseEffectVariables.jsx'
+import { UseEffectCleanUp } from './UseEffectCleanUp.jsx'
+import { SearchBoxAPI } from './SearchBoxAPI.jsx'
 //import './form.css'
 function App() {
   const [count, setCount] = useState(0)
@@ -23,9 +28,14 @@ function App() {
         </div>
         <div>
           <h1>Get started</h1>
+          <SearchBoxAPI/>
           <p>
             Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
           </p>
+          <UseEffectSinArreglo/>
+          <UseEffectArregloVacio/>
+          <UseEffectVariables/>
+          <UseEffectCleanUp/>
         </div>
         <Calculadora/>
         <GetAllProducts products={allProducts}/>

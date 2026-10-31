@@ -2,7 +2,7 @@ import { useState } from "react"
 import { ProductItem } from "./ProductItem";
 import { SearchBox } from "./SearchBox";
 
-export function GetAllProducts({ products }) {
+export function GetAllProducts({ products, onEdit, onRemove }) {
   // {products} --- props
   const [search, setSearch] = useState("")
   const filterProducts = products.filter(
@@ -43,6 +43,7 @@ export function GetAllProducts({ products }) {
       <table>
         <thead>
           <tr>
+            <th colSpan={2}> Opciones</th>
             <th onClick={() => setAscending({order:!objAsc.order, key:"id"})}>#</th>
             <th onClick={() => setAscending({order:!objAsc.order, key:"nombre"})}>Nombre</th>
             <th onClick={() => setAscending({order:!objAsc.order, key:"precio"})}>Precio</th>
@@ -52,7 +53,7 @@ export function GetAllProducts({ products }) {
         </thead>
         <tbody>
           {sorterProductsG.map((producto) => (
-            <ProductItem id={producto.id} producto={producto} /> // { id: 323123 , producto:{ name:"dasdas"}}
+            <ProductItem id={producto.id} producto={producto} onEdit={onEdit} onRemove={onRemove}  /> // { id: 323123 , producto:{ name:"dasdas"}}
           ))}
         </tbody>
       </table>

@@ -6,130 +6,90 @@ export function Catalogo({ products }) {
     //definir estado para catalogo, cargando
     const [productos, setProductos] = useState([...products]);
     const [isLoading, setLoading] = useState(true);
-    // const [editando, setEditando] = useState(false);
+    //const [addButton,setIsAdd]=useState(false)
 
-    // const [producto,setProducto]= useState({
-    //     id: "",
-    //     nombre:"",
-    //     precio: "",
-    //     stock: "",
-    //     categoria: ""
-    // })
+    //controlar si el formulario esta sinedo avierto y editando
+    const [showForm, setShowForm ] =useState(false)
+    const [productoSelecionado,setProductSeleccionado]= useState(null)
+
+
 
     useEffect(() => {
         setTimeout(() => {
             setLoading(false)
+            setProductos(products)
         }, 1500);
-    })
+    },[])
 
-// function inputOnChange(evt){
-//     const {name, value} = evt.target;
-//     setProducto({
-//         ...producto,
-//         [name]:value
-//     });
-// }
+  
+//CRUD
 
-//function create(e){
-//        e.preventDefault();
-//        if (editando){
-//            productos.map((item) => {
-//
-//            })
-//        }else{
+    const handlerSaveProduct = (nuevoOActualizado)=>{
+        //update:remplazar el producto seleccionado con el id
+        if(productoSelecionado){
+            //reemplacemos el product que coincida con el id
+            setProductos(prev=>prev.map(p=> p.id == productoSelecionado.id ? nuevoOActualizado : p))
+        }else{
+            //agrega nuevo elemento
+             setProductos(prev=>[...prev,{...nuevoOActualizado, id:`p${Date.now()}`}])
+        }
 
-//     const newProduct={
-//         id: producto.id,
-//         nombre:producto.nombre,
-//         precio: producto.precio,
-//         stock: Number(producto.stock),
-//         categoria:producto.categoria
-//     }
-    
-//     setProducto(productos.push(newProduct));
-//     setProducto({
-//          id: "",
-//          nombre:"",
-//         precio: "",
-//         stock: Number(""),
-//         categoria:""
-//     })
-//     }
-// }
+        //cerrar formulario y limpiarlo
+        setShowForm(false)
+        setProductSeleccionado(null)
+    };
 
-// function edit(id){
-//     const prooductoEncontrado= productos.find((item) => item.id === id);
-//     if (productoEncontrado){
-//     setProducto({
-//         id:productoEncontrado.id,
-//         nombre: productoEncontrado.nombre,
-//         precio: productoEncontrado.precio,
-//         stock: productoEncontrado.stock,
-//         categoria: productoEncontrado.categoria
-//     });
-//     setEditando(true);
-//     }
-// }
-const [addButton,setIsAdd]=useState(false)
-const [canHandleForm, setCanHandleForm ] =useState(false)
+    const handleRemoveProduct=(id) =>{
+
+         const confirmar = window.confirm(
+        "¿Estás seguro de que deseas eliminar este producto?"
+    );
+    if(confirmar){
+        //Elimine, filtre o saque de productos el id seleccionado
+        //prodriamos eliminar con filter o con slice
+        setProductos(prev => prev.filter(p=> p.id != id))
+    }
+    }
+
+    const handleInicarEdicion=(producto) =>{
+        setProductSeleccionado(producto);
+        setShowForm(true)
+
+    }
 
     return (
         <>
-
-        <div class="mag-btns">
-            <button onClick={()=>setCanHandleForm(true)}> Agregar</button>
-            <button onClick={()=>setCanHandleForm(true)}>Actualizar</button>
-            <button onClick={()=>setCanHandleForm(false)}>Eliminar</button>
-        </div>
-            {/* <form class="card bg-surface-100-900 p-4 w-full max-w-md mx-auto space-y-4" onSubmit={create}>
-                <header>
-                    <h3 class="h3">Producto</h3>
-                </header>
-                <fieldset class="fieldset space-y-2">
-                    <legend class="legend">Detalles del Producto</legend>
-                    <label class="label">
-                        <span class="label-text">Id: </span>
-                        <input class="input" name="id" type="number" onChange={inputOnChange} />
-                    </label>
-                </fieldset>
-                <fieldset class="fieldset space-y-2">
-                    <label class="label">
-                        <span class="label-text">Nombre: </span>
-                        <input class="input" name="nombre" type="text" onChange={inputOnChange} />
-                    </label>
-                </fieldset>
-                <fieldset class="fieldset space-y-2">
-                    <label class="label">
-                        <span class="label-text">Precio: </span>
-                        <input class="input" name="precio" type="text"  onChange={inputOnChange}/>
-                    </label>
-                </fieldset>
-                <fieldset class="fieldset space-y-2">
-                    <label class="label">
-                        <span class="label-text">Stock :</span>
-                        <input class="input" name="stock" type="text" onChange={inputOnChange} />
-                    </label>
+        <div>
+            {isLoading ? (
+                 <h4>Esta cargando</h4>
+                ) : (
+                <GetAllProducts products={productos}
+                onEdit= {handleInicarEdicion}
+                onRemove= {handleRemoveProduct}
                 
-                </fieldset>
-                <fieldset>
-                        <label class="label">
-                        <span class="label-text">Categoria: </span>
-                        <input class="input" name="categoria" type="text" onChange={inputOnChange} />
-                    </label>
-                </fieldset>
-                <footer class="flex justify-end">
-                    <button type="submit" class="btn preset-filled">Registrar</button>
-                </footer>
-            </form> */}
+                />
+                )}
+        <div class="mag-btns">
+            <button onClick={()=>{
+                setProductSeleccionado(null)
+                setShowForm(true)
+            }}> Agregar</button>
+ 
+        </div>
+            
             <div>
-
-                {canHandleForm ? <ProductForm products={productos} callBackSetLoadingProduct={setLoading}/> : ""}
-                {isLoading ? <h4>Esta cargando</h4> : <h4>Termino de cargar</h4>}
-                { 
-                productos.map((producto) => (<h4>{producto.id} </h4>))
-                // <GetAllProducts products={products}/>
-                }
+                {showForm ? (<ProductForm key={productoSelecionado ? productoSelecionado.id : ""}
+                produdctAEditar={productoSelecionado} 
+                onSave={handlerSaveProduct}
+                onCancel={()=>{
+                    setShowForm(false)
+                    setProductSeleccionado(null)
+                }}
+                />) : (
+                    ""
+                )}
             </div>
+        </div>
         </>
-    )
+    );
 }
