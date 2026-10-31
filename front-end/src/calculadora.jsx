@@ -2,6 +2,7 @@
 
 // export function Calculadora({ operacion }) {
 //   const [op, setOP] = useState('');
+// nombre variable, accion
 //   const [multiplicar, setMultiplicar] = useState('*');
 //   const [dividir, setDividr] = useState('/');
 //   const [sumar, setSumar] = useState('+');
@@ -84,6 +85,7 @@ export function Calculadora() {
 
   return (
     <>
+      {/* encapsulamiento */}
       <input type="text" onChange={(e) => setInputA(+e.target.value)} />
       <select
         name=""

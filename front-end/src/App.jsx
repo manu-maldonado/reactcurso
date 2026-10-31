@@ -7,6 +7,9 @@ import { GetAllProducts } from './productList';
 import { allProducts } from './productosMock.js';
 import { SearchProduct } from './searchProduct.jsx';
 import { Calculadora } from './calculadora.jsx';
+import { Catalogo } from './catalogo.jsx';
+import { Crud } from './crudMock.jsx';
+// import ./form.css
 
 function App() {
   const [count, setCount] = useState(0);
@@ -28,6 +31,7 @@ function App() {
           </p>
         </div>
         <SearchProduct products={allProducts}></SearchProduct>
+
         {/* <GetAllProducts products={allProducts}></GetAllProducts> */}
         {/* <div>
           <h3>Calculadora</h3>
@@ -42,6 +46,9 @@ function App() {
         </div> */}
         {/* <label htmlFor="">{registro}</label> */}
         {/* <label htmlFor="">{resultado}</label> */}
+
+        <Catalogo products={allProducts} />
+        <Crud />
         <Calculadora />
         <div>
           <label htmlFor="">Contador {count}</label>

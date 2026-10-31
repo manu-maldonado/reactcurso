@@ -1,0 +1,229 @@
+/* =========================================
+   1. RESET Y CONTENEDOR PRINCIPAL
+   ========================================= */
+.msf-wrap {
+  box-sizing: border-box; /* Previene desbordes */
+  width: 100%; /* Ocupa el 100% en móviles */
+  max-width: 400px; /* Límite en desktop */
+  margin: 0 auto;
+  background: #141415;
+  border: 1px solid #2a2a2d;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.msf-wrap *,
+.msf-wrap *::before,
+.msf-wrap *::after {
+  box-sizing: inherit; /* Hereda el border-box a todos los hijos */
+}
+
+/* =========================================
+   2. INPUTS (Arreglo del Overlay)
+   ========================================= */
+.msf-panel input[type='text'],
+.msf-panel input[type='email'],
+.msf-panel input[type='tel'] {
+  box-sizing: border-box; /* ⬅️ ESTO ARREGLA EL OVERLAY */
+  display: block; /* Asegura que se comporten como bloques */
+  width: 100%;
+  padding: 0.65rem 0.9rem;
+  background: #1c1c1e;
+  border: 1px solid #2a2a2d;
+  border-radius: 8px;
+  color: #f0f0f0;
+  font-family: system-ui, sans-serif;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.msf-panel input:focus {
+  border-color: #b8ff57;
+}
+
+/* =========================================
+   3. RESTO DEL CSS (Igual que tenías)
+   ========================================= */
+.msf-radio {
+  display: none;
+}
+
+.msf-progress {
+  display: flex;
+  background: #1c1c1e;
+  border-bottom: 1px solid #2a2a2d;
+}
+
+.msf-step-label {
+  flex: 1;
+  padding: 0.6rem 0.2rem; /* Un poco menos de padding lateral para móviles */
+  text-align: center;
+  font-size: 0.75rem;
+  color: #88888f;
+  font-weight: 500;
+  position: relative;
+}
+
+.msf-body {
+  padding: 1.5rem;
+}
+
+.msf-panel {
+  display: none;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.msf-panel h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.25rem;
+}
+
+.msf-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.msf-btn {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  background: #b8ff57;
+  color: #0c0c0d;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-align: center;
+  user-select: none;
+  transition: opacity 0.15s;
+}
+
+.msf-btn:hover {
+  opacity: 0.85;
+}
+
+.msf-btn-back {
+  background: #1c1c1e;
+  color: #f0f0f0;
+  border: 1px solid #2a2a2d;
+}
+
+.msf-success {
+  text-align: center;
+  padding: 1rem 0;
+  color: #57d9a3;
+  font-size: 1rem;
+}
+
+/* Lógica CSS para mostrar paneles */
+#step1:checked ~ .msf-wrap .msf-panel-1 {
+  display: flex;
+}
+#step2:checked ~ .msf-wrap .msf-panel-2 {
+  display: flex;
+}
+#step3:checked ~ .msf-wrap .msf-panel-3 {
+  display: flex;
+}
+
+#step1:checked ~ .msf-wrap .msf-step-label:nth-child(1),
+#step2:checked ~ .msf-wrap .msf-step-label:nth-child(2),
+#step3:checked ~ .msf-wrap .msf-step-label:nth-child(3) {
+  color: #b8ff57;
+  border-bottom: 2px solid #b8ff57;
+  margin-bottom: -1px;
+}
+
+/*botones*/
+.mag-btns {
+  display: flex;
+  gap: 1.25rem;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 1rem 0.5rem;
+}
+
+.mag-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.75rem;
+  border: none;
+  border-radius: 8px;
+  font-family: system-ui, sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  /* the springy Y2 above 1.0 gives the lift its overshoot */
+  transition:
+    transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.3s ease,
+    background 0.2s;
+}
+
+.mag-btn:hover {
+  transform: translateY(-6px) scale(1.04);
+}
+
+.mag-btn-primary {
+  background: #b8ff57;
+  color: #0c0c0d;
+  box-shadow: 0 2px 8px rgba(184, 255, 87, 0.2);
+}
+
+.mag-btn-primary:hover {
+  box-shadow: 0 16px 40px rgba(184, 255, 87, 0.35);
+}
+
+.mag-btn-sky {
+  background: #38bdf8;
+  color: #0a0a0b;
+  box-shadow: 0 2px 8px rgba(56, 189, 248, 0.2);
+}
+
+.mag-btn-sky:hover {
+  box-shadow: 0 16px 40px rgba(56, 189, 248, 0.35);
+}
+
+.mag-btn-ghost {
+  background: transparent;
+  color: #f0f0f0;
+  border: 2px solid #2a2a2d;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.mag-btn-ghost:hover {
+  border-color: #88888f;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2);
+}
+
+/* where the buttons animate in from on first paint */
+@starting-style {
+  .mag-btn {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+}
+
+/* =========================================
+   4. MEDIA QUERY (Ajustes responsivos)
+   ========================================= */
+@media (max-width: 480px) {
+  .msf-wrap {
+    border-radius: 0; /* En móviles muy pequeños, pegado a los bordes se ve mejor */
+    border-left: none;
+    border-right: none;
+  }
+
+  .msf-body {
+    padding: 1rem; /* Reducimos el espacio interior */
+  }
+
+  .msf-step-label {
+    font-size: 0.7rem; /* Letra un poco más pequeña para que quepa */
+    padding: 0.5rem 0.1rem;
+  }
+}

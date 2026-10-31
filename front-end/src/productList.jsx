@@ -9,7 +9,7 @@
 //     </div>
 //   );
 // }
-
+import { allProducts } from './productosMock';
 import { ProductItem } from './productItem';
 
 export function GetAllProducts({ products }) {
