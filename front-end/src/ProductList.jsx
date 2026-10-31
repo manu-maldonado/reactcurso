@@ -1,6 +1,6 @@
 import { ProductItem } from "./ProductItem";
 
-export function GetAllProducts({ products }) {
+export function GetAllProducts({ products, onCallbackClick }) {
   // {products} --- props
   return (
     <div>
@@ -14,8 +14,7 @@ export function GetAllProducts({ products }) {
         </tr>
         {products.map((producto) => (
           <>
-          <ProductItem id={producto.id} producto={producto} /> 
-
+          <ProductItem id={producto.id} producto={producto} onCallbackClick={onCallbackClick}/> 
           </>
         ))}
       </table>      

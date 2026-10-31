@@ -1,7 +1,8 @@
-export function ProductItem({ id, producto }) {
+export function ProductItem({ id, producto, onCallbackClick }) {
   return (
     <>
-      <tr>
+      <tr id={id}>
+        <button onClick={()=>onCallbackClick(true)} className="mag-btn mag-btn-sky">Actualizar Producto</button>
         <td>{id}</td>
         <td>{producto.nombre}</td>
         <td>{producto.precio}</td>
