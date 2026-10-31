@@ -35,17 +35,21 @@ export function Catalogo({ products }) {
 
   return (
     <div>
-      {cargando ? <h4>esta cargando</h4> : <h4>termino de cargar</h4>}
+      {cargando ? (
+        <h4>esta cargando</h4>
+      ) : (
+        <GetAllProducts products={productos} />
+      )}
       {/* {products.map((producto) => {
         return <h4>{producto.id}</h4>;
       })} */}
       {/* read */}
-      {products.map((producto) => (
+      {/* {products.map((producto) => (
         <>
           <h4>{producto.id}</h4>
           <h4>{producto.nombre}</h4>
         </>
-      ))}
+      ))} */}
       <div class="mag-btns">
         <button
           onClick={() => setCanHandleForm(true)}
