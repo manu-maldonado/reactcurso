@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { ProductForm } from "./ProductForm";
 
 const formVacio = { nombre: "", precio: "", stock: "", categoria: "" };
 
@@ -95,6 +96,14 @@ export function Catalogo({ products = [] }) {
 
   // DELETE: filter crea una lista nueva sin ese producto
   function eliminar(id) {
+    const producto = productos.find((p) => p.id === id);
+    if (!producto) return;
+
+    const confirmado = window.confirm(
+      `¿Seguro que quieres eliminar "${producto.nombre}"?`
+    );
+    if (!confirmado) return;
+
     setProductos(productos.filter((p) => p.id !== id));
     if (id === editandoId) limpiar();
   }
@@ -104,54 +113,19 @@ export function Catalogo({ products = [] }) {
   }
 
   return (
-    <div>
-      <h4>termino cargar</h4>
-
-      <h3>{editandoId ? "Editar producto" : "Agregar producto"}</h3>
-      <input name="nombre" placeholder="Nombre" value={form.nombre} onChange={cambiarCampo} />
-      <input name="precio" type="number" placeholder="Precio" value={form.precio} onChange={cambiarCampo} />
-      <input name="stock" type="number" placeholder="Stock" value={form.stock} onChange={cambiarCampo} />
-      <input name="categoria" placeholder="Categoría" value={form.categoria} onChange={cambiarCampo} />
-
-      <div>
-        {editandoId ? (
-          <>
-            <button type="button" onClick={guardar}>Guardar cambios</button>
-            <button type="button" onClick={limpiar}>Cancelar</button>
-          </>
-        ) : (
-          <button type="button" onClick={agregar}>Agregar</button>
-        )}
-      </div>
-
-      {mensaje && <p>{mensaje}</p>}
-
-      {/* READ */}
-      <table>
-        <tbody>
-          <tr>
-            <th>#</th>
-            <th>Nombre</th>
-            <th>Precio</th>
-            <th>Stock</th>
-            <th>Categoría</th>
-            <th>Acciones</th>
-          </tr>
-          {productos.map((producto) => (
-            <tr key={producto.id}>
-              <td>{producto.id}</td>
-              <td>{producto.nombre}</td>
-              <td>{producto.precio}</td>
-              <td>{producto.stock}</td>
-              <td>{producto.categoria}</td>
-              <td>
-                <button type="button" onClick={() => editar(producto.id)}>Editar</button>
-                <button type="button" onClick={() => eliminar(producto.id)}>Eliminar</button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <ProductForm
+      productos={productos}
+      form={form}
+      editandoId={editandoId}
+      mensaje={mensaje}
+      onCambiarCampo={cambiarCampo}
+      onAgregar={agregar}
+      onGuardar={guardar}
+      onCancelar={limpiar}
+      onEditar={editar}
+      onEliminar={eliminar}
+    />
   );
+
+  
 }

@@ -9,6 +9,13 @@ import { SearchBox } from './SearchBox.jsx'
 import { Calculadora } from './calculadora.jsx'
 import { Catalogo } from './Catalogo.jsx'
 
+
+import { UseEffectVariables } from './useEffectVariables.jsx'
+import { UseEffectCleanUp } from './UseEffectCleanUp.jsx'
+import { UseEffectArregloVacio } from './UseEffectArregloVacio.jsx'
+import { UseEffectSinArreglo } from './UseEffectSinArreglo.jsx'
+import { SearchTermBox } from './SearchTermBox.jsx'
+
 function App() {
   const [count, setCount] = useState(0)
   const [saludo, setSaludo] = useState("Hola desconocido")
@@ -24,9 +31,16 @@ function App() {
         </div>
         <div>
           <h1>Get started</h1>
+          <h3>Call API</h3>
+          <SearchTermBox/>
           <p>
             Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
           </p>
+                   <UseEffectSinArreglo/>
+          <UseEffectArregloVacio/>
+          <UseEffectVariables/>
+          <UseEffectCleanUp/>
+
         </div>
         <SearchBox name={name} onNameChange={setName} />
         <GetAllProducts products={allProducts} name={name} />
