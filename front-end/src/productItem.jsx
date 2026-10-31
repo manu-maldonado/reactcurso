@@ -30,6 +30,9 @@ export function ProductItem({
       <td>
         <img
           src={DeleteButton}
+          onClick={() => {
+            onCallbackClick(false);
+          }}
           width={20}
           height={20}
           style={{
