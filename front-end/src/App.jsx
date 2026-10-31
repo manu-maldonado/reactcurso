@@ -12,6 +12,7 @@ import { Crud } from './crudMock.jsx';
 import { useEffectSinArreglo } from './UseEffectSinArreglo.jsx';
 import { useEffectArregloVacio } from './useEffectArregloVacio.jsx';
 import { UseEffectVariables } from './useEffectVariables.jsx';
+import { UseEffectCleanUp } from './useEffectCleanUp.jsx';
 // import ./form.css
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
         <useEffectSinArreglo />
         <useEffectArregloVacio />
         <UseEffectVariables />
+        <UseEffectCleanUp />
         {/* <GetAllProducts products={allProducts}></GetAllProducts> */}
         {/* <div>
           <h3>Calculadora</h3>
