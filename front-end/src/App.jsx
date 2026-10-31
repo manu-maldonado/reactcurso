@@ -5,6 +5,8 @@ import viteLogo from './assets/vite.svg'
 import './App.css'
 import { GetAllProducts } from './ProductList'
 import { allProducts }  from './productosMock.js'
+import { SearchBox } from './SearchBox.jsx'
+import { Calculadora } from './Calculadora.jsx'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -24,6 +26,7 @@ function App() {
             Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
           </p>
         </div>
+        <Calculadora/>
         <GetAllProducts products={allProducts}/>
         <label>Count is {count}</label>
         <button
