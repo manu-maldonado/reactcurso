@@ -9,10 +9,12 @@ import { SearchProduct } from './searchProduct.jsx';
 import { Calculadora } from './calculadora.jsx';
 import { Catalogo } from './catalogo.jsx';
 import { Crud } from './crudMock.jsx';
-import { UseEffectSinArreglo } from './UseEffectSinArreglo.jsx';
+// import { UseEffectSinArreglo } from './UseEffectSinArreglo';
 import { UseEffectArregloVacio } from './useEffectArregloVacio.jsx';
 import { UseEffectVariables } from './useEffectVariables.jsx';
 import { UseEffectCleanUp } from './useEffectCleanUp.jsx';
+import { SearchBox } from './SearchBox.jsx';
+import { SearchTermBox } from './SearchTermBox.jsx';
 // import ./form.css
 
 function App() {
@@ -30,6 +32,8 @@ function App() {
         </div>
         <div>
           <h1>Get started</h1>
+          <h3>SearchBox Nueva</h3>
+          <SearchTermBox />
           <p>
             Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
           </p>

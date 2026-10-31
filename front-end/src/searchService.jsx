@@ -19,7 +19,7 @@ export const searchService = {
 
       const resultado = response.json();
 
-      return { data: resultado.data, total: resultado.data.length };
+      return resultado.data;
     } catch (error) {
       console.log('Error al procesar el search', error);
       throw error;
