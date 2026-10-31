@@ -9,6 +9,7 @@ import { SearchProduct } from './searchProduct.jsx';
 import { Calculadora } from './calculadora.jsx';
 import { Catalogo } from './catalogo.jsx';
 import { Crud } from './crudMock.jsx';
+import { useEffectSinArreglo } from './UseEffectSinArreglo.jsx';
 // import ./form.css
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
           <p>
             Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
           </p>
+          <useEffectSinArreglo />
         </div>
         <SearchProduct products={allProducts}></SearchProduct>
 

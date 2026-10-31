@@ -112,7 +112,7 @@ export function Catalogo({ products }) {
       {showForm ? (
         <ProductForm
           // products={productos} 1:59t
-          productAEditar={productAEditar}
+          productAEditar={productoSeleccionado}
           onSave={handlerSaveProduct}
           onCancel={() => {
             setShowForm(false);

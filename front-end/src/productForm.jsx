@@ -1,4 +1,7 @@
-import { useProductForm } from './useProductForm'; // Asegúrate de respetar mayúsculas/minúsculas del archivo
+import { useState } from 'react';
+import { useProductForm } from './useproductForm';
+
+// Asegúrate de respetar mayúsculas/minúsculas del archivo
 
 export function ProductForm({
   productoAEditar,
@@ -7,11 +10,27 @@ export function ProductForm({
   onSave,
   onCancel,
 }) {
-  // 1. Llamamos al Custom Hook dentro de la función y pasándole las props correctas
-  const { formData, handleChange, handleSubmit } = useProductForm(
-    products,
-    callbackSetLoadingProducts
-  );
+  let newProduct = {
+    id: 0,
+    nombre: '',
+    precio: 0,
+    stock: 0,
+    categoria: '',
+  };
+  const [formData, setFormData] = useState(productoAEditar || newProduct);
+
+  const handleChange = (evt) => {
+    const { name, value, type, checked } = evt.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: type === 'checkbox' ? checked : value,
+    }));
+  };
+
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    onSave(formData);
+  };
 
   // 2. El return DEBE ir aquí adentro, antes de que cierre la llave de la función
   return (
