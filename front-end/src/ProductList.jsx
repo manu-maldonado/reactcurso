@@ -14,12 +14,10 @@ export function GetAllProducts({ products }) {
         </thead>
         <tbody>
           {products.map((product) => (
-            <ProductItem id={product.id} product={product} />
+            <ProductItem product={product} />
           ))}
         </tbody>
       </table>
     </>
   );
 }
-
-
