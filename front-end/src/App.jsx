@@ -4,11 +4,21 @@ import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import './App.css'
 import { GetAllProducts } from './ProductList'
-import { allProducts }  from './productosMock.js'
+import { allProducts } from './productosMock.js'
+import { SearchBar } from './SearchBar';
+import { Calculator } from './Calculator';
+import { Catalogo } from './Catalogo.jsx'
 
 function App() {
   const [count, setCount] = useState(0)
   const [saludo, setSaludo] = useState("Hola desconocido")
+  const [searchTerm, setSearchTerm] = useState("")
+
+
+  // 3. Filtramos los productos según lo que se escriba
+  const filteredProducts = allProducts.filter((producto) =>
+    producto.nombre.toLowerCase().includes(searchTerm.toLowerCase())
+  )
 
   return (
     <>
@@ -24,34 +34,42 @@ function App() {
             Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
           </p>
         </div>
-        <GetAllProducts products={allProducts}/>
+        {/* 4. Renderizamos la barra de búsqueda y pasamos los productos filtrados */}
+        <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+        <GetAllProducts products={filteredProducts} />
+
         <label>Count is {count}</label>
         <button
           type="button"
           className="counter"
           onClick={() => setCount((count) => count + 1)}
-        >+          
+        >+
         </button>
-          <button
+        <button
           type="button"
           className="counter"
           onClick={() => setCount((count) => count - 1)}
-        >-        
+        >-
         </button>
-          <button
+        <button
           type="button"
           className="counter"
           onClick={() => setCount(() => 0)}
-        > reset          
+        > reset
         </button>
       </section>
 
-      <input onInput={(evt)=> { 
-        setSaludo(evt.target.value)}
+      <input onInput={(evt) => {
+        setSaludo(evt.target.value)
+      }
       }></input>
-      
+
       <h4>{saludo}</h4>
       <div className="ticks"></div>
+
+      <Catalogo products={allProducts} />
+
+      <Calculator />
 
       <section id="next-steps">
         <div id="docs">
