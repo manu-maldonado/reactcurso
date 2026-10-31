@@ -8,6 +8,7 @@ import { allProducts } from './productosMock.js'
 import { SearchBar } from './SearchBar';
 import { Calculator } from './Calculator';
 import { Catalogo } from './Catalogo.jsx'
+import { UseEffectVariables } from './UseEffectVariables.jsx'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -34,9 +35,12 @@ function App() {
             Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
           </p>
         </div>
+
+        {/*<UseEffectVariables />*/}
+
         {/* 4. Renderizamos la barra de búsqueda y pasamos los productos filtrados */}
         <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-        <GetAllProducts products={filteredProducts} />
+
 
         <label>Count is {count}</label>
         <button

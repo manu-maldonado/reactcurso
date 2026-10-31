@@ -1,86 +1,81 @@
 import { useEffect, useState } from "react";
+import { GetAllProducts } from "./ProductList";
+import { ProductForm } from "./ProductForm";
 
 export function Catalogo({ products }) {
-    // 1. Estado para los productos (inicia con los que le pasamos por props)
-    const [listProducts, setListProducts] = useState(products || []);
+    const [productos, setProductos] = useState(products || []);
+    const [isLoading, setLoading] = useState(true);
+    const [canHandleForm, setCanHandleForm] = useState(false);
+    const [selectedProduct, setSelectedProduct] = useState(null);
 
-    // 2. Estado de carga que tenía tu profe en la imagen
-    const [isLoading, setIsLoading] = useState(true);
-
-    // 3. Estados para los inputs del formulario de creación
-    const [nombre, setNombre] = useState("");
-    const [precio, setPrecio] = useState("");
-    const [stock, setStock] = useState("");
-
-    // El useEffect que puso tu profe para simular que carga datos[cite: 5]
     useEffect(() => {
-        setTimeout(() => {
-            setIsLoading(false);
+        const timer = setTimeout(() => {
+            setLoading(false);
         }, 2500);
+
+        return () => clearTimeout(timer);
     }, []);
 
-    // Función para agregar un producto nuevo a la lista (Create del CRUD)
-    const handleAddProduct = (e) => {
-        e.preventDefault();
-        const nuevo = {
-            id: "p" + (listProducts.length + 1),
-            nombre,
-            precio: Number(precio),
-            stock: Number(stock),
-            categoria: "General"
-        };
-        setListProducts([...listProducts, nuevo]); // Actualiza el estado sumando el nuevo
-        setNombre("");
-        setPrecio("");
-        setStock("");
+    // Función para eliminar un producto con ventana de confirmación
+    const handleDeleteProduct = (id) => {
+        // Ventana nativa del navegador
+        const confirmado = window.confirm("¿Estás seguro de que quieres eliminar este producto?");
+
+        // Si el usuario le da a "Aceptar", 'confirmado' será true y se borra
+        if (confirmado) {
+            setProductos((prev) => prev.filter((p) => p.id !== id));
+        }
+    };
+
+    const handleEditProduct = (producto) => {
+        setSelectedProduct(producto);
+        setCanHandleForm(true);
+    };
+
+    // Función para guardar (crear o actualizar en la lista)
+    const handleSaveProduct = (productData) => {
+        if (selectedProduct) {
+            // Actualizar existente
+            setProductos(productos.map(p => p.id === productData.id ? productData : p));
+        } else {
+            // Crear nuevo
+            setProductos([...productos, productData]);
+        }
+        setCanHandleForm(false); // Cierra el formulario al guardar
+        setSelectedProduct(null);
     };
 
     return (
-        <div style={{ padding: "20px", border: "1px solid #ccc", borderRadius: "8px", marginTop: "20px" }}>
-            <h2>Catálogo de Productos (CRUD)</h2>
-
-            {/* Si está cargando muestra el texto de la imagen, si no, muestra el contenido[cite: 5] */}
+        <div>
             {isLoading ? (
-                <h4>Esta cargando....</h4>
+                <h4>Cargando...</h4>
             ) : (
-                <div>
-                    <h4>Terminó de cargar</h4>
+                <GetAllProducts
+                    products={productos}
+                    onEditClick={handleEditProduct}
+                    onDeleteClick={handleDeleteProduct}
+                />
+            )}
 
-                    {/* Formulario integrado para crear un producto */}
-                    <form onSubmit={handleAddProduct} style={{ marginBottom: "20px", background: "#f9f9f9", padding: "10px" }}>
-                        <h4>Agregar nuevo producto</h4>
-                        <input
-                            type="text"
-                            placeholder="Nombre"
-                            value={nombre}
-                            onChange={(e) => setNombre(e.target.value)}
-                            required
-                        />
-                        <input
-                            type="number"
-                            placeholder="Precio"
-                            value={precio}
-                            onChange={(e) => setPrecio(e.target.value)}
-                            required
-                        />
-                        <input
-                            type="number"
-                            placeholder="Stock"
-                            value={stock}
-                            onChange={(e) => setStock(e.target.value)}
-                            required
-                        />
-                        <button type="submit">Guardar</button>
-                    </form>
+            <div className="mag-btns" style={{ marginTop: "15px" }}>
+                <button
+                    onClick={() => {
+                        setSelectedProduct(null);
+                        setCanHandleForm(true);
+                    }}
+                    className="mag-btn mag-btn-primary"
+                >
+                    Agregar Producto
+                </button>
+            </div>
 
-                    {/* Mapeo igual al que hizo tu profe en la imagen[cite: 5] */}
-                    <ul>
-                        {listProducts.map((producto) => (
-                            <li key={producto.id}>
-                                {producto.id} - <strong>{producto.nombre}</strong> (${producto.precio}) - Stock: {producto.stock}
-                            </li>
-                        ))}
-                    </ul>
+
+            {canHandleForm && (
+                <div style={{ marginTop: "20px" }}>
+                    <ProductForm
+                        selectedProduct={selectedProduct}
+                        onSaveProduct={handleSaveProduct}
+                    />
                 </div>
             )}
         </div>
