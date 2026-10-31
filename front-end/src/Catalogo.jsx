@@ -1,64 +1,79 @@
 import { useEffect, useState } from "react";
-import "./form.css"
-import { ProductForm } from "./ProductFrom";
+import "./form.css";
+import { ProductForm } from "./ProductForm.jsx";
+import { ProductItem } from "./ProductItem.jsx";
 
-export function Catalogo({products}){
+export function Catalogo({ products }) {
 
-    //definir estado para productos
-    //const [productos,setProductos] = useState([products]);
+    // Estado para almacenar los productos
     const [productos, setProductos] = useState(products);
-    const [isLoading,setLoading] = useState(true);
-    const [canHandleForm, setCanHandleForm] = useState(false);
 
-    // Estados para los campos del formulario
+    // Estado para simular la carga
+    const [isLoading, setLoading] = useState(true);
+
+    // Controlar si el formulario está abierto
+    const [showForm, setShowForm] = useState(false);
+
+    // Guardar el producto seleccionado para editar
+    const [productoSeleccionado, setproductSeleccionado] = useState(null);
+
+    // Estados para los campos del CRUD original
     const [id, setId] = useState("");
     const [nombre, setNombre] = useState("");
     const [precio, setPrecio] = useState("");
     const [stock, setStock] = useState("");
     const [categoria, setCategoria] = useState("");
 
-    const [mensaje, setMensaje] = useState("")
-    
-    
-    useEffect(()=> {
-        let active = true 
+    // Estado para mostrar mensajes
+    const [mensaje, setMensaje] = useState("");
+
+
+    // Simulación de carga
+    useEffect(() => {
+
+        let active = true;
+
         const timer = setTimeout(() => {
-            if(active)
-            setLoading(false)
-        },2500);
 
-        return () =>{
-            active = false
-            clearTimeout(timer)
-        }
-    })
+            if (active) {
+                setLoading(false);
+            }
 
-    // CREATE: Crear producto
+        }, 2500);
+
+        return () => {
+            active = false;
+            clearTimeout(timer);
+        };
+
+    }, []);
+
+
+    // CREATE: Crear producto desde el CRUD original
     function crearProducto() {
 
-        //Validar que los campos no estén vacios
         if (!id.trim() || !nombre.trim() ||
             precio === "" || stock === "" || !categoria.trim()) {
+
             setMensaje("Completa todos los campos");
             return;
         }
 
-        //Verificar que el producto no exista
         if (productos.some((producto) => producto.id === id)) {
+
             setMensaje("Ya existe un producto con ese ID");
             return;
         }
 
-        //Validar precio y stock
         if (!Number.isFinite(Number(precio)) ||
             Number(precio) < 0 ||
             !Number.isInteger(Number(stock)) ||
             Number(stock) < 0) {
+
             setMensaje("Precio o stock inválidos");
             return;
         }
 
-        //Creamos el objeto
         const nuevoProducto = {
             id: id,
             nombre: nombre,
@@ -67,64 +82,64 @@ export function Catalogo({products}){
             categoria: categoria
         };
 
-        //Agregamos el producto al estado
-        setProductos([...productos, nuevoProducto]);
+        setProductos((anteriores) => [...anteriores, nuevoProducto]);
 
         setMensaje("Producto agregado correctamente");
     }
 
-    // READ: Buscar producto
+
+    // READ: Buscar producto por ID
     function leerProducto() {
 
         const producto = productos.find(
             (producto) => producto.id === id
         );
 
-        //Si existe, devuelve el objeto
         if (producto) {
+
             setNombre(producto.nombre);
             setPrecio(String(producto.precio));
             setStock(String(producto.stock));
             setCategoria(producto.categoria);
 
             setMensaje("Producto encontrado");
+
         } else {
+
             setMensaje("Producto no encontrado");
         }
     }
 
-    // UPDATE: Actualizar producto
+
+    // UPDATE: Actualizar desde el CRUD original
     function actualizarProducto() {
 
-        //Validar que los datos sean correctos antes de modificar un producto
-
-        //Verificar que los campos estén completos
         if (!id.trim() || !nombre.trim() ||
             precio === "" || stock === "" || !categoria.trim()) {
+
             setMensaje("Completa todos los campos");
             return;
         }
 
-        //VAlidar que precio y stock sean correctos
         if (!Number.isFinite(Number(precio)) ||
             Number(precio) < 0 ||
             !Number.isInteger(Number(stock)) ||
             Number(stock) < 0) {
+
             setMensaje("Precio o stock inválidos");
             return;
         }
 
-        //Comprobar que el producto exista
         if (!productos.some((producto) => producto.id === id)) {
+
             setMensaje("Producto no encontrado");
             return;
         }
 
-        //Si se cumplen las condiciones:
-        //Recorre el arreglo y devuelve el producto
         const productosActualizados = productos.map((producto) => {
 
             if (producto.id === id) {
+
                 return {
                     ...producto,
                     nombre: nombre,
@@ -137,52 +152,213 @@ export function Catalogo({products}){
             return producto;
         });
 
-        setProductos(productosActualizados); //Actualiza la lista completa
+        setProductos(productosActualizados);
 
         setMensaje("Producto actualizado correctamente");
     }
 
-    // DELETE: Eliminar producto
+
+    // DELETE: Eliminar desde el CRUD original
     function eliminarProducto() {
 
-        //Verificamos que exista un producto con ese ID
-        const existe = productos.some(
-            (producto) => producto.id === id
+        eliminarProductoPorId(id);
+    }
+
+
+    // DELETE: Eliminar producto por ID con confirmación
+    function eliminarProductoPorId(idProducto) {
+
+        // Buscar el producto que queremos eliminar
+        const producto = productos.find(
+            (producto) => producto.id === idProducto
         );
 
-        if (!existe) {
+        // Verificar que el producto exista
+        if (!producto) {
             setMensaje("Producto no encontrado");
             return;
         }
 
-        //Filtramos los productos, devuelve los elementos que cumplan la condición
-        const productosRestantes = productos.filter(
-            (producto) => producto.id !== id //Conserva todos los productos cuyo ID sea diferente del que queremos eliminar
+        // Mostrar alerta de confirmación
+        const confirmar = window.confirm(
+            `¿Estás seguro de que deseas eliminar el producto "${producto.nombre}"?`
         );
 
-        setProductos(productosRestantes); //Actualizamos el estado y el producto desaparece
+        // Si el usuario presiona Cancelar, no eliminamos nada
+        if (!confirmar) {
+            return;
+        }
+
+        // Si confirma, eliminamos el producto
+        const productosRestantes = productos.filter(
+            (producto) => producto.id !== idProducto
+        );
+
+        setProductos(productosRestantes);
 
         setMensaje("Producto eliminado correctamente");
     }
 
+
+    // Abrir formulario para crear un producto
+    function abrirFormularioCrear() {
+
+        setproductSeleccionado(null);
+        setShowForm(true);
+        setMensaje("");
+    }
+
+
+    // Abrir formulario para actualizar un producto
+    function abrirFormularioActualizar() {
+
+        const producto = productos.find(
+            (producto) => producto.id === id
+        );
+
+        if (!producto) {
+
+            setMensaje("Escribe un ID válido para actualizar");
+            return;
+        }
+
+        setproductSeleccionado(producto);
+        setShowForm(true);
+        setMensaje("");
+    }
+
+
+    // Manejar los íconos de editar y eliminar
+    function manejarAccionProducto(idProducto, editar) {
+
+        if (editar) {
+
+            const producto = productos.find(
+                (item) => item.id === idProducto
+            );
+
+            if (producto) {
+
+                // Guardamos el producto seleccionado
+                setproductSeleccionado(producto);
+
+                // También actualizamos los campos del CRUD original
+                setId(producto.id);
+                setNombre(producto.nombre);
+                setPrecio(String(producto.precio));
+                setStock(String(producto.stock));
+                setCategoria(producto.categoria);
+
+                // Abrimos el formulario
+                setShowForm(true);
+
+                setMensaje("");
+            }
+
+        } else {
+
+            // Eliminamos directamente desde el ícono
+            eliminarProductoPorId(idProducto);
+        }
+    }
+
+
+    // Guardar producto desde ProductForm
+    function guardarProducto(datosProducto) {
+
+        const nuevoProducto = {
+            id: String(datosProducto.id).trim(),
+            nombre: String(datosProducto.nombre).trim(),
+            precio: Number(datosProducto.precio),
+            stock: Number(datosProducto.stock),
+            categoria: String(datosProducto.categoria).trim()
+        };
+
+        // Validar los datos
+        if (!nuevoProducto.id ||
+            !nuevoProducto.nombre ||
+            !nuevoProducto.categoria ||
+            datosProducto.precio === "" ||
+            datosProducto.stock === "" ||
+            !Number.isFinite(nuevoProducto.precio) ||
+            nuevoProducto.precio < 0 ||
+            !Number.isInteger(nuevoProducto.stock) ||
+            nuevoProducto.stock < 0) {
+
+            setMensaje("Completa los campos con datos válidos");
+            return;
+        }
+
+        if (productoSeleccionado !== null) {
+
+            // UPDATE
+            const productosActualizados = productos.map((producto) => {
+
+                if (producto.id === productoSeleccionado.id) {
+
+                    return {
+                        ...producto,
+                        ...nuevoProducto,
+                        id: productoSeleccionado.id
+                    };
+                }
+
+                return producto;
+            });
+
+            setProductos(productosActualizados);
+
+            setMensaje("Producto actualizado correctamente");
+
+        } else {
+
+            // CREATE
+            const existe = productos.some(
+                (producto) => producto.id === nuevoProducto.id
+            );
+
+            if (existe) {
+
+                setMensaje("Ya existe un producto con ese ID");
+                return;
+            }
+
+            setProductos((anteriores) => [
+                ...anteriores,
+                nuevoProducto
+            ]);
+
+            setMensaje("Producto agregado correctamente");
+        }
+
+        // Cerrar formulario después de guardar
+        setShowForm(false);
+        setproductSeleccionado(null);
+    }
+
+
+    // Cerrar formulario
+    function cerrarFormulario() {
+
+        setShowForm(false);
+        setproductSeleccionado(null);
+    }
+
+
     return (
+
         <div>
 
             <h2>Catálogo de productos</h2>
 
+            {/* Mensaje de carga */}
             {isLoading
                 ? <h4>Está cargando...</h4>
                 : <h4>Terminó de cargar</h4>
             }
 
-            <div class="mag-btns">
-                <button onClick={()=> setCanHandleForm(true)}>Agregar producto</button>
-                <button onClick={()=> setCanHandleForm(true)}>Actualizar producto</button>
-                <button onClick={()=> setCanHandleForm(false)}>Eliminar producto</button>
 
-            </div>
-            {canHandleForm ? <ProductForm products = {productos} callbackSetLoadingProducts={setLoading}/>: ""}
-
+            {/* CRUD original */}
             <h3>Administrar productos</h3>
 
             <input
@@ -218,17 +394,35 @@ export function Catalogo({products}){
             />
 
             <div>
+
                 <button onClick={crearProducto}>Create</button>
+
                 <button onClick={leerProducto}>Read</button>
+
                 <button onClick={actualizarProducto}>Update</button>
+
                 <button onClick={eliminarProducto}>Delete</button>
+
             </div>
 
+
+            {/* Mensajes */}
             <p>{mensaje}</p>
 
+
+            {/* Primera tabla: CRUD original */}
             <h3>Lista de productos</h3>
 
-            <table>
+            <table
+                cellPadding="12"
+                cellSpacing="0"
+                style={{
+                    margin: "25px auto",
+                    textAlign: "center",
+                    borderCollapse: "collapse"
+                }}
+            >
+
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -237,21 +431,99 @@ export function Catalogo({products}){
                         <th>Stock</th>
                         <th>Categoría</th>
                     </tr>
-                </thead> 
+                </thead>
 
                 <tbody>
+
                     {productos.map((producto) => (
+
                         <tr key={producto.id}>
                             <td>{producto.id}</td>
                             <td>{producto.nombre}</td>
                             <td>{producto.precio}</td>
                             <td>{producto.stock}</td>
-                            <td>{producto.categoria}</td> 
+                            <td>{producto.categoria}</td>
                         </tr>
+
                     ))}
+
                 </tbody>
+
             </table>
 
+
+            {/* Segunda tabla: CRUD con íconos */}
+            <h3>Productos con acciones</h3>
+
+            <table
+                cellPadding="12"
+                cellSpacing="0"
+                style={{
+                    margin: "25px auto",
+                    textAlign: "center",
+                    borderCollapse: "collapse"
+                }}
+            >
+
+                <thead>
+                    <tr>
+                        <th>Editar</th>
+                        <th>Eliminar</th>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Precio</th>
+                        <th>Stock</th>
+                        <th>Categoría</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {productos.map((producto) => (
+
+                        <ProductItem
+                            key={producto.id}
+                            id={producto.id}
+                            producto={producto}
+                            onCallbackClick={manejarAccionProducto}
+                        />
+
+                    ))}
+
+                </tbody>
+
+            </table>
+
+             
+            <div className="mag-btns">
+
+                <button onClick={abrirFormularioCrear}>
+                    Agregar producto
+                </button>
+
+                <button onClick={abrirFormularioActualizar}>
+                    Actualizar producto
+                </button>
+
+                <button onClick={eliminarProducto}>
+                    Eliminar producto
+                </button>
+
+            </div>
+
+
+            {/* Formulario para crear o editar */}
+            {showForm && (
+
+                <ProductForm
+                    key={productoSeleccionado?.id ?? "nuevo"}
+                    productoSeleccionado={productoSeleccionado}
+                    onGuardar={guardarProducto}
+                    onCancelar={cerrarFormulario}
+                />
+
+            )}
+
         </div>
-    )
+    );
 }

@@ -8,7 +8,11 @@ import { allProducts}  from './productosMock.js'
 import { SearchProduct } from './SearchProduct.jsx'
 import { Calculator } from './Calculator.jsx'
 import { Catalogo } from './Catalogo.jsx'
-
+import { UseEffectArregloVacio } from './UseEffectArregloVacio.jsx'
+import { UseEffectSinArreglo } from './UseEffectSinArreglo.jsx'
+import { UseEffectVariables } from './UseEffectVariables.jsx'
+import { UseEffectCleanup } from './UseEffectCleanup.jsx'
+import { SearchTermBox } from './SearchTermBox.jsx'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -51,9 +55,14 @@ function App() {
         </div>
         <div>
           <h1>Get started</h1>
+          {/*<SearchTermBox></SearchTermBox>*/}
           <p>
             Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
           </p>
+          <UseEffectSinArreglo></UseEffectSinArreglo>
+          <UseEffectArregloVacio></UseEffectArregloVacio>
+          <UseEffectVariables></UseEffectVariables>
+          <UseEffectCleanup></UseEffectCleanup>
         </div>
         <SearchProduct
             busqueda={busqueda}
