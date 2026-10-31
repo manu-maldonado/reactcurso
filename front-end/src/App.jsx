@@ -9,8 +9,8 @@ import { SearchProduct } from './searchProduct.jsx';
 import { Calculadora } from './calculadora.jsx';
 import { Catalogo } from './catalogo.jsx';
 import { Crud } from './crudMock.jsx';
-import { useEffectSinArreglo } from './UseEffectSinArreglo.jsx';
-import { useEffectArregloVacio } from './useEffectArregloVacio.jsx';
+import { UseEffectSinArreglo } from './UseEffectSinArreglo.jsx';
+import { UseEffectArregloVacio } from './useEffectArregloVacio.jsx';
 import { UseEffectVariables } from './useEffectVariables.jsx';
 import { UseEffectCleanUp } from './useEffectCleanUp.jsx';
 // import ./form.css

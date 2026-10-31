@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export function useEffectArregloVacio() {
+export function UseEffectArregloVacio() {
   // hook
   const [users, setUsers] = useState([]);
 
@@ -16,10 +16,12 @@ export function useEffectArregloVacio() {
   }, []);
 
   return (
-    <ul>
-      {users.map((x) => (
-        <li key={x.id}>{x.nombre}</li>
-      ))}
-    </ul>
+    <>
+      <ul>
+        {users.map((x) => (
+          <li key={x.id}>{x.nombre}</li>
+        ))}
+      </ul>
+    </>
   );
 }
