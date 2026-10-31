@@ -6,6 +6,7 @@ import './App.css'
 import { Calculadora } from "./Calculadora";
 import { GetAllProducts } from './ProductList'
 import { allProducts }  from './productoMock.js'
+import { Catalogo } from './Catalogo.jsx'
 //import { SearchProduct } from './SearchBox.jsx'
 
 function App() {
@@ -62,6 +63,9 @@ function App() {
       
       <h4>{saludo}</h4>
       <div className="ticks"></div>
+
+      {/* Ejercicio: catálogo */}
+      <Catalogo />
 
       <section id="next-steps">
         <div id="docs">
