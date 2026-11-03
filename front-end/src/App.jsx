@@ -7,6 +7,11 @@ import { Calculadora } from "./Calculadora";
 import { GetAllProducts } from './ProductList'
 import { allProducts }  from './productoMock.js'
 import { Catalogo } from './Catalogo.jsx'
+import { UseEffectSinArreglo } from './UseEffectSinArreglo.jsx'
+import { UseEffectArregloVacio } from './UseEffectArregloVacio.jsx'
+import { UseEffectVariables } from './UseEffectVariables.jsx'
+import { UseEffectCleanup } from './UseEffectCleanup.jsx'
+import { EjemploMontaje } from './EjemploMontaje.jsx'
 //import { SearchProduct } from './SearchBox.jsx'
 
 function App() {
@@ -33,6 +38,21 @@ function App() {
 
         {/* Ejercicio: productos */}
         <GetAllProducts products={allProducts}/>
+        
+        {/* Ejercicio: useEffect sin arreglo */}
+        <UseEffectSinArreglo />
+
+        {/* Ejercicio: useEffect con arreglo vacío */}
+        <UseEffectArregloVacio />
+
+        {/* Ejercicio: useEffect con variables */}
+        <UseEffectVariables />
+
+        {/* Ejercicio: useEffect con cleanup */}
+        <UseEffectCleanup />
+
+        {/* Ejercicio: ejemplo montaje */}
+        <EjemploMontaje />
   
 
         {/* Ejercicio: contador */}
