@@ -10,9 +10,9 @@ import { Catalogo } from './Catalogo.jsx'
 import { UseEffectSinArreglo } from './UseEffectSinArreglo.jsx'
 import { UseEffectArregloVacio } from './UseEffectArregloVacio.jsx'
 import { UseEffectVariables } from './UseEffectVariables.jsx'
-import { UseEffectCleanup } from './UseEffectCleanup.jsx'
+//import { UseEffectCleanup } from './UseEffectCleanup.jsx'
 import { EjemploMontaje } from './EjemploMontaje.jsx'
-//import { SearchProduct } from './SearchBox.jsx'
+import { SearchTermBox } from './SearchTermBox.jsx'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -49,11 +49,11 @@ function App() {
         <UseEffectVariables />
 
         {/* Ejercicio: useEffect con cleanup */}
-        <UseEffectCleanup />
+        {/* <UseEffectCleanup /> */}
 
         {/* Ejercicio: ejemplo montaje */}
         <EjemploMontaje />
-  
+        <SearchTermBox />
 
         {/* Ejercicio: contador */}
         <label>Count is {count}</label>
