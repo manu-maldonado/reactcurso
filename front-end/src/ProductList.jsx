@@ -56,6 +56,8 @@ export function GetAllProducts({ products, onEditarProducto, onEliminarProducto}
           } else {
             return (a === b)? 0 : a? 1 : -1;
           }
+        default:
+          return 0;
       }
     }
 

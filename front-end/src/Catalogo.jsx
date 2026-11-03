@@ -25,8 +25,8 @@ export function Catalogo() {
   //Crear producto, el padre agrega el nuevo producto al estado
   function agregarProducto(nuevoProducto) {
     const producto = {
-        id: crypto.randomUUID(),
-        ...nuevoProducto
+      ...nuevoProducto,
+      id: crypto.randomUUID(),
     }
     setProductos((prevProductos) => {
       const nuevoProductos = prevProductos.slice();
@@ -55,19 +55,29 @@ export function Catalogo() {
     cerrarFormulario();
   }
 
-    //Guardar producto: crear o actualizar
-    function guardarProducto(datosProducto) {
+  //Guardar producto: crear o actualizar
+  function guardarProducto(datosProducto) {
     if (productoEditar) {
         actualizarProducto(datosProducto);
     } else {
         agregarProducto(datosProducto);
     }
-    }
+  }
 
   //Eliminar producto
   function eliminarProducto(id) {
-    const productoEncontrado = productos.find((producto) => producto.id === id);
+    const productoEncontrado = productos.find(
+      (producto) => producto.id === id
+    );
+
     if (!productoEncontrado) return;
+
+    const confirmar = window.confirm(
+      `¿Estás seguro de eliminar "${productoEncontrado.nombre}"?`
+    );
+
+    if (!confirmar) return;
+
     setProductos((prevProductos) =>
       prevProductos.filter((producto) => producto.id !== id)
     );
