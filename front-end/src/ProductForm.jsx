@@ -1,13 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export function ProductForm({ products, callbackSetLoadingProducts }) {
-  const [formData, setFormData] = useState({
+export function ProductForm({ productoAEditar, onSave, onCancel }) {
+  let productoNuevo = {
     id: 0,
     nombre: "",
     precio: 0,
     stock: 0,
     categoria: "",
-  });
+  };
+
+  const [formData, setFormData] = useState(productoAEditar || productoNuevo);
+
+  // Si le Pasamos un Producto para Editar, estaríamos Cargando sus Datos en el Estado de Nuestro Form Local
+  {
+    /*
+  useEffect(() => {
+    if (productoAEditar) {
+      setFormData(productoAEditar);
+    } else {
+      setFormData(productoNuevo);
+    }
+  }, [productoAEditar]);
+  */
+  }
 
   const handleChange = (evt) => {
     const { name, value, type, checked } = evt.target;
@@ -21,13 +36,11 @@ export function ProductForm({ products, callbackSetLoadingProducts }) {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    products.push(formData);
-    callbackSetLoadingProducts(true);
-    console.log(
-      "Los Datos Están Listo para ser Enviados al Servidor",
-      formData,
-      products,
-    );
+    onSave({
+      ...formData,
+      precio: formData.precio,
+      //stock: formData.stock,
+    });
   };
 
   return (
@@ -43,7 +56,8 @@ export function ProductForm({ products, callbackSetLoadingProducts }) {
         <div className="msf-body">
           <div className="msf-panel msf-panel-1">
             <h3>Información del Producto</h3>
-            <input type="text" name="id" placeholder="ID" readOnly={true} />
+            <h3>{productoAEditar ? "Editar Producto" : "Nuevo Producto"}</h3>
+            <input type="text" name="id" placeholder="ID" value={formData.id} />
             <input
               type="text"
               name="nombre"
@@ -62,15 +76,29 @@ export function ProductForm({ products, callbackSetLoadingProducts }) {
               type="text"
               name="stock"
               placeholder="stock"
-              readOnly={true}
+              value={formData.stock}
             />
-            {/* to-do move to selectlist */}
-            <input type="text" placeholder="category" readOnly={true} />
+            <input
+              type="text"
+              name="category"
+              placeholder="categoría"
+              value={formData.categoria}
+            />
             <div className="msf-actions">
               <button>
-                <label htmlFor="step" className="msf-btn">
-                  Enviar
-                </label>
+                {" "}
+                {productoAEditar ? (
+                  <label htmlFor="step" className="msf-btn">
+                    Actualizar
+                  </label>
+                ) : (
+                  <label htmlFor="step" className="msf-btn">
+                    Guardar
+                  </label>
+                )}
+              </button>
+              <button type="button" onClick={onCancel}>
+                Cancelar
               </button>
             </div>
           </div>

@@ -1,21 +1,26 @@
-export function CatalogoItem({ id, producto, onCallbackClick }) {
+import EditButton from "./assets/edit-icon_1.svg";
+import DeleteButton from "./assets/delete-icon_1.svg";
+
+export function CatalogoItem({ id, producto, onEdit, onRemove }) {
   return (
     <tr id="id">
       <td>
-        <button
-          onClick={() => onCallbackClick(true)}
+        <img
+          src={EditButton}
+          width={30}
+          height={30}
+          onClick={() => onEdit(producto)}
           className="mag-btn mag-btn-sky"
-        >
-          Actualizar Producto
-        </button>
+        ></img>
       </td>
       <td>
-        <button
-          onClick={() => onCallbackClick(false)}
+        <img
+          src={DeleteButton}
+          width={30}
+          height={30}
+          onClick={() => onRemove(id)}
           className="mag-btn mag-btn-sky"
-        >
-          Eliminar Producto
-        </button>
+        ></img>
       </td>
       <td>{id}</td>
       <td>{producto.nombre}</td>

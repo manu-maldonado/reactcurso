@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { CatalogoItem } from "./CatalogoItem";
 
-export function CatalogoList({ products, onCallbackClick }) {
+export function CatalogoList({ products, onEdit, onRemove }) {
   const [search, setSearch] = useState("");
   //const [canHandleForm, setCanHandleForm] = useState(false);
 
@@ -92,7 +92,8 @@ export function CatalogoList({ products, onCallbackClick }) {
                 key={producto.id}
                 id={producto.id}
                 producto={producto}
-                onCallbackClick={onCallbackClick}
+                onEdit={onEdit}
+                onRemove={onRemove}
               />
             ))
           ) : (
