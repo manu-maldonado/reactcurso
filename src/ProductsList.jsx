@@ -7,7 +7,7 @@ const columns = [
   { key: "precio", label: "Precio" },
 ];
 
-export function GetAllProducts({ products, sortBy, sortDir, onSort }) {
+export function GetAllProducts({ products, sortBy, sortDir, onSort, onCallbackClick }) {
   const arrow = (key) =>
     sortBy === key ? (sortDir === "asc" ? " ▲" : " ▼") : "";
 
@@ -29,30 +29,9 @@ return (
       </thead>
       <tbody>
         {products.map((product) => (
-          <ProductItem key={product.id} product={product} />
+          <ProductItem id={product.id} key={product.id} product={product} setCanHandleForm={onCallbackClick} />
         ))}
       </tbody>
     </table>
   );
 }
-
-/*export function GetAllProducts({ products }) {
-  return (
-    <table>
-      <thead>
-        <tr>
-          <th>Id</th>
-          <th>Nombre</th>
-          <th>Categoría</th>
-          <th>Precio</th>
-        </tr>
-      </thead>
-      <tbody>
-        {products.map((product) => (
-          <ProductItem key={product.id} product={product} />
-        ))}
-      </tbody>
-    </table>
-  );
-}
-*/

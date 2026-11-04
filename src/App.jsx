@@ -5,6 +5,7 @@ import viteLogo from "./assets/vite.svg";
 import { SearchProduct } from "./SearchProduct.jsx";
 import { allProducts } from "./productoMock.js";
 import { Calculadora } from "./Calculadora.jsx";
+import { Catalogo } from "./Catalogo.jsx";
 import "./css/App.css";
 
 function App() {
@@ -62,7 +63,9 @@ function App() {
       <h4>{saludo}</h4>
       <div className="ticks"></div>
 
+      <Catalogo products={allProducts} />
       <Calculadora/>
+
 
       <section id="next-steps">
         <div id="docs">
