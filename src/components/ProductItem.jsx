@@ -1,4 +1,4 @@
-import editIcon from "./assets/edit.svg";
+import editIcon from "../assets/img/edit.svg";
 
 function ProductItem({id, product, setCanHandleForm}) {
     return (

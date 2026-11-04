@@ -1,11 +1,11 @@
 import { useState } from "react";
-import heroImg from "./assets/hero.png";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "./assets/vite.svg";
-import { SearchProduct } from "./SearchProduct.jsx";
-import { allProducts } from "./productoMock.js";
-import { Calculadora } from "./Calculadora.jsx";
-import { Catalogo } from "./Catalogo.jsx";
+import heroImg from "./assets/img/hero.png";
+import reactLogo from "./assets/img/react.svg";
+import viteLogo from "./assets/img/vite.svg";
+import { SearchProduct } from "./components/SearchProduct.jsx";
+import { allProducts } from "./Utils/productoMock.js";
+import { Calculadora } from "./components/Calculadora.jsx";
+import { Catalogo } from "./components/Catalogo.jsx";
 import "./css/App.css";
 
 function App() {

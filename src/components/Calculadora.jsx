@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./css/Calculadora.css";
+import "../css/Calculadora.css";
 
 export function Calculadora() {
   const [a, setA] = useState("");

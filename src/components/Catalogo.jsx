@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { GetAllProducts } from "./ProductsList.jsx";
-import { FormularioProducto } from "./components/FormularioProducto.jsx";
-import "./css/index.css";
+import { FormularioProducto } from "./FormularioProducto.jsx";
+import "../css/index.css";
 
 export function Catalogo({ products }) {
   const [productos, setProductos] = useState([]);
