@@ -5,6 +5,11 @@ import { GetAllProducts } from "./ProductsList";
 import { allProducts } from "./productsMock";
 import { Calculadora } from "./Calculadora";
 import { Catalogo } from "./Catalogo";
+import { UseEffectSinArreglo } from "./UseEffectSinArreglo";
+import { UseEffectConArregloVacio } from "./UseEffectConArregloVacio";
+import { UseEffectConArregloVariable } from "./UseEffectConArregloVariable";
+import { UseEffectCleanup } from "./UseEffectCleanup";
+import { SearchTermBox } from "./SearchTermBox";
 
 function App() {
   const [contador, setContador] = useState(0);
@@ -14,6 +19,21 @@ function App() {
     <>
       <section id="center">
         <Calculadora />
+        <hr />
+        <h2>UseEffect sin Arreglo</h2>
+        <UseEffectSinArreglo />
+        <hr />
+        <h2>UseEffect con Arreglo Vacío</h2>
+        <UseEffectConArregloVacio />
+        <hr />
+        <h2>UseEffect con Arreglo con Variable</h2>
+        <UseEffectConArregloVariable />
+        <hr />
+        <h2>UseEffect con Cleanup</h2>
+        <UseEffectCleanup />
+        <hr />
+        <h2>Call API Search</h2>
+        <SearchTermBox />
         <hr />
         <h2>Tabla con Búsqueda</h2>
         <GetAllProducts products={allProducts} />
