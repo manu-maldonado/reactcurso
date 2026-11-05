@@ -10,13 +10,9 @@ const nuevoProducto = {
 };
 
 export function FormularioProducto({productoEditar, onSave, onCancel}) {
-    const [formData, setFormData] = useState(
-        productoEditar ? productoEditar : nuevoProducto
-    );
+    const [formData, setFormData] = useState(productoEditar || nuevoProducto);
 
-    useEffect(() => {
-        setFormData(productoEditar ? productoEditar : nuevoProducto);
-    }, [productoEditar]);
+    
 
     const handleChange = (evt) => {
         const {name, value, type, checked} = evt.target;

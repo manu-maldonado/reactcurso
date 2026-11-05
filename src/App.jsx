@@ -6,6 +6,10 @@ import { SearchProduct } from "./components/SearchProduct.jsx";
 import { allProducts } from "./Utils/productoMock.js";
 import { Calculadora } from "./components/Calculadora.jsx";
 import { Catalogo } from "./components/Catalogo.jsx";
+import { UseEffectSinArreglo } from "./Utils/UseEffectSinArreglo.jsx";
+import { UseEffectArregloVacio } from "./Utils/UseEffectArregloVacio.jsx";
+import { UseEffectVariables } from "./Utils/UseEffectVariables.jsx";
+import { UseEffectCleanup } from "./Utils/UseEffectCleanup.jsx";
 import "./css/App.css";
 
 function App() {
@@ -25,6 +29,12 @@ function App() {
           <p>
             Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
           </p>
+          {/*Ejemplos*/}
+          <UseEffectSinArreglo/>
+          <UseEffectArregloVacio/>
+          <UseEffectVariables/>
+          <UseEffectCleanup/>
+          {/*Ejemplos*/}
         </div>
         {/* Tabla Producto */}
         <SearchProduct allProducts={allProducts} />

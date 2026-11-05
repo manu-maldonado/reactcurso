@@ -80,6 +80,7 @@ export function Catalogo({ products }) {
                         <div>
                             <br/><br/>
                             <FormularioProducto
+                                key = {productoSeleccionado ? productoSeleccionado.id : ""}
                                 productoEditar = {productoSeleccionado}
                                 onSave = {handleGuardarProducto}
                                 onCancel = {() => {
