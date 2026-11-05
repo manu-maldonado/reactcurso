@@ -1,6 +1,6 @@
 import { ProductItem } from "./ProductItem";
 
-export function GetAllProducts({ products }) {
+export function GetAllProducts({ products, onEdit, onDelete }) {
   // {products} --- props
   return (
     <div>
@@ -13,11 +13,15 @@ export function GetAllProducts({ products }) {
           <th>Categoria</th>
         </tr>
         {products.map((producto) => (
-
-          
-          <ProductItem id={producto.id} producto={producto} /> // { id: 323123 , producto:{ name:"dasdas"}}
+          <ProductItem
+            key={producto.id}
+            id={producto.id}
+            producto={producto}
+            onEdit={onEdit}
+            onDelete={onDelete}
+          /> // { id: 323123 , producto:{ name:"dasdas"}}
         ))}
-      </table>      
+      </table>
     </div>
   );
 }

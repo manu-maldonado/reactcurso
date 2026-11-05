@@ -1,9 +1,10 @@
+{/*https://purecss.com/examples/multi-step-form/ */}
 import { useState } from 'react'
 import heroImg from './assets/hero.png'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import './App.css'
-import { GetAllProducts } from './ProductList'
+import { Catalogo } from './Catalogo.jsx'
 import { allProducts }  from './productosMock.js'
 import { SearchBox } from './SearchBox.jsx'
 import { UseEffectVariables } from './USeEffectVariables'
@@ -36,7 +37,7 @@ function App() {
           <UseEffectVariables></UseEffectVariables>
           <UseEffectCleanup></UseEffectCleanup>*/}
         </div>
-        <GetAllProducts products={allProducts}/>
+        <Catalogo products={allProducts} />
         <label>Count is {count}</label>
         <button
           type="button"

@@ -1,13 +1,15 @@
 import { useState } from "react";
 
-export function ProductForm({products, callbackSetProducts}) {
-  const [formData, setFormData] = useState({
-    id: 0,
-    nombre: "",
-    precio: 0,
-    stock: 0,
-    categoria: "",
-  });
+export function ProductForm({ products, callbackSetProducts, productoEditando, onClose }) {
+  const [formData, setFormData] = useState(
+    productoEditando ?? {
+      id: "",
+      nombre: "",
+      precio: "",
+      stock: "",
+      categoria: "",
+    }
+  );
 
   const handleChange = (evt) => {
     const { name, value, type, checked } = evt.target;
@@ -21,12 +23,24 @@ export function ProductForm({products, callbackSetProducts}) {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    
-    products.push(formData)
 
-    callbackSetProducts(products)
-    
+    const producto = {
+      ...formData,
+      precio: Number(formData.precio),
+      stock: Number(formData.stock),
+    };
+
+    if (productoEditando) {
+      callbackSetProducts(
+        products.map((p) => (p.id === producto.id ? producto : p))
+      );
+    } else {
+      callbackSetProducts([...products, { ...producto, id: "p" + Date.now() }]);
+    }
+
     console.log("Datos estan listo para ser enviador al servidor", formData, products);
+
+    onClose();
   };
 
   return (
@@ -51,23 +65,27 @@ export function ProductForm({products, callbackSetProducts}) {
         <div className="msf-body">
           <div className="msf-panel msf-panel-1">
             <h3>Your Info</h3>
+            <h4>{productoEditando ? "Editar Producto" : "Agregar Producto"}</h4>
             {/* id: "p2",
     nombre: "Mouse Inalámbrico",
     precio: 45,
     stock: 0,
     categoria: "Periféricos", */}
 
-            <input type="text" name="id" placeholder="ID" readOnly="true" />
+            <input type="text" name="id" placeholder="ID" value={formData.id} readOnly />
             <input type="text" name="nombre" placeholder="Name" onChange={handleChange} value={formData.nombre}/>
-            <input type="text" name="precio" placeholder="precio" onChange={handleChange} value={formData.precio}/>
-            <input type="text" name="stock" placeholder="stock" readOnly="true" />
+            <input type="number" name="precio" placeholder="precio" onChange={handleChange} value={formData.precio}/>
+            <input type="number" name="stock" placeholder="stock" onChange={handleChange} value={formData.stock}/>
             {/* to-do move to selectlist */}
-            <input type="text" placeholder="category" readOnly="true" />
+            <input type="text" name="categoria" placeholder="category" onChange={handleChange} value={formData.categoria}/>
             <div className="msf-actions">
               <button>
                 <label htmlFor="step" className="msf-btn">
-                  Enviar
+                  {productoEditando ? "Actualizar" : "Agregar"}
                 </label>
+              </button>
+              <button type="button" onClick={onClose}>
+                Cancelar
               </button>
             </div>
           </div>
