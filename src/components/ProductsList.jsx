@@ -7,7 +7,7 @@ const columns = [
   { key: "precio", label: "Precio" },
 ];
 
-export function GetAllProducts({ products, sortBy, sortDir, onSort, onCallbackClick }) {
+export function GetAllProducts({ products, sortBy, sortDir, onSort, onEdit, onRemove }) {
   const arrow = (key) =>
     sortBy === key ? (sortDir === "asc" ? " ▲" : " ▼") : "";
 
@@ -29,7 +29,7 @@ return (
       </thead>
       <tbody>
         {products.map((product) => (
-          <ProductItem id={product.id} key={product.id} product={product} setCanHandleForm={onCallbackClick} />
+          <ProductItem key={product.id} id={product.id} product={product} onEdit={onEdit} onRemove={onRemove} />
         ))}
       </tbody>
     </table>

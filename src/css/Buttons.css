@@ -1,0 +1,101 @@
+:root {
+  --btn-bg: transparent;
+  --btn-border: #4a4a63;
+  --btn-text: #c9cde0;
+  --btn-accent: #8f9bff;
+  --btn-accent-bg: #2d2d4a;
+  --btn-accent-text: #b8c0ff;
+  --btn-danger: #ff7b8a;
+  --btn-danger-bg: rgba(255, 123, 138, 0.12);
+}
+
+/* Base */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 24px;
+  background: var(--btn-bg);
+  border: 1px solid var(--btn-border);
+  border-radius: 999px;
+  color: var(--btn-text);
+  font-family: inherit;
+  font-size: 0.95rem;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s,
+    transform 0.1s, box-shadow 0.2s;
+}
+
+.btn:hover {
+  border-color: var(--btn-accent);
+  color: #fff;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(143, 155, 255, 0.3);
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Variantes */
+.btn-primary {
+  background: var(--btn-accent-bg);
+  border-color: var(--btn-accent);
+  color: var(--btn-accent-text);
+  font-weight: 600;
+}
+
+.btn-primary:hover {
+  background: #3a3a60;
+  color: #fff;
+}
+
+.btn-secondary {
+  /* usa los estilos base (transparente con borde) */
+}
+
+.btn-danger {
+  border-color: var(--btn-danger);
+  color: var(--btn-danger);
+}
+
+.btn-danger:hover {
+  background: var(--btn-danger-bg);
+  border-color: var(--btn-danger);
+  color: var(--btn-danger);
+}
+
+.btn-ghost {
+  border-color: transparent;
+}
+
+.btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: transparent;
+}
+
+/* Tamaños */
+.btn-sm {
+  padding: 6px 14px;
+  font-size: 0.82rem;
+}
+
+.btn-lg {
+  padding: 13px 32px;
+  font-size: 1.05rem;
+}
+
+.btn-block {
+  width: 100%;
+}
