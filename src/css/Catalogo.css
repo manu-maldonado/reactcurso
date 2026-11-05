@@ -1,0 +1,133 @@
+.table-card {
+  max-width: 900px;
+  margin: 24px auto;
+  background: #20202c;
+  border: 1px solid #32324a;
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+  overflow: hidden; /* respeta las esquinas redondeadas */
+}
+
+.table-scroll {
+  overflow-x: auto;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  color: #e6e8f2;
+}
+
+/* Encabezado */
+.data-table thead {
+  background: #15151d;
+}
+
+.data-table th {
+  padding: 14px 18px;
+  text-align: left;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #8f9bbd;
+  border-bottom: 1px solid #32324a;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.data-table th.sortable {
+  cursor: pointer;
+  transition: color 0.2s, background 0.2s;
+}
+
+.data-table th.sortable:hover {
+  color: #b8c0ff;
+  background: rgba(143, 155, 255, 0.06);
+}
+
+.th-content {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sort-arrow {
+  display: inline-block;
+  min-width: 1em; /* evita que el encabezado "salte" al aparecer la flecha */
+  color: #8f9bff;
+}
+
+/* Filas */
+.data-table td {
+  padding: 14px 18px;
+  border-bottom: 1px solid #2a2a3c;
+  vertical-align: middle;
+}
+
+.data-table tbody tr {
+  transition: background 0.15s;
+}
+
+.data-table tbody tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.data-table tbody tr:hover {
+  background: rgba(143, 155, 255, 0.08);
+}
+
+.data-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Columnas numéricas alineadas a la derecha */
+.data-table td.num,
+.data-table th.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Celda de acciones */
+.actions-cell {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.actions-cell .btn + .btn {
+  margin-left: 8px;
+}
+
+/* Mensaje de tabla vacía (opcional) */
+.table-empty {
+  padding: 32px;
+  text-align: center;
+  color: #6b7280;
+}
+
+/* Botón cuadrado/circular para íconos */
+.btn-icon {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border-radius: 50%;
+}
+
+.btn-icon img {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+/* Encabezado de acciones alineado con los botones */
+.data-table th.actions-th {
+  text-align: right;
+  cursor: default;
+}
+
+/* Precio a la derecha (ya definido antes, por si no lo tenías) */
+.data-table td.num {
+  font-variant-numeric: tabular-nums;
+}

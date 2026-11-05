@@ -26,6 +26,10 @@
   color: #b8c0ff;
 }
 
+.form-actions{
+  margin-top: 16px;
+}
+
 .form-input {
   width: 100%;
   box-sizing: border-box;
