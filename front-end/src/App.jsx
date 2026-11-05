@@ -5,6 +5,12 @@ import viteLogo from './assets/vite.svg'
 import './App.css'
 import { GetAllProducts } from './ProductList'
 import { allProducts }  from './productosMock.js'
+import { SearchBox } from './SearchBox.jsx'
+import { UseEffectVariables } from './USeEffectVariables'
+import { UseEffectCleanup } from './UseEffectCleanup.jsx'
+import { UseEffectArregloVacio } from './UseEffectArregloVacio.jsx'
+import { Calculadora } from "./Calculadora.jsx";
+ 
 
 function App() {
   const [count, setCount] = useState(0)
@@ -13,16 +19,22 @@ function App() {
   return (
     <>
       <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
+          <div className="hero">
+            <img src={heroImg} className="base" width="170" height="179" alt="" />
+            <img src={reactLogo} className="framework" alt="React logo" />
+            <img src={viteLogo} className="vite" alt="Vite logo" />
+          </div>
+          <div>
+            <h1>Get started</h1>
+            <p>
+              Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
+            </p>
+          <p>CALCULADORA MAESTRA</p>
+          <Calculadora />
+          {/*<SearchBox/>*/}
+          {/*<UseEffectArregloVacio></UseEffectArregloVacio>
+          <UseEffectVariables></UseEffectVariables>
+          <UseEffectCleanup></UseEffectCleanup>*/}
         </div>
         <GetAllProducts products={allProducts}/>
         <label>Count is {count}</label>
