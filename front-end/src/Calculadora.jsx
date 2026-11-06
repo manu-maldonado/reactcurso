@@ -1,62 +1,38 @@
-import { useState } from "react";
-import { CalculadoraOperaciones } from "./CalculadoraOperaciones";
+import { useState } from "react"
 
-export function Calculadora() {
-  const [input1, setInput1] = useState(0);
-  const [input2, setInput2] = useState(0);
-  const [operacion, setOperacion] = useState("");
-  return (
-    <>
-      <form>
-        <label>Valor 1</label>
-        <input type="number" onChange={(evt) => setInput1(+evt.target.value)} />
-        <p>{input1}</p>
+export function Calculadora(){
+    const [resultado, setResultado] = useState(0)
+    // const [suma, setSuma] = useState()
+    // const [rest, setResta] = useState()
+    const [inputA, setInputA] = useState(0)
+    const [inputB, setInputB] = useState(0)
 
-        <label> Valor 2</label>
-        <input type="number" onChange={(evt) => setInput2(+evt.target.value)} />
-        <p>{input2}</p>
-        <br />
-        <div>
-          <button
-            type="button"
-            onClick={() => setOperacion((operacion) => "S")}
-          >
-            Sumar
-          </button>{" "}
-          <br />
-          <button
-            type="button"
-            onClick={() => setOperacion((operacion) => "R")}
-          >
-            Restar
-          </button>{" "}
-          <br />
-          <button
-            type="button"
-            onClick={() => setOperacion((operacion) => "M")}
-          >
-            Multiplicar
-          </button>{" "}
-          <br />
-          <button
-            type="button"
-            onClick={() => setOperacion((operacion) => "D")}
-          >
-            Dividir
-          </button>{" "}
-          <br />
-          <button type="reset">Reset</button>
-        </div>
-        <br />
-        <div>
-          <CalculadoraOperaciones
-            operaciones={operacion}
-            input1={input1}
-            input2={input2}
-          ></CalculadoraOperaciones>
-        </div>
-      </form>
-      <br />
-    </>
-  );
+    function operationAritmetic(a, b, operator){
+        switch(operator){
+            case "+":
+                return a + b;
+            case "-":
+                return a - b;
+            case "*":
+                return a * b;
+            case "/":
+                  if (a === 0 && b === 0) return "Indeterminado vato";
+                  if (b === 0) return "No se puede dividir mano";
+                     return a / b;                  
+        }
+    }
+
+    return (
+        <>
+        <input type="text" onChange={(e)=> setInputA(+e.target.value)}/>
+        <select name="" id="" onClick={(evt)=> setResultado(operationAritmetic(inputA, inputB, evt.target.value))}>
+            <option value="+">+</option>
+            <option value="-">-</option>
+            <option value="*">*</option>
+            <option value="/">/</option>
+        </select>
+        <input type="text" onChange={(e)=> setInputB(+e.target.value)} />
+        <label htmlFor="">{resultado}</label>
+        </>
+    )
 }

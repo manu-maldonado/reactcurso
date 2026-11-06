@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
 
-export function UseEffectSinArreglo() {
-  const [contador, setContador] = useState(0);
+export function UseEffectSinArreglo(){
+    const [contador, setContador] = useState(0);
 
-  useEffect(() => {
-    console.log("Renderizado");
-  });
 
-  return (
-    <>
-      <p>Contador: {contador}</p>
-      <button onClick={() => setContador(contador + 1)}>Sumar </button>
-    </>
-  );
+    useEffect(()=>{
+        console.log("El componente se acaba de renderizar de useEffectSinArreglo")
+    })
+
+    return (
+        <>
+          <p>Contador: {contador}</p>   
+          <button onClick={()=> setContador(contador + 1)}>Sumar</button>
+        </>
+    )
 }
