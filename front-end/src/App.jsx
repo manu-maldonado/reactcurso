@@ -1,47 +1,21 @@
-<<<<<<< HEAD
-import { useState } from 'react'; // agrego una libreria de react
+import { useState } from 'react';
 import heroImg from './assets/hero.png';
 import reactLogo from './assets/react.svg';
 import viteLogo from './assets/vite.svg';
 import './App.css';
-import { GetAllProducts } from './productList';
 import { allProducts } from './productosMock.js';
-import { SearchProduct } from './searchProduct.jsx';
-import { Calculadora } from './calculadora.jsx';
-import { Catalogo } from './catalogo.jsx';
-import { Crud } from './crudMock.jsx';
-// import { UseEffectSinArreglo } from './UseEffectSinArreglo';
-import { UseEffectArregloVacio } from './useEffectArregloVacio.jsx';
-import { UseEffectVariables } from './useEffectVariables.jsx';
-import { UseEffectCleanUp } from './useEffectCleanUp.jsx';
-import { SearchBox } from './SearchBox.jsx';
+import { Catalogo } from './Catalogo.jsx';
+import { UseEffectSinArreglo } from './UseEffectSinArreglo.jsx';
+import { UseEffectArregloVacio } from './UseEffectArregloVacio.jsx';
+import { UseEffectVariables } from './UseEffectVariables.jsx';
+import { UseEffectCleanup } from './UseEffectCleanup.jsx';
 import { SearchTermBox } from './SearchTermBox.jsx';
-// import ./form.css
+import { SearchProduct } from './SearchProduct';
+import { Calculadora } from './Calculadora.jsx';
 
 function App() {
   const [count, setCount] = useState(0);
   const [saludo, setSaludo] = useState('Hola desconocido');
-  // const [name, setName] = useState('');
-=======
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
-import { allProducts }  from './productosMock.js'
-import { Catalogo } from './Catalogo.jsx'
-import { UseEffectSinArreglo } from './UseEffectSinArreglo.jsx'
-import { UseEffectArregloVacio } from './UseEffectArregloVacio.jsx'
-import { UseEffectVariables } from './UseEffectVariables.jsx'
-import { UseEffectCleanup } from './UseEffectCleanup.jsx'
-import { SearchTermBox } from './SearchTermBox.jsx'
-import { SearchProduct } from "./SearchProduct"
-import { Calculadora } from "./Calculadora.jsx"
-
-function App() {
-  const [count, setCount] = useState(0);
-  const [saludo, setSaludo] = useState("Hola desconocido");
->>>>>>> 463659425ad945b9ac9dd4aa99349a0464c4b1c4
 
   return (
     <>
@@ -53,88 +27,15 @@ function App() {
         </div>
         <div>
           <h1>Get started</h1>
-<<<<<<< HEAD
-          <h3>SearchBox Nueva</h3>
+          <h3>Call Api search</h3>
           <SearchTermBox />
           <p>
             Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
           </p>
-        </div>
-        <SearchProduct products={allProducts}></SearchProduct>
-        <useEffectSinArreglo />
-        <useEffectArregloVacio />
-        <UseEffectVariables />
-        <UseEffectCleanUp />
-        {/* <GetAllProducts products={allProducts}></GetAllProducts> */}
-        {/* <div>
-          <h3>Calculadora</h3>
-          <input type="text" />
-          
-          <hr />
-          <button className="counter">Suma</button>
-          <button className="counter">Resta</button>
-          <button className="counter">Multiplicacion</button>
-          <button className="counter">Division</button>
-          
-        </div> */}
-        {/* <label htmlFor="">{registro}</label> */}
-        {/* <label htmlFor="">{resultado}</label> */}
-
-        <Catalogo products={allProducts} />
-        <Crud />
-        <Calculadora />
-        <div>
-          <label htmlFor="">Contador {count}</label>
-
-          <div>
-            <button
-              type="button"
-              className="counter"
-              onClick={() => setCount((count) => count + 1)}
-            >
-              Incremento
-            </button>
-            <button
-              type="button"
-              className="counter"
-              onClick={() => setCount((count) => count - 1)}
-            >
-              Decremento
-            </button>
-            <button
-              type="button"
-              className="counter"
-              onClick={() => setCount((count) => (count = 0))}
-            >
-              Reseteo
-            </button>
-          </div>
-        </div>
-      </section>
-
-      <input
-        onInput={() => {
-          setSaludo((a) => {
-            console.log(a);
-            ('ya no eres extraño');
-          });
-        }}
-        type="text"
-      />
-      <h4> {saludo} </h4>
-      {/* inyectar valor del useState */}
-      <div className="ticks"></div>
-
-=======
-          <h3>Call Api search</h3>
-          <SearchTermBox/>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-          <UseEffectSinArreglo/>
-          <UseEffectArregloVacio/>
-          <UseEffectVariables/>
-          <UseEffectCleanup/>
+          <UseEffectSinArreglo />
+          <UseEffectArregloVacio />
+          <UseEffectVariables />
+          <UseEffectCleanup />
         </div>
         <Calculadora />
         <SearchProduct products={allProducts} />
@@ -158,7 +59,7 @@ function App() {
           className="counter"
           onClick={() => setCount(() => 0)}
         >
-          {" "}
+          {' '}
           reset
         </button>
       </section>
@@ -171,8 +72,7 @@ function App() {
 
       <h4>{saludo}</h4>
       <div className="ticks"></div>
-      <Catalogo products={allProducts}/>
->>>>>>> 463659425ad945b9ac9dd4aa99349a0464c4b1c4
+      <Catalogo products={allProducts} />
       <section id="next-steps">
         <div id="docs">
           <svg className="icon" role="presentation" aria-hidden="true">
