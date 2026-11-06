@@ -1,53 +1,17 @@
-import EditButton from './assets/edit-note.svg';
-import DeleteButton from './assets/delete-icon.svg';
-
-export function ProductItem({
-  id,
-  producto,
-  precio,
-  stock,
-  categoria,
-  callbackSetCanHandlerForm,
-  onEdit,
-  onRemove,
-}) {
+import EditButton from "./assets/edit-note.svg"
+import DeleteButton from "./assets/delete-icon.svg"
+export function ProductItem({ id, producto, onEdit, onRemove }) {
   return (
-    // <p>
-    //   {id} {producto} {precio}
-    // </p>
-    // recordatorio no agregar table por que se rompe y lo agrega a un solo th
-    <tr id={id}>
-      <td>
-        <img
-          src={EditButton}
-          onClick={() => {
-            onEdit(producto);
-          }}
-          width={20}
-          height={20}
-          style={{ background: 'white', cursor: 'pointer' }}
-        />
-      </td>
-      <td>
-        <img
-          src={DeleteButton}
-          onClick={() => {
-            onRemove(id);
-          }}
-          width={20}
-          height={20}
-          style={{
-            background: 'white',
-            cursor: 'pointer',
-            padding: '5px 0 0 0 ',
-          }}
-        />
-      </td>
-      <td>{id}</td>
-      <td>{producto}</td>
-      <td>{precio}</td>
-      <td>{stock}</td>
-      <td>{categoria}</td>
-    </tr>
+    <>             
+      <tr id={id} >
+        <td><img src={EditButton}  onClick={()=> onEdit(producto)} width={32} height={32} style={{ background: 'white', border: 'none', cursor: 'pointer' }}></img></td>
+        <td><img src={DeleteButton}  onClick={()=> { onRemove(id)}} width={32} height={32} style={{ background: 'white', border: 'none', cursor: 'pointer' }}></img></td>
+        {/* <button onClick={()=> onCallbackClick(true)} class="mag-btn mag-btn-sky">Actualizar Producto</button> */}
+        <td>{producto.nombre}</td>
+        <td>{producto.precio}</td>
+        <td>{producto.stock}</td>
+        <td>{producto.categoria}</td>
+      </tr>
+    </>
   );
 }
