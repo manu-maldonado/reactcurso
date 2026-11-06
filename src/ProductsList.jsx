@@ -2,7 +2,7 @@ import ProductItem from "./ProductItem";
 
 export function GetAllProducts({ products, selectedId, onSelect }) {
   return (
-    <table border="1">
+    <table>
       <thead>
         <tr>
           <th>Id</th>

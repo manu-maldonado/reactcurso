@@ -2,11 +2,14 @@ import { useState } from "react";
 import heroImg from "./assets/hero.png";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "./assets/vite.svg";
+import { UseEffectVariebles } from "./UseEffectVariables.jsx";
 import { SearchProduct } from "./SearchProduct.jsx";
 import { allProducts } from "./productoMock.js";
 import { Calculator } from "./Calculator.jsx";
 import "./App.css";
 import { Catalogo } from "./Catalogo.jsx";
+import { UseEffectCleanup } from "./UseEffectCleanUp.jsx";
+import { SearchBox } from "./SearchBox.jsx";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -26,10 +29,15 @@ function App() {
             Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
           </p>
         </div>
+
+        <SearchBox />
         {/* Tabla Producto */}
         <SearchProduct allProducts={allProducts} />
 
-        <Catalogo allProducts={allProducts}/>
+        <UseEffectVariebles />
+        <UseEffectCleanup />
+
+        <Catalogo allProducts={allProducts} />
         {/* Contador */}
         <button
           type="button"
@@ -63,7 +71,7 @@ function App() {
 
       <h4>{saludo}</h4>
 
-      <Calculator/>
+      <Calculator />
 
       <div className="ticks"></div>
 

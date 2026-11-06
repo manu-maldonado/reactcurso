@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Pencil, Trash2, PackagePlus, Check } from "lucide-react";
 import { allProducts } from "./productoMock";
 import { GetAllProducts } from "./ProductsList";
 
@@ -124,15 +125,15 @@ export function Catalogo() {
         />
 
         <button type="submit">
-          {editId !== null ? "Actualizar" : "Agregar"}
+          {editId !== null ? <Check size={16}/> : <PackagePlus size={16}/>}
         </button>
 
-        <button type="button" onClick={editProduct} disabled={selectedId === null}>
-          Editar
+        <button type="button" onClick={editProduct} disabled={selectedId === null} aria-label="Editar">
+          <Pencil size={16} />
         </button>
 
         <button type="button" onClick={deleteProduct} disabled={selectedId === null}>
-          Eliminar
+          <Trash2 size={16}/>
         </button>
       </form>
 
