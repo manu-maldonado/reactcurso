@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { ProductItem } from "./ProductItem";
 import { GetAllProducts } from "./ProductList";
+import btnEdit from "./assets/edit-svgrepo-com.svg";
+import btnDelete from "./assets/delete-icon.svg";
 
 export function Formulario({ products = [] }) {
   const [list, setList] = useState(products);
@@ -37,7 +39,7 @@ export function Formulario({ products = [] }) {
   const handleAgregar = (e) => {
     e.preventDefault();
     const nuevoProducto = {
-      id: list.length + 1,
+      id: list.length + 1, 
       nombre: name,
       precio: Number(price),
       stock: Number(stock),
@@ -68,7 +70,37 @@ export function Formulario({ products = [] }) {
     setIsEditing(false);
   };
 
-  //   const handleEliminar = () => {};
+  // Función para eliminar con advertencia de confirmación
+  const handleEliminar = () => {
+    if (!id || id === 0) {
+      alert(
+        "Por favor, haz clic en 'Editar' e ingresa o selecciona el ID del producto que deseas eliminar.",
+      );
+      return;
+    }
+
+    const productoEncontrado = list.find(
+      (prod) => String(prod.id) === String(id),
+    );
+
+    if (!productoEncontrado) {
+      alert("No se encontró ningún producto con ese ID.");
+      return;
+    }
+
+    const confirmado = window.confirm(
+      `¿Estás seguro de que deseas eliminar el producto "${productoEncontrado.nombre}" (ID: ${productoEncontrado.id})?`,
+    );
+
+    if (confirmado) {
+      const listaActualizada = list.filter(
+        (prod) => String(prod.id) !== String(id),
+      );
+      setList(listaActualizada);
+      limpiarFormulario();
+      setIsEditing(false);
+    }
+  };
 
   const limpiarFormulario = () => {
     setId("");
@@ -83,7 +115,7 @@ export function Formulario({ products = [] }) {
       <form onSubmit={isEditing ? handleEditar : handleAgregar}>
         {isEditing && (
           <>
-            <label>ID del producto a editar</label>
+            <label>ID del producto a editar / eliminar</label>
             <input
               type="number"
               value={id}
@@ -132,6 +164,7 @@ export function Formulario({ products = [] }) {
         ) : (
           <button type="submit">Agregar</button>
         )}
+        <br />
 
         <button
           type="button"
@@ -140,10 +173,27 @@ export function Formulario({ products = [] }) {
             limpiarFormulario();
           }}
         >
-          {isEditing ? "Cancelar Edición" : "Editar"}
+          {isEditing ? "Cancelar Edición" : "Editar / Eliminar por ID"}
         </button>
+        <img
+          src={btnEdit}
+          width={18}
+          height={18}
+          style={{ background: "white", border: "none", cursor: "pointer" }}
+          alt="img edit"
+        />
+        <br />
 
-        <button type="button">Eliminar</button>
+        <button type="button" onClick={handleEliminar}>
+          Eliminar
+        </button>
+        <img
+          src={btnDelete}
+          width={18}
+          height={18}
+          style={{ background: "white", border: "none", cursor: "pointer" }}
+          alt="img delete"
+        />
 
         <br />
         <br />

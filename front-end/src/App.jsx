@@ -9,6 +9,9 @@ import { SearchProduct } from "./SearchProduct";
 import { Calculadora } from "./Calculadora";
 import { Catalogo } from "./Catalogo";
 import { Formulario } from "./agregarFormulario";
+import { UseEffectArregloVacio } from "./UseEffectArregloVacio";
+import { UseEffectSinArreglo } from "./UseEffectSinArreglo";
+import { UseEffectVariables } from "./useEffectVariables";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -70,6 +73,15 @@ function App() {
 
       <section>
         <Formulario products={listaProductos}></Formulario>
+      </section>
+
+      <section>
+        <UseEffectArregloVacio></UseEffectArregloVacio>
+        <br />
+        <UseEffectSinArreglo></UseEffectSinArreglo>
+        <br />
+        <UseEffectVariables></UseEffectVariables>
+        <br />
       </section>
     </>
   );
