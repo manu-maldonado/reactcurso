@@ -3,8 +3,8 @@ import heroImg from './assets/hero.png'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import './App.css'
-import { GetAllProducts } from './ProductList'
 import { allProducts } from './productosMock.js'
+import { Catalogo } from './Catalogo.jsx'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -48,7 +48,7 @@ function App() {
       </section>
 
       <section>
-        <GetAllProducts products={allProducts} />
+        <Catalogo products={allProducts} />
       </section>
 
       <div className="ticks"></div>
