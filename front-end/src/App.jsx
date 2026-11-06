@@ -12,6 +12,7 @@ import { UseEffectCleanup } from './UseEffectCleanup.jsx'
 import { SearchTermBox } from './SearchTermBox.jsx'
 import { SearchProduct } from "./SearchProduct"
 import { Calculadora } from "./Calculadora.jsx"
+import { MisComponentes } from './mio/MisComponentes.jsx'
 
 function App() {
   const [count, setCount] = useState(0);
@@ -73,6 +74,7 @@ function App() {
       <h4>{saludo}</h4>
       <div className="ticks"></div>
       <Catalogo products={allProducts}/>
+      <MisComponentes />
       <section id="next-steps">
         <div id="docs">
           <svg className="icon" role="presentation" aria-hidden="true">
