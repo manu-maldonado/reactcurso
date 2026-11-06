@@ -4,38 +4,85 @@ import { ProductForm } from "./ProductForm";
 import { GetAllProducts } from "./ProductList";
 
 export function Catalogo({ products }) {
-    const [productos, setProductos] = useState([...products]);
-    const [isLoading, setLoading] = useState(true);
-    const [canHandleForm, setCandleForm] = useState(false);
+  const [productos, setProductos] = useState([...products]);
+  const [isLoading, setLoading] = useState(true);
 
-    useEffect(() => {
-        setTimeout(() => {
-            setLoading(false);
-        }, 2500);
-    });
+  const [showForm, setShowForm] = useState(false);
+  const [productSeleccionado, setProductSeleccionado] = useState(null);
 
-    //crud -create, read, update, delete
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+      setProductos(products);
+    }, 2500);
+  }, []);
 
-    return (
-        <>
-            <div>
-                {isLoading ? (
-                    <h4>Cargando productos...</h4>
-                ) : (
-                    <GetAllProducts products={productos} callbackSetHandlerForm={setCandleForm}/>
-                )}
-            </div>
-            <div className="mag-btns">
-                <button onClick={() => setCandleForm(true)} className="mag-btn mag-btn-primary">
-                    Agregar Producto
-                </button>
-                <button onClick={() => setCandleForm(false)} className="mag-btn mag-btn-ghost">
-                    Eliminar Producto
-                </button>
-            </div>
+  //crud -create, read, update, delete
+  const handlerSaveProduct = (nuevoOActualizado) => {
+    if (productSeleccionado) {
+      setProductos((prev) =>
+        prev.map((p) =>
+          p.id == productSeleccionado.id ? nuevoOActualizado : p
+        ),
+      );
+    } else {
+      setProductos((prev) => [
+        ...prev,
+        { ...nuevoOActualizado, id: `p${Date.now()}` },
+      ]);
+    }
 
-            {canHandleForm ? <ProductForm products={productos} callbackSetLoadingProducts={setLoading}/> : ""}
+    setShowForm(false);
+    setProductSeleccionado(null);
+  };
 
-        </>
-    );
+  const handlerRemoveProduct = (id) => {
+    setProductos((prev) => prev.filter((p) => p.id != id));
+  };
+
+  const handlerIniciarEdicion = (producto) => {
+    setProductSeleccionado(producto);
+    setShowForm(true);
+  };
+
+  return (
+    <>
+      <div>
+        {isLoading ? (
+          <h4>Cargando productos...</h4>
+        ) : (
+          <GetAllProducts
+            products={productos}
+            onEdit={handlerIniciarEdicion}
+            onRemove={handlerRemoveProduct}
+          />
+        )}
+      </div>
+      <div className="mag-btns">
+        <button
+          onClick={() => {
+            setProductSeleccionado(null);
+            setShowForm(true);
+          }}
+          className="mag-btn mag-btn-primary"
+        >
+          Agregar Producto
+        </button>
+      </div>
+
+      {showForm ? (
+        <ProductForm
+          key={productSeleccionado ? productSeleccionado.id : ""}
+          productoAEditar={productSeleccionado}
+          onSave={handlerSaveProduct}
+          onCancel={() => {
+            setShowForm(false);
+            setProductSeleccionado(null);
+          }}
+        />
+      ) : (
+        ""
+      )}
+    </>
+  );
 }

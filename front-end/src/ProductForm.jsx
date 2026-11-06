@@ -1,13 +1,14 @@
 import { useState } from "react";
 
-export function ProductForm({ products, callbackSetLoadingProducts }) {
-  const [formData, setFormData] = useState({
+export function ProductForm({ productoAEditar, onSave, onCancel }) {
+  let newProduct = {
     id: 0,
     nombre: "",
     precio: 0,
     stock: 0,
     categoria: "",
-  });
+  };
+  const [formData, setFormData] = useState(productoAEditar || newProduct);
 
   const handleChange = (evt) => {
     const { name, value, type, checked } = evt.target;
@@ -23,9 +24,10 @@ export function ProductForm({ products, callbackSetLoadingProducts }) {
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
-    products.push(formData);
-    callbackSetLoadingProducts(true);
-    console.log("Datos estan listos para ser enviados al servidor", formData, products);
+    onSave({
+      ...formData,
+      precio: +formData.precio,
+    });
   };
 
   return (
@@ -50,7 +52,13 @@ export function ProductForm({ products, callbackSetLoadingProducts }) {
         <div className="msf-body">
           <div className="msf-panel msf-panel-1">
             <h3>Informacion</h3>
-            <input type="text" placeholder="ID" readOnly="true" />
+            <h3>{productoAEditar ? "Editar Producto" : "Nuevo Producto"}</h3>
+            <input
+              type="text"
+              placeholder="ID"
+              readOnly="true"
+              value={formData.id}
+            />
             <input
               type="text"
               placeholder="Name"
@@ -65,41 +73,34 @@ export function ProductForm({ products, callbackSetLoadingProducts }) {
               onChange={handleChange}
               value={formData.precio}
             />
-            <input type="text" placeholder="Stock" readOnly="true" />
-            <input type="text" placeholder="Category" readOnly="true" />
+            <input
+              type="text"
+              placeholder="Stock"
+              onChange={handleChange}
+              value={formData.stock}
+            />
+            <input
+              type="text"
+              placeholder="Category"
+              onChange={handleChange}
+              value={formData.categoria}
+            />
 
             <div className="msf-actions">
               <button>
-                <label htmlFor="step" className="msf-btn">
-                  Enviar
-                </label>
+                {productoAEditar ? (
+                  <label htmlFor="step" className="msf-btn">
+                    Actualizar
+                  </label>
+                ) : (
+                  <label htmlFor="step" className="msf-btn">
+                    Guardar
+                  </label>
+                )}
               </button>
-            </div>
-          </div>
-
-          <div className="msf-panel msf-panel-2">
-            <h3>Details</h3>
-            <input type="text" placeholder="Company (optional)" />
-            <input type="tel" placeholder="Phone number" />
-            <div className="msf-actions">
-              <label htmlFor="step1" className="msf-btn msf-btn-back">
-                ← Back
-              </label>
-              <label htmlFor="step3" className="msf-btn">
-                Next →
-              </label>
-            </div>
-          </div>
-
-          <div className="msf-panel msf-panel-3">
-            <h3>All done!</h3>
-            <p className="msf-success">
-              ✓ Form submitted, zero JavaScript used!
-            </p>
-            <div className="msf-actions">
-              <label htmlFor="step1" className="msf-btn">
-                Start Over
-              </label>
+              <button type="button" onClick={onCancel}>
+                Cancelar
+              </button>
             </div>
           </div>
         </div>

@@ -1,17 +1,21 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
-import { GetAllProducts } from './ProductList'
-import { allProducts } from './productosMock.js'
-import { SearchBox } from './searchBox.jsx'
-import { Calculadora } from './Calculadora.jsx'
-import { Catalogo } from './Catalogo.jsx'
+import { useState } from "react";
+import heroImg from "./assets/hero.png";
+import reactLogo from "./assets/react.svg";
+import viteLogo from "./assets/vite.svg";
+import "./App.css";
+import { GetAllProducts } from "./ProductList";
+import { allProducts } from "./productosMock.js";
+import { SearchBox } from "./searchBox.jsx";
+import { Calculadora } from "./Calculadora.jsx";
+import { Catalogo } from "./Catalogo.jsx";
+import { UseEffectSinArreglo } from "./UseEffectSinArreglo.jsx";
+import { UseEffectArregloVacio } from "./UseEffectArregloVacio.jsx";
+import { UseEffectVariables } from "./useEffectVariables.jsx";
+import { UseEffectCleanup } from "./useEffectCleanup.jsx";
 
 function App() {
-  const [count, setCount] = useState(0)
-  const [saludo, setSaludo] = useState("Hola desconocido")
+  const [count, setCount] = useState(0);
+  const [saludo, setSaludo] = useState("Hola desconocido");
 
   return (
     <>
@@ -27,8 +31,12 @@ function App() {
             Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
           </p>
         </div>
-        <Calculadora/>
-        <GetAllProducts products={allProducts}/>
+        <UseEffectSinArreglo />
+        <UseEffectArregloVacio />
+        <UseEffectVariables />
+        <UseEffectCleanup />
+        <Calculadora />
+        <GetAllProducts products={allProducts} />
         <button
           type="button"
           className="counter"
@@ -43,23 +51,21 @@ function App() {
         >
           Restar
         </button>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount(0)}
-        >
+        <button type="button" className="counter" onClick={() => setCount(0)}>
           Reset
         </button>
         <div> Count is {count} </div>
       </section>
 
-      <input onInput={(evt)=> {
-        setSaludo(evt.target.value)}
-      }/>
+      <input
+        onInput={(evt) => {
+          setSaludo(evt.target.value);
+        }}
+      />
       <h4>{saludo}</h4>
       <div className="ticks"></div>
 
-      <Catalogo products={allProducts}/>
+      <Catalogo products={allProducts} />
 
       <section id="next-steps">
         <div id="docs">
@@ -145,7 +151,7 @@ function App() {
       <div className="ticks"></div>
       <section id="spacer"></section>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
