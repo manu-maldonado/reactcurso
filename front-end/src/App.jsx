@@ -5,6 +5,12 @@ import viteLogo from './assets/vite.svg'
 import './App.css'
 import { GetAllProducts } from './ProductList'
 import { allProducts }  from './productosMock.js'
+import { Catalogo } from './Catalogo.jsx'
+import { UseEffectSinArreglo } from './UseEffectSinArreglo.jsx'
+import { UseEffectArregloVacio } from './UseEffectArregloVacio.jsx'
+import { UseEffectVariables } from './UseEffectVariables.jsx'
+import { UseEffectCleanup } from './UseEffectCleanup.jsx'
+import { SearchTermBox } from './SearchTermBox.jsx'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -20,9 +26,15 @@ function App() {
         </div>
         <div>
           <h1>Get started</h1>
+          <h3>Call Api search</h3>
+          <SearchTermBox/>
           <p>
             Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
           </p>
+          <UseEffectSinArreglo/>
+          <UseEffectArregloVacio/>
+          <UseEffectVariables/>
+          <UseEffectCleanup/>
         </div>
         <GetAllProducts products={allProducts}/>
         <label>Count is {count}</label>
@@ -52,7 +64,7 @@ function App() {
       
       <h4>{saludo}</h4>
       <div className="ticks"></div>
-
+      <Catalogo products={allProducts}/>
       <section id="next-steps">
         <div id="docs">
           <svg className="icon" role="presentation" aria-hidden="true">
