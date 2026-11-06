@@ -12,6 +12,8 @@ import { UseEffectCleanup } from './UseEffectCleanup.jsx'
 import { SearchTermBox } from './SearchTermBox.jsx'
 import { SearchProduct } from "./SearchProduct"
 import { Calculadora } from "./Calculadora.jsx"
+import { PostList } from "./PostList.jsx"
+
 
 function App() {
   const [count, setCount] = useState(0);
@@ -39,6 +41,8 @@ function App() {
         </div>
         <Calculadora />
         <SearchProduct products={allProducts} />
+        <h3>Práctica JSONPlaceholder</h3>
+        <PostList />
         <label>Count is {count}</label>
         <button
           type="button"
