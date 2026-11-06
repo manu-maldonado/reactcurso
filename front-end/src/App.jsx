@@ -3,75 +3,73 @@ import heroImg from './assets/hero.png'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import './App.css'
-import { GetAllProducts } from './ProductList'
 import { allProducts }  from './productosMock.js'
-import { SearchBox } from './SearchBox.jsx'
-import { Calculadora } from './calculadora.jsx'
 import { Catalogo } from './Catalogo.jsx'
-
-
-import { UseEffectVariables } from './useEffectVariables.jsx'
-import { UseEffectCleanUp } from './UseEffectCleanUp.jsx'
-import { UseEffectArregloVacio } from './UseEffectArregloVacio.jsx'
 import { UseEffectSinArreglo } from './UseEffectSinArreglo.jsx'
+import { UseEffectArregloVacio } from './UseEffectArregloVacio.jsx'
+import { UseEffectVariables } from './UseEffectVariables.jsx'
+import { UseEffectCleanup } from './UseEffectCleanup.jsx'
 import { SearchTermBox } from './SearchTermBox.jsx'
+import { SearchProduct } from "./SearchProduct"
+import { Calculadora } from "./Calculadora.jsx"
 
 function App() {
-  const [count, setCount] = useState(0)
-  const [saludo, setSaludo] = useState("Hola desconocido")
-  const [name, setName] = useState("")
-  
+  const [count, setCount] = useState(0);
+  const [saludo, setSaludo] = useState("Hola desconocido");
 
   return (
     <>
       <section id="center">
         <div className="hero">
           <img src={heroImg} className="base" width="170" height="179" alt="" />
-          
+          <img src={reactLogo} className="framework" alt="React logo" />
+          <img src={viteLogo} className="vite" alt="Vite logo" />
         </div>
         <div>
           <h1>Get started</h1>
-          <h3>Call API</h3>
+          <h3>Call Api search</h3>
           <SearchTermBox/>
           <p>
             Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
           </p>
-                   <UseEffectSinArreglo/>
+          <UseEffectSinArreglo/>
           <UseEffectArregloVacio/>
           <UseEffectVariables/>
-          <UseEffectCleanUp/>
-
+          <UseEffectCleanup/>
         </div>
-        <SearchBox name={name} onNameChange={setName} />
-        <GetAllProducts products={allProducts} name={name} />
-            
         <Calculadora />
-        
+        <SearchProduct products={allProducts} />
         <label>Count is {count}</label>
         <button
           type="button"
           className="counter"
           onClick={() => setCount((count) => count + 1)}
-        >+          
+        >
+          +
         </button>
-          <button
+        <button
           type="button"
           className="counter"
           onClick={() => setCount((count) => count - 1)}
-        >-        
+        >
+          -
         </button>
-          <button
+        <button
           type="button"
           className="counter"
           onClick={() => setCount(() => 0)}
-        > reset          
+        >
+          {" "}
+          reset
         </button>
       </section>
 
-      <input onInput={(evt)=> { 
-        setSaludo(evt.target.value)}
-      }></input>
-      
+      <input
+        onInput={(evt) => {
+          setSaludo(evt.target.value);
+        }}
+      ></input>
+
       <h4>{saludo}</h4>
       <div className="ticks"></div>
       <Catalogo products={allProducts}/>
@@ -159,7 +157,7 @@ function App() {
       <div className="ticks"></div>
       <section id="spacer"></section>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

@@ -1,79 +1,142 @@
-import editIcon from "./assets/edit-note.svg";
+import { useEffect, useState } from "react";
+export function ProductForm({ productAEditar, onSave, onCancel }) {
+  let newProduct = {
+    id: 0,
+    nombre: "",
+    precio: 0,
+    stock: 0,
+    categoria: "",
+  };
+  const [formData, setFormData] = useState(productAEditar || newProduct);
 
-export function ProductForm({
-  productos,
-  form,
-  editandoId,
-  mensaje,
-  onCambiarCampo,
-  onAgregar,
-  onGuardar,
-  onCancelar,
-  onEditar,
-  onEliminar,
-}) {
+  //Si nosotros le pasamos un producto para edita, estariamos cargando sus datos en el estado de nuestro form local
+  // useEffect(() => {
+  //   if (productAEditar) {
+  //     setFormData(productAEditar);
+  //   } else {
+  //     setFormData(newProduct);
+  //   }
+  // }, [productAEditar]);
+
+  const handleChange = (evt) => {
+    const { name, value, type, checked } = evt.target;
+
+    setFormData((prevData) => ({
+      // ... spread
+      ...prevData,
+      [name]: type == "checkbox" ? checked : value,
+    }));
+  };
+
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    onSave({
+      ...formData,
+      precio: +formData.precio,
+      // stock: +formData.stock
+    });
+  };
+
   return (
-    <div>
-      <h4>termino cargar</h4>
+    <form onSubmit={handleSubmit}>
+      <input
+        type="radio"
+        name="step"
+        id="step1"
+        className="msf-radio"
+        defaultChecked
+      />
+      {/* <input type="radio" name="step" id="step2" className="msf-radio" />
+        <input type="radio" name="step" id="step3" className="msf-radio" /> */}
 
-      <h3>{editandoId ? "Editar producto" : "Agregar producto"}</h3>
-      <input name="nombre" placeholder="Nombre" value={form.nombre} onChange={onCambiarCampo} />
-      <input name="precio" type="number" placeholder="Precio" value={form.precio} onChange={onCambiarCampo} />
-      <input name="stock" type="number" placeholder="Stock" value={form.stock} onChange={onCambiarCampo} />
-      <input name="categoria" placeholder="Categoría" value={form.categoria} onChange={onCambiarCampo} />
+      <div className="msf-wrap">
+        {/* <div className="msf-progress">
+            <span className="msf-step-label">1. Your Info</span>
+            <span className="msf-step-label">2. Details</span>
+            <span className="msf-step-label">3. Done</span>
+          </div> */}
 
-      <div>
-        {editandoId ? (
-          <>
-            <button type="button" onClick={onGuardar}>Guardar cambios</button>
-            <button type="button" onClick={onCancelar}>Cancelar</button>
-          </>
-        ) : (
-          <button type="button" onClick={onAgregar}>Agregar</button>
-        )}
+        <div className="msf-body">
+          <div className="msf-panel msf-panel-1">
+            <h3>Your Info</h3>
+            <h3>{productAEditar ? "Editar Producto" : "Nuevo Producto"}</h3>
+            {/* id: "p2",
+    nombre: "Mouse Inalámbrico",
+    precio: 45,
+    stock: 0,
+    categoria: "Periféricos", */}
+
+            <input type="text" name="id" placeholder="ID" readOnly="true"  value={formData.id} />
+            <input
+              type="text"
+              name="nombre"
+              placeholder="Name"
+              onChange={handleChange}
+              value={formData.nombre}
+            />
+            <input
+              type="text"
+              name="precio"
+              placeholder="precio"
+              onChange={handleChange}
+              value={formData.precio}
+            />
+            <input
+              type="text"
+              name="stock"
+              onChange={handleChange}
+              value={formData.stock}
+            />
+            <input
+              type="text"
+              name="category"
+              onChange={handleChange}
+              value={formData.category}
+            />
+            {/* to-do move to selectlist */}
+            <input type="text" placeholder="category" readOnly="true" />
+            <div className="msf-actions">
+              <button>
+                {productAEditar ? (
+                  <label htmlFor="step" className="msf-btn">
+                    Actualizar
+                  </label>
+                ) : (
+                  <label htmlFor="step" className="msf-btn">
+                    Guardar
+                  </label>
+                )}
+              </button>
+              <button type="button" onClick={onCancel}>
+                Cancelar
+              </button>
+            </div>
+          </div>
+
+          <div className="msf-panel msf-panel-2">
+            <h3>Details</h3>
+            <input type="text" placeholder="Company (optional)" />
+            <input type="tel" placeholder="Phone number" />
+            <div className="msf-actions">
+              <label htmlFor="step1" className="msf-btn msf-btn-back">
+                ← Back
+              </label>
+            </div>
+          </div>
+
+          <div className="msf-panel msf-panel-3">
+            <h3>All done!</h3>
+            <p className="msf-success">
+              ✓ Form submitted, zero JavaScript used!
+            </p>
+            <div className="msf-actions">
+              <label htmlFor="step1" className="msf-btn">
+                Start Over
+              </label>
+            </div>
+          </div>
+        </div>
       </div>
-
-      {mensaje && <p>{mensaje}</p>}
-
-      {/* READ */}
-      <table style={{ margin: "0 auto" }}>
-        <tbody>
-          <tr>
-            <th>#</th>
-            <th>Nombre</th>
-            <th>Precio</th>
-            <th>Stock</th>
-            <th>Categoría</th>
-            <th>Acciones</th>
-          </tr>
-          {productos.map((producto) => (
-            <tr key={producto.id}>
-              <td>{producto.id}</td>
-              <td>{producto.nombre}</td>
-              <td>{producto.precio}</td>
-              <td>{producto.stock}</td>
-              <td>{producto.categoria}</td>
-              <td>
-                <button
-                  type="button"
-                  title="Editar"
-                  aria-label="Editar"
-                  onClick={() => onEditar(producto.id)}
-                >
-                  <img
-                    src={editIcon}
-                    alt=""
-                    width="16"
-                    height="16"
-                    style={{ filter: "invert(1)", verticalAlign: "middle" }}
-                  />
-                </button>
-                <button type="button" onClick={() => onEliminar(producto.id)}>Eliminar</button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    </form>
   );
 }

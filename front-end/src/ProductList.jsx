@@ -1,47 +1,94 @@
 import { useState } from "react";
 import { ProductItem } from "./ProductItem";
 
-export function GetAllProducts({ products, name = "" }) {
-  const [orden, setOrden] = useState("id-asc");
+export function GetAllProducts({ products, onEdit, onRemove }) {
+const [isAsending, setIsAsending] = useState({ order: true, key: "" });
 
-  const productosFiltrados = products.filter((producto) =>
-    producto.nombre.toLowerCase().includes(name.toLowerCase())
-  );
-
-  const [campo, direccion] = orden.split("-");
-
-  const productosOrdenados = [...productosFiltrados].sort((a, b) => {
-    const resultado =
-      campo === "nombre"
-        ? a.nombre.localeCompare(b.nombre, "es")
-        : a[campo] - b[campo];
-
-    return direccion === "asc" ? resultado : -resultado;
+  const sortedProducts = products.sort((a, b) => {
+    return setPredicatedSort(
+      a[isAsending.key],
+      b[isAsending.key],
+      isAsending.order,
+    );
   });
 
+  function setPredicatedSort(a, b, order) {
+    switch (typeof a) {
+      case "number":
+        // order - default asc
+        if (order) {
+          return a - b;
+        } else {
+          return b - a;
+        }
+      case "string":
+        if (order) {
+          return a.localeCompare(b);
+        } else {
+          return b.localeCompare(a);
+        }
+      case "boolean":
+        //to-do will implement it
+        return;
+    }
+  }
+  // {products} --- props
   return (
     <div>
-      <select value={orden} onChange={(evt) => setOrden(evt.target.value)}>
-        <option value="nombre-asc">Nombre ascendente (A-Z)</option>
-        <option value="nombre-desc">Nombre descendente (Z-A)</option>
-        <option value="id-asc">ID ascendente</option>
-        <option value="id-desc">ID descendente</option>
-        <option value="precio-asc">Precio ascendente</option>
-        <option value="precio-desc">Precio descendente</option>
-      </select>
-
       <table>
-        <tr>
-          <th>#</th>
-          <th>Nombre</th>
-          <th>Precio</th>
-          <th>Stock</th>
-          <th>Categoria</th>
-        </tr>
-        {productosOrdenados.map((producto) => (
-          <ProductItem key={producto.id} id={producto.id} producto={producto} />
+        <thead>
+          <tr>
+            <th>#</th>
+            <th
+              onClick={(evt) =>
+                setIsAsending({ order: !isAsending, key: "nombre" })
+              }
+            >
+              Nombre
+            </th>
+            <th
+              onClick={(evt) =>
+                setIsAsending({ order: !isAsending, key: "precio" })
+              }
+            >
+              Precio
+            </th>
+            <th
+              onClick={(evt) =>
+                setIsAsending({ order: !isAsending, key: "stock" })
+              }
+            >
+              Stock
+            </th>
+            <th
+              onClick={(evt) =>
+                setIsAsending({ order: !isAsending, key: "categoria" })
+              }
+            >
+              Categoria
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {sortedProducts.length > 0 ? (
+            sortedProducts.map((producto) => (
+              <ProductItem
+                key={producto.id}
+                id={producto.id}
+                producto={producto}
+              />
+            ))
+          ) : (
+            <tr>
+              <th>No se encontraron productos</th>
+            </tr>
+          )}
+        </tbody>
+        {products.map((producto) => (
+          <ProductItem id={producto.id} producto={producto} onEdit={onEdit} onRemove={onRemove}  /> // { id: 323123 , producto:{ name:"dasdas"}}
         ))}
-      </table>
+        
+      </table>             
     </div>
   );
 }

@@ -3,17 +3,17 @@ import { useEffect, useState } from "react";
 export function UseEffectVariables(){
     const [busqueda, setBusqueda] = useState('')
 
+    useEffect(()=>{
+        if(busqueda.trim() == "") return;
 
-useEffect(()=> {
-
-    if(busqueda.trim() == "")return;
-    console.log("Buscando Api QUE COINCIDAN CON BUSQUEDA")
-}, [busqueda])
+        console.log("Buscando Api de productos que coincidan con la busqueda")
 
 
-return (
-    <div>
-       <input type="text" placeholder="Termino de Busqueda" value={busqueda} onChange={(evt)=> setBusqueda(evt.target.value)}/>
-    </div>
-)
+    }, [busqueda])
+
+    return (
+        <div>
+            <input type="text" placeholder="escriba su termino de busqueda" value = {busqueda} onInput={(evt)=> setBusqueda(evt.target.value)}/>
+        </div>
+    )
 }
