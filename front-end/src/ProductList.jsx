@@ -1,84 +1,94 @@
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import { ProductItem } from "./ProductItem";
 
-function compareValues(a, b, order) {
-  if (typeof a === "number" && typeof b === "number") {
-    return order ? a - b : b - a;
-  }
+export function GetAllProducts({ products, onEdit, onRemove }) {
+const [isAsending, setIsAsending] = useState({ order: true, key: "" });
 
-  if (typeof a === "string" && typeof b === "string") {
-    return order ? a.localeCompare(b) : b.localeCompare(a);
-  }
-
-  if (typeof a === "boolean" && typeof b === "boolean") {
-    return order ? Number(a) - Number(b) : Number(b) - Number(a);
-  }
-
-  return 0;
-}
-
-export function GetAllProducts({ products }) {
-  const [sortConfig, setSortConfig] = useState({ key: null, order: true });
-  const sortedProducts = [...products].sort((a, b) => {
-    if (!sortConfig.key) return 0;
-
-    return compareValues(
-      a[sortConfig.key],
-      b[sortConfig.key],
-      sortConfig.order,
+  const sortedProducts = products.sort((a, b) => {
+    return setPredicatedSort(
+      a[isAsending.key],
+      b[isAsending.key],
+      isAsending.order,
     );
   });
 
-  function handleSort(key) {
-    setSortConfig((current) => ({
-      key,
-      order: current.key === key ? !current.order : true,
-    }));
+  function setPredicatedSort(a, b, order) {
+    switch (typeof a) {
+      case "number":
+        // order - default asc
+        if (order) {
+          return a - b;
+        } else {
+          return b - a;
+        }
+      case "string":
+        if (order) {
+          return a.localeCompare(b);
+        } else {
+          return b.localeCompare(a);
+        }
+      case "boolean":
+        //to-do will implement it
+        return;
+    }
   }
-
+  // {products} --- props
   return (
     <div>
       <table>
         <thead>
           <tr>
-            <th onClick={() => handleSort("id")}>
-              # {sortConfig.key === "id" ? (sortConfig.order ? "▲" : "▼") : ""}
+            <th>#</th>
+            <th
+              onClick={(evt) =>
+                setIsAsending({ order: !isAsending, key: "nombre" })
+              }
+            >
+              Nombre
             </th>
-            <th onClick={() => handleSort("nombre")}>
-              Nombre{" "}
-              {sortConfig.key === "nombre" ? (sortConfig.order ? "▲" : "▼") : ""}
+            <th
+              onClick={(evt) =>
+                setIsAsending({ order: !isAsending, key: "precio" })
+              }
+            >
+              Precio
             </th>
-            <th onClick={() => handleSort("precio")}>
-              Precio{" "}
-              {sortConfig.key === "precio" ? (sortConfig.order ? "▲" : "▼") : ""}
+            <th
+              onClick={(evt) =>
+                setIsAsending({ order: !isAsending, key: "stock" })
+              }
+            >
+              Stock
             </th>
-            <th onClick={() => handleSort("stock")}>
-              Stock{" "}
-              {sortConfig.key === "stock" ? (sortConfig.order ? "▲" : "▼") : ""}
-            </th>
-            <th onClick={() => handleSort("categoria")}>
-              Categoria{" "}
-              {sortConfig.key === "categoria" ? (sortConfig.order ? "▲" : "▼") : ""}
+            <th
+              onClick={(evt) =>
+                setIsAsending({ order: !isAsending, key: "categoria" })
+              }
+            >
+              Categoria
             </th>
           </tr>
         </thead>
         <tbody>
-          {sortedProducts.map((producto) => (
-            <Fragment key={producto.id}>
-              {producto.nombre === "Mouse Inalámbrico" ? (
-                <tr>
-                  <td colSpan="5">Best CHOICE</td>
-                </tr>
-              ) : null}
-              <ProductItem id={producto.id} producto={producto} />
-            </Fragment>
-          ))}
+          {sortedProducts.length > 0 ? (
+            sortedProducts.map((producto) => (
+              <ProductItem
+                key={producto.id}
+                id={producto.id}
+                producto={producto}
+              />
+            ))
+          ) : (
+            <tr>
+              <th>No se encontraron productos</th>
+            </tr>
+          )}
         </tbody>
-      </table>
-      {products.length === 0 ? <p>No se encontró el producto.</p> : null}
+        {products.map((producto) => (
+          <ProductItem id={producto.id} producto={producto} onEdit={onEdit} onRemove={onRemove}  /> // { id: 323123 , producto:{ name:"dasdas"}}
+        ))}
+        
+      </table>             
     </div>
   );
 }
-
-//export function GetProductById({ productos, producto }) {
-//}

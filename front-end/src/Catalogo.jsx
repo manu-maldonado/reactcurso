@@ -1,60 +1,94 @@
 import { useEffect, useState } from "react";
 import "./form.css";
 import { ProductForm } from "./ProductForm";
-export function Catalogo({ products = [] }) {
-  const [productos, setProductos] = useState([...products]);
+import { GetAllProducts } from "./ProductList";
+export function Catalogo({ products }) {
+  //definir estado para productos, cargando
+  const [productos, setProductos] = useState([]);
   const [isLoading, setLoading] = useState(true);
-  const [formMode, setFormMode] = useState(null);
+
+  //controlar si el formulario esta siendo abierto y si estamos editando o creando
+  const [showForm, setShowForm] = useState(false);
+  const [productSeleccionado, setproductSeleccionado] = useState(null);
 
   useEffect(() => {
-    const timerId = setTimeout(() => setLoading(false), 2500);
-    return () => clearTimeout(timerId);
+    setTimeout(() => {
+      setLoading(false);
+      setProductos(products);
+    }, 2500);
   }, []);
+
+  //crud -create, read, update, delete
+  const handlerSaveProduct = (nuevoOActualizado) => {
+    // update: reemplazar el producto seleccionado con el id
+    if (productSeleccionado) {
+      //reemplacemos el product que coincida con el id
+      setProductos(prev=> prev.map(p=> p.id == productSeleccionado.id? nuevoOActualizado: p))      
+    }
+    else{
+      // agrega un nuevo elemento
+      setProductos((prev) => [
+        ...prev,
+        { ...nuevoOActualizado, id: `p${Date.now()}` },
+      ]);
+    }
+
+    //cerrar formulario y limpiarlo
+    setShowForm(false);
+    setproductSeleccionado(null);
+  };
+
+  const handlerRemoveProduct = (id) => {
+    // Elimine, filtre o saque de productos el id seleccionado
+    // podriamos eliminar con filter, o con slice
+    setProductos(prev => prev.filter(p=> p.id != id))
+  }
+
+  const handlerIniciarEdicion = (producto) => {    
+    setproductSeleccionado(producto);
+    setShowForm(true);
+  }
 
   return (
     <>
-      <section className="catalog">
-        <h2>Catálogo</h2>
+      <div>
         {isLoading ? (
-          <p className="catalog-message">Cargando...</p>
-        ) : (
-          <ul className="catalog-list">
-            {productos.map((producto) => (
-              <li key={producto.id}>
-                {producto.id} - {producto.nombre}
-              </li>
-            ))}
-          </ul>
+          <h4>Cargando...</h4>
+        ) : (          
+          <GetAllProducts
+            products={productos}
+            onEdit = {handlerIniciarEdicion}
+            onRemove = {handlerRemoveProduct}
+          />
         )}
 
-        <div className="mag-btns">
+        <div class="mag-btns">
           <button
-            type="button"
-            onClick={() => setFormMode("create")}
-            className="mag-btn mag-btn-primary"
+            onClick={() => {
+              setproductSeleccionado(null)
+              setShowForm(true)
+            }}
+            class="mag-btn mag-btn-primary"
           >
             Agregar Producto
           </button>
-          <button
-            type="button"
-            onClick={() => setFormMode("update")}
-            className="mag-btn mag-btn-sky"
-            disabled={productos.length === 0}
-          >
-            Actualizar Producto
-          </button>
+          {/* <button onClick={()=> setCanHandleForm(false)} class="mag-btn mag-btn-ghost">Eliminar Producto</button> */}
         </div>
 
-        {formMode ? (
+        {showForm ? (
           <ProductForm
-            key={formMode}
-            mode={formMode}
-            products={productos}
-            callbackSetProducts={setProductos}
-            onCancel={() => setFormMode(null)}
+            key = {productSeleccionado ? productSeleccionado.id: ''}
+            productAEditar={productSeleccionado}
+            onSave={handlerSaveProduct}
+            onCancel={()=>{
+              setShowForm(false)
+              setproductSeleccionado(null)
+            }}
           />
-        ) : null}
-      </section>
+        ) : (
+          ""
+        )}
+      </div>
     </>
   );
 }

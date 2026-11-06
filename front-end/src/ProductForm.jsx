@@ -1,147 +1,138 @@
-import { useState } from "react";
-
-function getProductFormData(product) {
-  return {
-    nombre: product?.nombre ?? "",
-    precio: product ? String(product.precio) : "",
-    stock: product ? String(product.stock) : "",
-    categoria: product?.categoria ?? "",
+import { useEffect, useState } from "react";
+export function ProductForm({ productAEditar, onSave, onCancel }) {
+  let newProduct = {
+    id: 0,
+    nombre: "",
+    precio: 0,
+    stock: 0,
+    categoria: "",
   };
-}
+  const [formData, setFormData] = useState(productAEditar || newProduct);
 
-export function ProductForm({
-  products,
-  callbackSetProducts,
-  mode,
-  onCancel,
-}) {
-  const initialProduct = mode === "update" ? products[0] : null;
-  const [selectedId, setSelectedId] = useState(
-    initialProduct ? String(initialProduct.id) : "",
-  );
-  const [formData, setFormData] = useState(getProductFormData(initialProduct));
+  //Si nosotros le pasamos un producto para edita, estariamos cargando sus datos en el estado de nuestro form local
+  // useEffect(() => {
+  //   if (productAEditar) {
+  //     setFormData(productAEditar);
+  //   } else {
+  //     setFormData(newProduct);
+  //   }
+  // }, [productAEditar]);
 
-  function handleProductSelection(event) {
-    const id = event.target.value;
-    const selectedProduct = products.find(
-      (product) => String(product.id) === id,
-    );
-    setSelectedId(id);
-    setFormData(getProductFormData(selectedProduct));
-  }
+  const handleChange = (evt) => {
+    const { name, value, type, checked } = evt.target;
 
-  function handleChange(event) {
-    const { name, value } = event.target;
-    setFormData((currentData) => ({ ...currentData, [name]: value }));
-  }
+    setFormData((prevData) => ({
+      // ... spread
+      ...prevData,
+      [name]: type == "checkbox" ? checked : value,
+    }));
+  };
 
-  function handleSubmit(event) {
-    event.preventDefault();
-
-    const productData = {
-      nombre: formData.nombre.trim(),
-      precio: Number(formData.precio),
-      stock: Number(formData.stock),
-      categoria: formData.categoria.trim(),
-    };
-
-    if (mode === "update") {
-      callbackSetProducts((currentProducts) =>
-        currentProducts.map((product) =>
-          String(product.id) === selectedId
-            ? { ...product, ...productData }
-            : product,
-        ),
-      );
-    } else {
-      callbackSetProducts((currentProducts) => {
-        const nextId =
-          currentProducts.reduce((maxId, product) => {
-            const numericId = Number(
-              String(product.id).match(/\d+$/)?.[0] ?? 0,
-            );
-            return Math.max(maxId, numericId);
-          }, 0) + 1;
-        const updatedProducts = [...currentProducts];
-        updatedProducts.push({ id: `p${nextId}`, ...productData });
-        return updatedProducts;
-      });
-    }
-
-    onCancel();
-  }
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    onSave({
+      ...formData,
+      precio: +formData.precio,
+      // stock: +formData.stock
+    });
+  };
 
   return (
-    <form className="catalog-product-form" onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}>
+      <input
+        type="radio"
+        name="step"
+        id="step1"
+        className="msf-radio"
+        defaultChecked
+      />
+      {/* <input type="radio" name="step" id="step2" className="msf-radio" />
+        <input type="radio" name="step" id="step3" className="msf-radio" /> */}
+
       <div className="msf-wrap">
+        {/* <div className="msf-progress">
+            <span className="msf-step-label">1. Your Info</span>
+            <span className="msf-step-label">2. Details</span>
+            <span className="msf-step-label">3. Done</span>
+          </div> */}
+
         <div className="msf-body">
-          <div className="msf-panel msf-panel-1 catalog-form-panel">
-            <h3>{mode === "update" ? "Actualizar producto" : "Agregar producto"}</h3>
-            {mode === "update" ? (
-              <select
-                aria-label="Producto que se actualizará"
-                required
-                value={selectedId}
-                onChange={handleProductSelection}
-              >
-                {products.map((product) => (
-                  <option key={product.id} value={String(product.id)}>
-                    {product.id} - {product.nombre}
-                  </option>
-                ))}
-              </select>
-            ) : null}
+          <div className="msf-panel msf-panel-1">
+            <h3>Your Info</h3>
+            <h3>{productAEditar ? "Editar Producto" : "Nuevo Producto"}</h3>
+            {/* id: "p2",
+    nombre: "Mouse Inalámbrico",
+    precio: 45,
+    stock: 0,
+    categoria: "Periféricos", */}
+
+            <input type="text" name="id" placeholder="ID" readOnly="true"  value={formData.id} />
             <input
               type="text"
               name="nombre"
-              placeholder="Nombre"
-              aria-label="Nombre"
-              required
+              placeholder="Name"
               onChange={handleChange}
               value={formData.nombre}
             />
             <input
-              type="number"
+              type="text"
               name="precio"
-              placeholder="Precio"
-              aria-label="Precio"
-              min="0"
-              step="any"
-              required
+              placeholder="precio"
               onChange={handleChange}
               value={formData.precio}
             />
             <input
-              type="number"
+              type="text"
               name="stock"
-              placeholder="Stock"
-              aria-label="Stock"
-              min="0"
-              step="1"
-              required
               onChange={handleChange}
               value={formData.stock}
             />
             <input
               type="text"
-              name="categoria"
-              placeholder="Categoría"
-              aria-label="Categoría"
-              required
+              name="category"
               onChange={handleChange}
-              value={formData.categoria}
+              value={formData.category}
             />
+            {/* to-do move to selectlist */}
+            <input type="text" placeholder="category" readOnly="true" />
             <div className="msf-actions">
-              <button type="submit" className="msf-btn">
-                {mode === "update" ? "Guardar cambios" : "Crear producto"}
+              <button>
+                {productAEditar ? (
+                  <label htmlFor="step" className="msf-btn">
+                    Actualizar
+                  </label>
+                ) : (
+                  <label htmlFor="step" className="msf-btn">
+                    Guardar
+                  </label>
+                )}
               </button>
-              <button
-                type="button"
-                className="msf-btn msf-btn-back"
-                onClick={onCancel}
-              >
+              <button type="button" onClick={onCancel}>
                 Cancelar
               </button>
+            </div>
+          </div>
+
+          <div className="msf-panel msf-panel-2">
+            <h3>Details</h3>
+            <input type="text" placeholder="Company (optional)" />
+            <input type="tel" placeholder="Phone number" />
+            <div className="msf-actions">
+              <label htmlFor="step1" className="msf-btn msf-btn-back">
+                ← Back
+              </label>
+            </div>
+          </div>
+
+          <div className="msf-panel msf-panel-3">
+            <h3>All done!</h3>
+            <p className="msf-success">
+              ✓ Form submitted, zero JavaScript used!
+            </p>
+            <div className="msf-actions">
+              <label htmlFor="step1" className="msf-btn">
+                Start Over
+              </label>
             </div>
           </div>
         </div>

@@ -1,27 +1,17 @@
-import { useState } from 'react'
+import { useState } from "react";
+import { GetAllProducts } from "./ProductList";
 
-export function SearchProduct({ products, onResultsChange }) {
-  const [name, setName] = useState('')
+export function SearchProduct({ products }) {
+  const [name, setName] = useState("");
+  const filterProduct = products.filter((x) =>
+    x.nombre.toLowerCase().includes(name.toLowerCase()),
+  );
 
   return (
-    <div>
-      <label htmlFor="searchProduct">Buscar producto por nombre</label>
-      <input
-        id="searchProduct"
-        type="search"
-        value={name}
-        onChange={(event) => {
-          const value = event.target.value
-          const searchTerm = value.trim().toLowerCase()
-          const matchingProducts = products.filter((product) =>
-            product.nombre.toLowerCase().includes(searchTerm),
-          )
-
-          setName(value)
-          onResultsChange(searchTerm ? matchingProducts : products)
-        }}
-      />
-    </div>
-  )
+    <>
+      <label>{name}</label>
+      <input id="searchProduct" onChange={(evt) => setName(evt.target.value)} />
+      <GetAllProducts products={filterProduct} />
+    </>
+  );
 }
-
