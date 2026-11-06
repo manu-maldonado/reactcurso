@@ -6,6 +6,8 @@ export function GetAllProducts({ products, onEdit, onDelete }) {
     <div>
       <table>
         <tr>
+          <th></th>
+          <th></th>
           <th>#</th>
           <th>Nombre</th>
           <th>Precio</th>

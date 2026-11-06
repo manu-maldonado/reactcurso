@@ -7,32 +7,38 @@ export function Catalogo({ products }) {
   //definir estado para productos, cargando
   const [productos, setProductos] = useState([...products]);
   const [isLoading, setLoading] = useState(true);
-  const [canHandleForm, setCanHandleForm] = useState(false);
-  const [productoEditando, setProductoEditando] = useState(null);
-
-  const abrirAgregar = () => {
-    setProductoEditando(null);
-    setCanHandleForm(true);
-  };
-  const abrirEditar = (producto) => {
-    setProductoEditando(producto);
-    setCanHandleForm(true);
-  };
-  const cerrarForm = () => {
-    setProductoEditando(null);
-    setCanHandleForm(false);
-  };
-  const eliminar = (producto) => {
-    if (window.confirm(`¿Seguro que quieres eliminar "${producto.nombre}"?`)) {
-      setProductos(productos.filter((p) => p.id !== producto.id));
-    }
-  };
+  const [showForm, setShowForm] = useState(false);
+  const [productSeleccionado, setproductSeleccionado] = useState(null);
 
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
     }, 2500);
   });
+
+  // al darle al lapiz: guardamos el producto y mostramos el form
+  const handlerEditProduct = (producto) => {
+    setproductSeleccionado(producto);
+    setShowForm(true);
+  };
+
+  // al darle al bote: preguntamos y quitamos el producto
+  const handlerDeleteProduct = (producto) => {
+    if (window.confirm(`¿Seguro que quieres eliminar "${producto.nombre}"?`)) {
+      setProductos(productos.filter((p) => p.id !== producto.id));
+    }
+  };
+
+  // al darle a guardar en el form: editar o agregar
+  const handlerSaveProduct = (producto) => {
+    if (productSeleccionado) {
+      setProductos(productos.map((p) => (p.id === producto.id ? producto : p)));
+    } else {
+      setProductos([...productos, { ...producto, id: "p" + Date.now() }]);
+    }
+    setShowForm(false);
+    setproductSeleccionado(null);
+  };
 
   //crud -create, read, update, delete
   return (
@@ -43,24 +49,32 @@ export function Catalogo({ products }) {
         ) : (
           <GetAllProducts
             products={productos}
-            onEdit={abrirEditar}
-            onDelete={eliminar}
+            onEdit={handlerEditProduct}
+            onDelete={handlerDeleteProduct}
           />
         )}
 
         <div class="mag-btns">
-          <button onClick={abrirAgregar} class="mag-btn mag-btn-primary">Agregar Producto</button>
-          <button onClick={()=> setCanHandleForm(true)} class="mag-btn mag-btn-sky">Actualizar Producto</button>
-          <button onClick={()=> setCanHandleForm(false)} class="mag-btn mag-btn-ghost">Eliminar Producto</button>
+          <button
+            onClick={() => {
+              setproductSeleccionado(null);
+              setShowForm(true);
+            }}
+            class="mag-btn mag-btn-primary"
+          >
+            Agregar Producto
+          </button>
         </div>
 
-        {canHandleForm ? (
+        {showForm ? (
           <ProductForm
-            key={productoEditando ? productoEditando.id : "nuevo"}
-            products={productos}
-            callbackSetProducts={setProductos}
-            productoEditando={productoEditando}
-            onClose={cerrarForm}
+            key={productSeleccionado ? productSeleccionado.id : ""}
+            productAEditar={productSeleccionado}
+            onSave={handlerSaveProduct}
+            onCancel={() => {
+              setShowForm(false);
+              setproductSeleccionado(null);
+            }}
           />
         ) : (
           ""

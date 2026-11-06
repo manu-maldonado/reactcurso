@@ -1,0 +1,154 @@
+.msf-radio {
+  display: none;
+}
+
+.msf-wrap {
+  max-width: 400px;
+  margin: 0 auto;
+  background: #141415;
+  border: 1px solid #2a2a2d;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.msf-progress {
+  display: flex;
+  background: #1c1c1e;
+  border-bottom: 1px solid #2a2a2d;
+}
+
+.msf-step-label {
+  flex: 1;
+  padding: .6rem;
+  text-align: center;
+  font-size: .75rem;
+  color: #88888f;
+  font-weight: 500;
+  position: relative;
+}
+
+.msf-body {
+  padding: 1.5rem;
+}
+
+.msf-panel {
+  display: none;
+  flex-direction: column;
+  gap: .75rem;
+}
+
+.msf-panel h3 {
+  font-size: 1.1rem;
+  margin-bottom: .25rem;
+}
+
+.msf-panel input[type="text"],
+.msf-panel input[type="email"],
+.msf-panel input[type="tel"],
+.msf-panel input[type="number"] {
+  box-sizing: border-box;
+  width: 100%;
+  padding: .65rem .9rem;
+  background: #1c1c1e;
+  border: 1px solid #2a2a2d;
+  border-radius: 8px;
+  color: #f0f0f0;
+  font-family: system-ui, sans-serif;
+  font-size: .95rem;
+  outline: none;
+  transition: border-color .2s;
+}
+
+.msf-panel input:focus {
+  border-color: #b8ff57;
+}
+
+.msf-actions {
+  display: flex;
+  gap: .5rem;
+  margin-top: .5rem;
+}
+
+.msf-btn {
+  display: inline-block;
+  padding: .6rem 1.2rem;
+  background: #b8ff57;
+  color: #0c0c0d;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: .9rem;
+  cursor: pointer;
+  text-align: center;
+  user-select: none;
+  transition: opacity .15s;
+}
+
+.msf-btn:hover {
+  opacity: .85;
+}
+
+.msf-btn-back {
+  background: #1c1c1e;
+  color: #f0f0f0;
+  border: 1px solid #2a2a2d;
+}
+
+.msf-success {
+  text-align: center;
+  padding: 1rem 0;
+  color: #57d9a3;
+  font-size: 1rem;
+}
+
+/* Show only the panel whose radio is checked */
+#step1:checked ~ .msf-wrap .msf-panel-1 { display: flex; }
+#step2:checked ~ .msf-wrap .msf-panel-2 { display: flex; }
+#step3:checked ~ .msf-wrap .msf-panel-3 { display: flex; }
+
+/* Highlight the matching step label */
+#step1:checked ~ .msf-wrap .msf-step-label:nth-child(1),
+#step2:checked ~ .msf-wrap .msf-step-label:nth-child(2),
+#step3:checked ~ .msf-wrap .msf-step-label:nth-child(3) {
+  color: #b8ff57;
+  border-bottom: 2px solid #b8ff57;
+  margin-bottom: -1px;
+}
+
+/* Botones de Catalogo.jsx */
+.mag-btns {
+  display: flex;
+  gap: .5rem;
+  justify-content: center;
+  margin: 1.25rem 0;
+}
+
+.mag-btn {
+  padding: .6rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: .9rem;
+  cursor: pointer;
+  transition: opacity .15s;
+}
+
+.mag-btn:hover {
+  opacity: .85;
+}
+
+.mag-btn-primary {
+  background: #b8ff57;
+  color: #0c0c0d;
+  box-shadow: 0 0 14px rgba(184, 255, 87, .45);
+}
+
+.mag-btn-sky {
+  background: #5ac8fa;
+  color: #0c0c0d;
+}
+
+.mag-btn-ghost {
+  background: #1c1c1e;
+  color: #f0f0f0;
+  border: 1px solid #2a2a2d;
+}
