@@ -13,6 +13,10 @@ import { UseEffectSinArreglo } from './UseEffectSinArreglo.jsx'
 import { UseEffectVariables } from './UseEffectVariables.jsx'
 import { UseEffectCleanup } from './UseEffectCleanup.jsx'
 import { SearchTermBox } from './SearchTermBox.jsx'
+import { PlaceHolder } from './placeHolder.jsx'
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { Home } from './Home.jsx'
+import { DetallePlaceHolder } from './DetallePlaceHolder.jsx'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -47,7 +51,18 @@ function App() {
   
   return (
     <>
+    <BrowserRouter>
+    <nav>
+      <Link to="/">Home</Link>
+    </nav>
+    <main>
+      <Routes>
+        <Route path="/" element={<Home/>}> </Route>
+        <Route path="/detalle/:id" element={<DetallePlaceHolder/>}> </Route>
+      </Routes>
+    
       <section id="center">
+        {/* <PlaceHolder/> */}
         <div className="hero">
           <img src={heroImg} className="base" width="170" height="179" alt="" />
           <img src={reactLogo} className="framework" alt="React logo" />
@@ -57,6 +72,7 @@ function App() {
           <h1>Get started</h1>
           <h3>Call Api search</h3>
           {/*<SearchTermBox></SearchTermBox>*/}
+          <SearchTermBox/>
           
           <p>
             Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
@@ -201,6 +217,8 @@ function App() {
 
       <div className="ticks"></div>
       <section id="spacer"></section>
+      </main>
+      </BrowserRouter>
     </>
   )
 }
