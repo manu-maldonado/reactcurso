@@ -25,7 +25,7 @@ export const placeHolderService = {
     return responseUnpack(resGet);
   },
 
-  async list(signal) {
+  async list(query, signal) {
     const resList = await clients.jsonPlaceHolder.get('/posts', {});
     return responseUnpack(resList).map(normalize);
   },
