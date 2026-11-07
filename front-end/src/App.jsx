@@ -13,6 +13,9 @@ import { SearchTermBox } from './SearchTermBox.jsx'
 import { SearchProduct } from "./SearchProduct"
 import { Calculadora } from "./Calculadora.jsx"
 import { PruebaHTTP } from './PruebaHTTP.jsx'
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom"
+import { Home } from './Home.jsx'
+import { DetallePlaceHolder } from './DetallePlaceHolder.jsx'
 
 function App() {
   const [count, setCount] = useState(0);
@@ -20,6 +23,15 @@ function App() {
 
   return (
     <>
+     <BrowserRouter>
+     <nav>
+        <Link to="/" >Home</Link>
+     </nav>
+     <main>
+        <Routes>
+          <Route path="/" element={<Home></Home>}></Route>
+          <Route path="/detalle/:id" element={<DetallePlaceHolder/>}></Route>
+        </Routes>
       <section id="center">
         <div className="hero">
           <img src={heroImg} className="base" width="170" height="179" alt="" />
@@ -158,6 +170,8 @@ function App() {
 
       <div className="ticks"></div>
       <section id="spacer"></section>
+      </main>
+      </BrowserRouter>
     </>
   );
 }
