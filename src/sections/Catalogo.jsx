@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import { Pencil, Trash2, PackagePlus, Check } from "lucide-react";
-import { allProducts } from "./productoMock";
+import { allProducts } from "../mock/productoMock";
 import { GetAllProducts } from "./ProductsList";
 
 export function Catalogo() {
-
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -99,10 +98,11 @@ export function Catalogo() {
 
   return (
     <div>
-      
-
       {/* formulario */}
-      <form className ="flex gap-3"onSubmit={editId !== null ? updateProduct : addProduct}>
+      <form
+        className="flex gap-3"
+        onSubmit={editId !== null ? updateProduct : addProduct}
+      >
         <input
           type="text"
           placeholder="Nombre"
@@ -125,20 +125,27 @@ export function Catalogo() {
         />
 
         <button type="submit">
-          {editId !== null ? <Check size={16}/> : <PackagePlus size={16}/>}
+          {editId !== null ? <Check size={16} /> : <PackagePlus size={16} />}
         </button>
 
-        <button type="button" onClick={editProduct} disabled={selectedId === null} aria-label="Editar">
+        <button
+          type="button"
+          onClick={editProduct}
+          disabled={selectedId === null}
+        >
           <Pencil size={16} />
         </button>
 
-        <button type="button" onClick={deleteProduct} disabled={selectedId === null}>
-          <Trash2 size={16}/>
+        <button
+          type="button"
+          onClick={deleteProduct}
+          disabled={selectedId === null}
+        >
+          <Trash2 size={16} />
         </button>
       </form>
 
       <br />
-
 
       {isLoading ? (
         <p>Cargando...</p>

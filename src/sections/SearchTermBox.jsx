@@ -1,6 +1,6 @@
-import { useAsync } from "./hooks/useAsync";
-import { searchService } from "./services/searchService";
-import { ErrorPanel } from "./components/ErrorPanel";
+import { useAsync } from "../hooks/useAsync";
+import { searchService } from "../services/searchService";
+import { ErrorPanel } from "../components/ErrorPanel";
 
 export function SearchTermBox() {
   const { data, loading, error, recargar } = useAsync(
@@ -9,7 +9,7 @@ export function SearchTermBox() {
   );
 
   if (loading) return <p>⏳ Buscando...</p>;
-  if (error)   return <ErrorPanel error={error} onRetry={recargar} />;
+  if (error) return <ErrorPanel error={error} onRetry={recargar} />;
   if (!data?.length) return <p>Sin resultados.</p>;
 
   return (
@@ -31,7 +31,9 @@ export function SearchTermBox() {
                 {r.title}
               </a>
             </td>
-            <td><code>{r.engine}</code></td>
+            <td>
+              <code>{r.engine}</code>
+            </td>
             <td>{r.snippet}</td>
           </tr>
         ))}

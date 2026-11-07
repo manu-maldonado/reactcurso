@@ -1,12 +1,13 @@
 import { useState } from "react";
-import { SearchProduct } from "./SearchProduct.jsx";
-import { allProducts } from "./productoMock.js";
-import { Calculator } from "./Calculator.jsx";
-import { Catalogo } from "./Catalogo.jsx";
-import { UseEffectCleanup } from "./UseEffectCleanUp.jsx";
-import { UseEffectVariebles } from "./UseEffectVariables.jsx";
-import { SearchBox } from "./SearchBox.jsx";
-import { SearchTermBox } from "./SearchTermBox.jsx";
+import { SearchProduct } from "./sections/SearchProduct.jsx";
+import { allProducts } from "./mock/productoMock.js";
+import { Calculator } from "./sections/Calculator.jsx";
+import { Catalogo } from "./sections/Catalogo.jsx";
+import { UseEffectCleanup } from "./sections/UseEffectCleanUp.jsx";
+import { UseEffectVariebles } from "./sections/UseEffectVariables.jsx";
+import { SearchBox } from "./sections/SearchBox.jsx";
+import { PostViewer } from "./JSONPlaceholder/PostViewer.jsx";
+import { SearchTermBox } from "./sections/SearchTermBox.jsx";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -24,6 +25,14 @@ function App() {
 
         <h3>Call Api search</h3>
         <SearchTermBox />
+
+        {/* JSONPlaceholder */}
+        <section className="rounded-2xl bg-white p-6 shadow-sm">
+          <h2 className="mb-4 text-xl font-semibold text-gray-900">
+            JSONPlaceholder
+          </h2>
+          <PostViewer />
+        </section>
 
         {/* Tabla de productos */}
         <section className="rounded-2xl bg-white p-6 shadow-sm">

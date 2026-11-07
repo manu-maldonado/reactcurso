@@ -29,9 +29,6 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Aquí conservas el resto de tus estilos */
-
-/* Shared form controls: every input, select and textarea looks the same */
 @layer components {
   input,
   select,
