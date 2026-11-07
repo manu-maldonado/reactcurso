@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { Home } from './Home.jsx'
+import { DetallePlaceHolder } from './DetallePlaceHolder.jsx'
 import heroImg from './assets/hero.png'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
@@ -18,6 +20,7 @@ import { PostCreate } from './PostCreate.jsx'
 import { PostUpdate } from './PostUpdate.jsx'
 import { PostDelete } from './PostDelete.jsx'
 import { PostFilter } from './PostFilter.jsx'
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 
 
 function App() {
@@ -26,6 +29,13 @@ function App() {
 
   return (
     <>
+    <BrowserRouter>
+      <nav> <Link to="/">Home</Link> </nav>
+      <main>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/detalle/:id" element={<DetallePlaceHolder />} />
+        </Routes>
       <section id="center">
         <div className="hero">
           <img src={heroImg} className="base" width="170" height="179" alt="" />
@@ -173,7 +183,9 @@ function App() {
 
       <div className="ticks"></div>
       <section id="spacer"></section>
-    </>
+      </main>
+    </BrowserRouter>
+    </> 
   );
 }
 

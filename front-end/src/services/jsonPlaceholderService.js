@@ -36,7 +36,7 @@ export const jsonPlaceholderService = {
       "/posts",
       payload
     );
-    return normalize(responseUnpack(res));
+    return res ? normalize(res) : null;
   },
 
   // UPDATE: actualizar una publicación.
@@ -45,7 +45,7 @@ export const jsonPlaceholderService = {
       `/posts/${id}`,
       payload
     );
-    return normalize(responseUnpack(res));
+    return res ? normalize(res) : null;
   },
 
   // DELETE: eliminar una publicación.
@@ -61,4 +61,12 @@ export const jsonPlaceholderService = {
     );
     return res.map(normalize);
   },
+
+  async get(id, signal) {
+        const res = await clients.jsonPlaceholder.get(
+          `/posts/${id}`,
+          { signal }
+        );
+        return res ? normalize(res) : null;
+    }
 };
