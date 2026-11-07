@@ -3,9 +3,20 @@ import heroImg from './assets/hero.png'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import './App.css'
+import { allProducts }  from './productosMock.js'
+import { Catalogo } from './Catalogo.jsx'
+import { UseEffectSinArreglo } from './UseEffectSinArreglo.jsx'
+import { UseEffectArregloVacio } from './UseEffectArregloVacio.jsx'
+import { UseEffectVariables } from './UseEffectVariables.jsx'
+import { UseEffectCleanup } from './UseEffectCleanup.jsx'
+import { SearchTermBox } from './SearchTermBox.jsx'
+import { SearchProduct } from "./SearchProduct"
+import { Calculadora } from "./Calculadora.jsx"
+import { PruebaHTTP } from './PruebaHTTP.jsx'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
+  const [saludo, setSaludo] = useState("Hola desconocido");
 
   return (
     <>
@@ -17,21 +28,53 @@ function App() {
         </div>
         <div>
           <h1>Get started</h1>
+          <h3>Call Api search</h3>
+          <SearchTermBox/>
           <p>
             Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
           </p>
+          <PruebaHTTP />
+          <UseEffectSinArreglo/>
+          <UseEffectArregloVacio/>
+          <UseEffectVariables/>
+          <UseEffectCleanup/>
         </div>
+        <Calculadora />
+        <SearchProduct products={allProducts} />
+        <label>Count is {count}</label>
         <button
           type="button"
           className="counter"
           onClick={() => setCount((count) => count + 1)}
         >
-          Count is {count}
+          +
+        </button>
+        <button
+          type="button"
+          className="counter"
+          onClick={() => setCount((count) => count - 1)}
+        >
+          -
+        </button>
+        <button
+          type="button"
+          className="counter"
+          onClick={() => setCount(() => 0)}
+        >
+          {" "}
+          reset
         </button>
       </section>
 
-      <div className="ticks"></div>
+      <input
+        onInput={(evt) => {
+          setSaludo(evt.target.value);
+        }}
+      ></input>
 
+      <h4>{saludo}</h4>
+      <div className="ticks"></div>
+      <Catalogo products={allProducts}/>
       <section id="next-steps">
         <div id="docs">
           <svg className="icon" role="presentation" aria-hidden="true">
@@ -116,7 +159,7 @@ function App() {
       <div className="ticks"></div>
       <section id="spacer"></section>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
