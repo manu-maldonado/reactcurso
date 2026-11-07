@@ -3,30 +3,66 @@ import heroImg from './assets/hero.png'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import './App.css'
-<<<<<<< HEAD
-import { GetAllProducts } from './ProductList'
-import { allProducts } from './productosMock.js'
-import { SearchBox } from './searchBox.jsx'
-import { Calculadora } from './Calculadora.jsx'
-=======
-import { allProducts }  from './productosMock.js'
+import { GetAllProducts } from './ProductList.jsx'
+import { allProducts}  from './productosMock.js'
+import { SearchProduct } from './SearchProduct.jsx'
+import { Calculator } from './Calculator.jsx'
 import { Catalogo } from './Catalogo.jsx'
-import { UseEffectSinArreglo } from './UseEffectSinArreglo.jsx'
 import { UseEffectArregloVacio } from './UseEffectArregloVacio.jsx'
+import { UseEffectSinArreglo } from './UseEffectSinArreglo.jsx'
 import { UseEffectVariables } from './UseEffectVariables.jsx'
 import { UseEffectCleanup } from './UseEffectCleanup.jsx'
 import { SearchTermBox } from './SearchTermBox.jsx'
-import { SearchProduct } from "./SearchProduct"
-import { Calculadora } from "./Calculadora.jsx"
->>>>>>> 463659425ad945b9ac9dd4aa99349a0464c4b1c4
+import { PlaceHolder } from './placeHolder.jsx'
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { Home } from './Home.jsx'
+import { DetallePlaceHolder } from './DetallePlaceHolder.jsx'
 
 function App() {
-  const [count, setCount] = useState(0);
-  const [saludo, setSaludo] = useState("Hola desconocido");
+  const [count, setCount] = useState(0)
+  const [saludo, setSaludo] = useState("Hola, desconocido")
+  const [busqueda, setBusqueda] = useState("")   // Estado para almacenar la búsqueda
+  const [orden, setOrden] = useState("idAsc") // Estado para el ordenamiento
+  // Filtrar los productos por nombre
+  const productosFiltrados = allProducts.filter((producto) =>
+    producto.nombre.toLowerCase().includes(busqueda.toLowerCase())
+  )
+  // Ordenar productos
+  const productosOrdenados = [...productosFiltrados].sort((a, b) => {
 
+      if (orden === "precioAsc") {
+          return a.precio - b.precio
+      }
+
+      if (orden === "precioDesc") {
+          return b.precio - a.precio
+      }
+
+      if (orden === "idAsc") {
+          return a.id.localeCompare(b.id, undefined, { numeric: true })
+      }
+
+      if (orden === "idDesc") {
+          return b.id.localeCompare(a.id, undefined, { numeric: true })
+      }
+
+      return 0
+  })
+  
   return (
     <>
+    <BrowserRouter>
+    <nav>
+      <Link to="/">Home</Link>
+    </nav>
+    <main>
+      <Routes>
+        <Route path="/" element={<Home/>}> </Route>
+        <Route path="/detalle/:id" element={<DetallePlaceHolder/>}> </Route>
+      </Routes>
+    
       <section id="center">
+        {/* <PlaceHolder/> */}
         <div className="hero">
           <img src={heroImg} className="base" width="170" height="179" alt="" />
           <img src={reactLogo} className="framework" alt="React logo" />
@@ -35,82 +71,69 @@ function App() {
         <div>
           <h1>Get started</h1>
           <h3>Call Api search</h3>
+          {/*<SearchTermBox></SearchTermBox>*/}
           <SearchTermBox/>
+          
           <p>
             Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
           </p>
-          <UseEffectSinArreglo/>
-          <UseEffectArregloVacio/>
-          <UseEffectVariables/>
-          <UseEffectCleanup/>
+          <UseEffectSinArreglo></UseEffectSinArreglo>
+          <UseEffectArregloVacio></UseEffectArregloVacio>
+          <UseEffectVariables></UseEffectVariables>
+          <UseEffectCleanup></UseEffectCleanup>
         </div>
-<<<<<<< HEAD
-        <Calculadora/>
-        <GetAllProducts products={allProducts}/>
-=======
-        <Calculadora />
-        <SearchProduct products={allProducts} />
+        <SearchProduct
+            busqueda={busqueda}
+            setBusqueda={setBusqueda}
+        />
+
+        <div>
+            <label htmlFor="ordenProductos">Ordenar por: </label>
+
+            <select
+                id="ordenProductos"
+                value={orden}
+                onChange={(evt) => setOrden(evt.target.value)}
+            >
+                <option value="idAsc">ID: Ascendente</option>
+                <option value="idDesc">ID: Descendente</option>
+                <option value="precioAsc">Precio: Menor a mayor</option>
+                <option value="precioDesc">Precio: Mayor a menor</option>
+            </select>
+        </div>
+
+        <GetAllProducts products={productosOrdenados} />
+        <Calculator />
         <label>Count is {count}</label>
->>>>>>> 463659425ad945b9ac9dd4aa99349a0464c4b1c4
         <button
           type="button"
           className="counter"
           onClick={() => setCount((count) => count + 1)}
-        >
-<<<<<<< HEAD
-          Sumar
-=======
-          +
->>>>>>> 463659425ad945b9ac9dd4aa99349a0464c4b1c4
+        >+
         </button>
         <button
           type="button"
           className="counter"
           onClick={() => setCount((count) => count - 1)}
-        >
-<<<<<<< HEAD
-          Restar
-=======
-          -
->>>>>>> 463659425ad945b9ac9dd4aa99349a0464c4b1c4
+        >-
         </button>
         <button
           type="button"
           className="counter"
-<<<<<<< HEAD
-          onClick={() => setCount(0)}
-        >
-          Reset
-=======
-          onClick={() => setCount(() => 0)}
-        >
-          {" "}
-          reset
->>>>>>> 463659425ad945b9ac9dd4aa99349a0464c4b1c4
+          onClick={() => setCount((count) => 0)}
+        >reset
         </button>
-        <div> Count is {count} </div>
       </section>
 
-<<<<<<< HEAD
-      <input onInput={(evt)=> {
+      <input onInput= {(evt)=> {
         setSaludo(evt.target.value)}
-      }/>
+      }></input>
+      
       <h4>{saludo}</h4>
-      <div className="ticks"></div>
-
-      <div className="ticks"></div>
-
-=======
-      <input
-        onInput={(evt) => {
-          setSaludo(evt.target.value);
-        }}
-      ></input>
-
-      <h4>{saludo}</h4>
+      
       <div className="ticks"></div>
       <Catalogo products={allProducts}/>
->>>>>>> 463659425ad945b9ac9dd4aa99349a0464c4b1c4
+
       <section id="next-steps">
         <div id="docs">
           <svg className="icon" role="presentation" aria-hidden="true">
@@ -194,8 +217,10 @@ function App() {
 
       <div className="ticks"></div>
       <section id="spacer"></section>
+      </main>
+      </BrowserRouter>
     </>
-  );
+  )
 }
 
-export default App;
+export default App

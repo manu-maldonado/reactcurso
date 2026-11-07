@@ -1,17 +1,50 @@
-import EditButton from "./assets/edit-note.svg"
-import DeleteButton from "./assets/delete-icon.svg"
-export function ProductItem({ id, producto, onEdit, onRemove }) {
-  return (
-    <>             
-      <tr id={id} >
-        <td><img src={EditButton}  onClick={()=> onEdit(producto)} width={32} height={32} style={{ background: 'white', border: 'none', cursor: 'pointer' }}></img></td>
-        <td><img src={DeleteButton}  onClick={()=> { onRemove(id)}} width={32} height={32} style={{ background: 'white', border: 'none', cursor: 'pointer' }}></img></td>
-        {/* <button onClick={()=> onCallbackClick(true)} class="mag-btn mag-btn-sky">Actualizar Producto</button> */}
-        <td>{producto.nombre}</td>
-        <td>{producto.precio}</td>
-        <td>{producto.stock}</td>
-        <td>{producto.categoria}</td>
-      </tr>
-    </>
-  );
+import EditButton from "./assets/edit-note.svg";
+import DeleteButton from "./assets/delete-icon.svg";
+
+
+export function ProductItem({ id, producto, onCallbackClick }) {
+
+    return (
+        <tr>
+            <td>
+                {onCallbackClick && (
+                    <img
+                        src={EditButton}
+                        onClick={() => onCallbackClick(id, true)}
+                        width={32}
+                        height={32}
+                        style={{
+                            background: "white",
+                            border: "none",
+                            cursor: "pointer"
+                        }}
+                        alt="Editar producto"
+                    />
+                )}
+            </td>
+
+            <td>
+                {onCallbackClick && (
+                    <img
+                        src={DeleteButton}
+                        onClick={() => onCallbackClick(id, false)}
+                        width={32}
+                        height={32}
+                        style={{
+                            background: "white",
+                            border: "none",
+                            cursor: "pointer"
+                        }}
+                        alt="Eliminar producto"
+                    />
+                )}
+            </td>
+
+            <td>{id}</td>
+            <td>{producto.nombre}</td>
+            <td>{producto.precio}</td>
+            <td>{producto.stock}</td>
+            <td>{producto.categoria}</td>
+        </tr>
+    );
 }

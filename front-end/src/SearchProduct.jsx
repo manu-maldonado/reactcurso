@@ -1,17 +1,15 @@
-import { useState } from "react";
-import { GetAllProducts } from "./ProductList";
+export function SearchProduct({ busqueda, setBusqueda }) {
 
-export function SearchProduct({ products }) {
-  const [name, setName] = useState("");
-  const filterProduct = products.filter((x) =>
-    x.nombre.toLowerCase().includes(name.toLowerCase()),
-  );
+    return (
+        <>
+            <label>Buscar producto:</label>
 
-  return (
-    <>
-      <label>{name}</label>
-      <input id="searchProduct" onChange={(evt) => setName(evt.target.value)} />
-      <GetAllProducts products={filterProduct} />
-    </>
-  );
+            <input
+                id="searchProduct"
+                value={busqueda}
+                onChange={(evt) => setBusqueda(evt.target.value)}
+                placeholder="Escribe el nombre del producto"
+            />
+        </>
+    )
 }

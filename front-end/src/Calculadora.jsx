@@ -1,66 +1,77 @@
 import { useState } from "react"
 
-<<<<<<< HEAD
-export function Calculadora() {
-    const [resultado, setResultado] = useState(0)
-    const [inputA, setInputA] = useState(0)
-    const [inputB, setInputB] = useState(0)
+export function Calculator() {
 
-    function operationAritmetic(a, b, operador) {
-        switch (operador) {
-=======
-export function Calculadora(){
-    const [resultado, setResultado] = useState(0)
-    // const [suma, setSuma] = useState()
-    // const [rest, setResta] = useState()
-    const [inputA, setInputA] = useState(0)
-    const [inputB, setInputB] = useState(0)
+    const [numero1, setNumero1] = useState("")
+    const [numero2, setNumero2] = useState("")
+    const [operacion, setOperacion] = useState("suma")
+    const [resultado, setResultado] = useState(null)
 
-    function operationAritmetic(a, b, operator){
-        switch(operator){
->>>>>>> 463659425ad945b9ac9dd4aa99349a0464c4b1c4
-            case "+":
-                return a + b;
-            case "-":
-                return a - b;
-            case "*":
-                return a * b;
-            case "/":
-<<<<<<< HEAD
-                if (a === 0 && b === 0) return "indeterminado";
-                if (b === 0) return "No se puede dividir"
-                return a / b;
-=======
-                  if (a === 0 && b === 0) return "Indeterminado vato";
-                  if (b === 0) return "No se puede dividir mano";
-                     return a / b;                  
->>>>>>> 463659425ad945b9ac9dd4aa99349a0464c4b1c4
+    function calcular() {
+
+        if (numero1.trim() === "" || numero2.trim() === "") {
+            setResultado("Ingresa ambos números")
+            return
+        }
+
+        const num1 = Number(numero1)
+        const num2 = Number(numero2)
+
+        if (operacion === "suma") {
+            setResultado(num1 + num2)
+        }
+
+        if (operacion === "resta") {
+            setResultado(num1 - num2)
+        }
+
+        if (operacion === "multiplicacion") {
+            setResultado(num1 * num2)
+        }
+
+        if (operacion === "division") {
+
+            if (num2 === 0) {
+                setResultado("No se puede dividir entre cero")
+            } else {
+                setResultado(num1 / num2)
+            }
         }
     }
 
     return (
-        <>
-<<<<<<< HEAD
-            <input type="text" onChange={(e) => setInputA(+e.target.value)} />
-            <select name="" id="" onClick={(evt) => setResultado(operationAritmetic(inputA, inputB, evt.target.value ))}>
-                <option value="+">+</option>
-                <option value="-">-</option>
-                <option value="*">*</option>
-                <option value="/">/</option>
+        <div>
+            <h2>Calculadora</h2>
+
+            <input
+                type="number"
+                placeholder="Número 1"
+                value={numero1}
+                onChange={(evt) => setNumero1(evt.target.value)}
+            />
+
+            <input
+                type="number"
+                placeholder="Número 2"
+                value={numero2}
+                onChange={(evt) => setNumero2(evt.target.value)}
+            />
+
+            <select
+                value={operacion}
+                onChange={(evt) => setOperacion(evt.target.value)}
+            >
+                <option value="suma">Sumar</option>
+                <option value="resta">Restar</option>
+                <option value="multiplicacion">Multiplicar</option>
+                <option value="division">Dividir</option>
             </select>
-            <input type="text" onChange={(e) => setInputB(+e.target.value)} />
-            <label htmlFor="">{resultado}</label>
-=======
-        <input type="text" onChange={(e)=> setInputA(+e.target.value)}/>
-        <select name="" id="" onClick={(evt)=> setResultado(operationAritmetic(inputA, inputB, evt.target.value))}>
-            <option value="+">+</option>
-            <option value="-">-</option>
-            <option value="*">*</option>
-            <option value="/">/</option>
-        </select>
-        <input type="text" onChange={(e)=> setInputB(+e.target.value)} />
-        <label htmlFor="">{resultado}</label>
->>>>>>> 463659425ad945b9ac9dd4aa99349a0464c4b1c4
-        </>
+
+            <button type="button" onClick={calcular}>
+                Calcular
+            </button>
+
+            <h3>Resultado: {resultado}</h3>
+        </div>
     )
 }
