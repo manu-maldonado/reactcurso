@@ -12,18 +12,41 @@ export function usePost() {
   useEffect(() => setPosts(data ?? []), [data]);
 
   const [nuevo, setNuevo] = useState({ title: "", body: "" });
+  const [editandoId, setEditandoId] = useState(null);
 
-  async function crearPost(evt) {
+  function empezarEdicion(post) {
+    setEditandoId(post.id);
+    setNuevo({ title: post.title, body: post.body });
+  }
+
+  function cancelarEdicion() {
+    setEditandoId(null);
+    setNuevo({ title: "", body: "" });
+  }
+
+  async function guardarPost(evt) {
     evt.preventDefault();
     if (!nuevo.title.trim()) return;
 
     try {
-      const creado = await postsService.create({ ...nuevo, userId: 1 });
-      console.log("Se creo? jaja", creado);
-      setPosts((prev) => [creado, ...prev]);
+      if (editandoId === null) {
+        const creado = await postsService.create({ ...nuevo, userId: 1 });
+        console.log("Se creo? jaja", creado);
+        setPosts((prev) => [creado, ...prev]);
+      } else {
+        const actualizado = await postsService.update(editandoId, {
+          ...nuevo,
+          userId: 1,
+        });
+        console.log("Se edito? jaja", actualizado);
+        setPosts((prev) =>
+          prev.map((p) => (p.id === editandoId ? actualizado : p))
+        );
+      }
       setNuevo({ title: "", body: "" });
+      setEditandoId(null);
     } catch {
-      console.log("No se creo :((");
+      console.log(editandoId === null ? "No se creo :((" : "No se edito :((");
     }
   }
 
@@ -31,6 +54,7 @@ export function usePost() {
     try {
       await postsService.delete(id);
       setPosts((prev) => prev.filter((p) => p.id !== id));
+      if (id === editandoId) cancelarEdicion();
     } catch {
       console.log("error Eliminar");
     }
@@ -42,7 +66,10 @@ export function usePost() {
     error,
     nuevo,
     setNuevo,
-    crearPost,
+    editandoId,
+    empezarEdicion,
+    cancelarEdicion,
+    guardarPost,
     eliminar,
   };
 }

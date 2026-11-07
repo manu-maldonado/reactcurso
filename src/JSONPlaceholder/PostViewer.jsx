@@ -3,12 +3,22 @@ import { usePost } from "./hooks/usePost";
 import { ErrorPanel } from "../components/ErrorPanel";
 
 export function PostViewer() {
-  const { posts, loading, error, nuevo, setNuevo, crearPost, eliminar } =
-    usePost();
+  const {
+    posts,
+    loading,
+    error,
+    nuevo,
+    setNuevo,
+    editandoId,
+    empezarEdicion,
+    cancelarEdicion,
+    guardarPost,
+    eliminar,
+  } = usePost();
 
   return (
     <div>
-      <form onSubmit={crearPost} className="flex flex-wrap gap-3">
+      <form onSubmit={guardarPost} className="flex flex-wrap gap-3">
         <input
           type="text"
           placeholder="titulo"
@@ -25,7 +35,16 @@ export function PostViewer() {
             setNuevo((prev) => ({ ...prev, body: e.target.value }))
           }
         />
-        <button type="submit">Crear</button>
+        <div className="flex gap-3">
+          <button type="submit">
+            {editandoId === null ? "Crear" : "Guardar"}
+          </button>
+          {editandoId !== null && (
+            <button type="button" onClick={cancelarEdicion}>
+              Cancelar
+            </button>
+          )}
+        </div>
       </form>
 
       {loading && <p className="mt-4 text-muted-foreground">Cargando...</p>}
@@ -45,7 +64,7 @@ export function PostViewer() {
               <button
                 type="button"
                 className="bg-transparent px-2 py-1 text-muted-foreground hover:bg-accent hover:text-accent-foreground"
-                onClick={() => eliminar(p.id)}
+                onClick={() => empezarEdicion(p)}
               >
                 <Pen size={16} />
               </button>

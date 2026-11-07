@@ -15,6 +15,11 @@ export const postsService = {
     return res;
   },
 
+  async update(id, data, signal) {
+    const res = await clients.placeholder.put(`/posts/${id}`, data, { signal });
+    return res;
+  },
+
   async delete(id, signal) {
     const res = await clients.placeholder.delete(`/posts/${id}`, { signal });
     return res;
