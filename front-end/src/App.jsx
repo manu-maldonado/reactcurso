@@ -13,6 +13,11 @@ import { SearchTermBox } from './SearchTermBox.jsx'
 import { SearchProduct } from "./SearchProduct"
 import { Calculadora } from "./Calculadora.jsx"
 import { PostList } from "./PostList.jsx"
+import { PostDetail } from "./PostDetail.jsx"
+import { PostCreate } from './PostCreate.jsx'
+import { PostUpdate } from './PostUpdate.jsx'
+import { PostDelete } from './PostDelete.jsx'
+import { PostFilter } from './PostFilter.jsx'
 
 
 function App() {
@@ -41,8 +46,16 @@ function App() {
         </div>
         <Calculadora />
         <SearchProduct products={allProducts} />
-        <h3>Práctica JSONPlaceholder</h3>
-        <PostList />
+        <section id="jsonplaceholder">
+          <h2>Práctica JSONPlaceholder</h2>
+
+          <PostList />
+          <PostDetail />
+          <PostCreate />
+          <PostUpdate />
+          <PostDelete />
+          <PostFilter />
+        </section>
         <label>Count is {count}</label>
         <button
           type="button"

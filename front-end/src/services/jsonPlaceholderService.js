@@ -1,32 +1,64 @@
 import { clients } from "./clients";
 
+// Normaliza los datos que devuelve JSONPlaceholder.
+const normalize = (post) => ({
+  userId: post.userId,
+  id: post.id,
+  title: post.title,
+  body: post.body,
+});
+
+// Devuelve la respuesta o un valor predeterminado.
+const responseUnpack = (res) => res ?? {};
+
 export const jsonPlaceholderService = {
+  // GET: obtener una publicación por ID.
+  async getById(id, signal) {
+    const res = await clients.jsonPlaceholder.get(
+      `/posts/${id}`,
+      { signal }
+    );
+    return res ? normalize(res) : null;
+  },
 
-  // Obtener todos los posts (LIST)
-  getAll: (signal) =>
-    clients.jsonPlaceholder.get("/posts", { signal }),
+  // LIST: obtener todas las publicaciones.
+  async getAll(signal) {
+    const res = await clients.jsonPlaceholder.get(
+      "/posts",
+      { signal }
+    );
+    return res ? res.map(normalize) : [];
+  },
 
-  // Obtener un post por ID (GET)
-  getById: (id, signal) =>
-    clients.jsonPlaceholder.get(`/posts/${id}`, { signal }),
+  // CREATE: crear una publicación.
+  async create(payload) {
+    const res = await clients.jsonPlaceholder.post(
+      "/posts",
+      payload
+    );
+    return normalize(responseUnpack(res));
+  },
 
-  // Crear un post (CREATE)
-  create: (payload) =>
-    clients.jsonPlaceholder.post("/posts", payload),
+  // UPDATE: actualizar una publicación.
+  async update(id, payload) {
+    const res = await clients.jsonPlaceholder.put(
+      `/posts/${id}`,
+      payload
+    );
+    return normalize(responseUnpack(res));
+  },
 
-  // Actualizar un post (UPDATE)
-  update: (id, payload) =>
-    clients.jsonPlaceholder.put(`/posts/${id}`, payload),
+  // DELETE: eliminar una publicación.
+  async remove(id) {
+    return clients.jsonPlaceholder.delete(`/posts/${id}`);
+  },
 
-  // Eliminar un post (DELETE)
-  remove: (id) =>
-    clients.jsonPlaceholder.delete(`/posts/${id}`),
-
-  // Filtrar posts por usuario (FILTER)
-  filterByUser: (userId, signal) =>
-    clients.jsonPlaceholder.get(
+  // FILTER: filtrar publicaciones por usuario.
+  async filterByUser(userId, signal) {
+    const res = await clients.jsonPlaceholder.get(
       `/posts?userId=${encodeURIComponent(userId)}`,
       { signal }
-    ),
-
+    );
+    return res.map(normalize);
+  },
 };
