@@ -20,23 +20,22 @@ export function Calculator() {
   };
 
   return (
-    <div>
+    <div className="flex flex-col gap-2">
       <p>Inserta dos numeros y selecciona un operador :)) </p>
       <br />
-      <input type="number" value={a} onChange={(e) => setA(e.target.value)} />
-
-      <select value={operador} onChange={(e) => setOperador(e.target.value)}>
-        <option value="+"> + </option>
-        <option value="-"> - </option>
-        <option value="*"> × </option>
-        <option value="/"> ÷ </option>
-      </select>
-
-      <input type="number" value={b} onChange={(e) => setB(e.target.value)} />
-
-      <span> = {calcular()}</span>
-      <br />
-      <button
+      <div className="flex items-center gap-2">
+        <input type="number" value={a} onChange={(e) => setA(e.target.value)} />
+        <select value={operador} onChange={(e) => setOperador(e.target.value)}>
+          <option value="+"> + </option>
+          <option value="-"> - </option>
+          <option value="*"> × </option>
+          <option value="/"> ÷ </option>
+        </select>
+        <input type="number" value={b} onChange={(e) => setB(e.target.value)} />
+        <span> = {calcular()}</span>
+        <br />
+      </div>
+      <button className="w-fit"
         type="button"
         onClick={() => {
           setA("");

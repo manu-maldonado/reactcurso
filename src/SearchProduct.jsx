@@ -15,8 +15,8 @@ export function SearchProduct({ allProducts = [] }) {
 
   return (
     <>
-      <label htmlFor="searchProduct">Producto</label>
-      <div>
+      
+      <div className="flex gap-2">
         <input
           id="searchProduct"
           value={name}

@@ -99,10 +99,10 @@ export function Catalogo() {
 
   return (
     <div>
-      <h4>Catáloguito</h4>
+      
 
       {/* formulario */}
-      <form onSubmit={editId !== null ? updateProduct : addProduct}>
+      <form className ="flex gap-3"onSubmit={editId !== null ? updateProduct : addProduct}>
         <input
           type="text"
           placeholder="Nombre"

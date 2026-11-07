@@ -1,164 +1,114 @@
 import { useState } from "react";
-import heroImg from "./assets/hero.png";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "./assets/vite.svg";
-import { UseEffectVariebles } from "./UseEffectVariables.jsx";
 import { SearchProduct } from "./SearchProduct.jsx";
 import { allProducts } from "./productoMock.js";
 import { Calculator } from "./Calculator.jsx";
-import "./App.css";
 import { Catalogo } from "./Catalogo.jsx";
 import { UseEffectCleanup } from "./UseEffectCleanUp.jsx";
+import { UseEffectVariebles } from "./UseEffectVariables.jsx";
 import { SearchBox } from "./SearchBox.jsx";
+import { SearchTermBox } from "./SearchTermBox.jsx";
 
 function App() {
   const [count, setCount] = useState(0);
   const [saludo, setSaludo] = useState("Hola desconocido");
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
+    <main className="min-h-screen bg-background px-4 py-10 text-gray-800 sm:px-8">
+      <div className="mx-auto max-w-6xl space-y-8">
+        {/* Encabezado */}
+        <header>
+          <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+            Cuaderno de Karla :)))
+          </h1>
+        </header>
 
-        <SearchBox />
-        {/* Tabla Producto */}
-        <SearchProduct allProducts={allProducts} />
+        <h3>Call Api search</h3>
+        <SearchTermBox />
 
-        <UseEffectVariebles />
-        <UseEffectCleanup />
+        {/* Tabla de productos */}
+        <section className="rounded-2xl bg-white p-6 shadow-sm">
+          <h2 className="mb-4 text-xl font-semibold text-gray-900">
+            Productos
+          </h2>
+          <SearchProduct allProducts={allProducts} />
+        </section>
 
-        <Catalogo allProducts={allProducts} />
+        {/* Hooks */}
+        <section className="grid gap-6 md:grid-cols-2">
+          <div className="rounded-2xl bg-white p-6 shadow-sm">
+            <UseEffectVariebles />
+          </div>
+
+          <div className="rounded-2xl bg-white p-6 shadow-sm">
+            <UseEffectCleanup />
+          </div>
+        </section>
+
+        {/* Catálogo */}
+        <section className="rounded-2xl bg-white p-6 shadow-sm">
+          <h2 className="mb-4 text-xl font-semibold text-gray-900">Catálogo</h2>
+          <Catalogo allProducts={allProducts} />
+        </section>
+
         {/* Contador */}
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          +
-        </button>
-        <p>Count is {count}</p>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count - 1)}
-        >
-          -
-        </button>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => 0)}
-        >
-          Reset
-        </button>
-        {/* Saludo  */}
-        <input
-          onInput={(evt) => {
-            setSaludo(evt.target.value);
-          }}
-        ></input>
-      </section>
+        <section className="rounded-2xl bg-white p-6 shadow-sm">
+          <h2 className="mb-4 text-xl font-semibold text-gray-900">Contador</h2>
 
-      <h4>{saludo}</h4>
+          <p className="mb-5 text-4xl font-bold text-purple-600">{count}</p>
 
-      <Calculator />
+          <div className="flex flex-wrap gap-3">
+            <button
+              type="button"
+              onClick={() => setCount((count) => count + 1)}
+              className="rounded-lg bg-purple-600 px-5 py-2.5 font-medium text-white transition hover:bg-purple-700 active:scale-95"
+            >
+              + Incrementar
+            </button>
 
-      <div className="ticks"></div>
+            <button
+              type="button"
+              onClick={() => setCount((count) => count - 1)}
+              className="rounded-lg bg-gray-200 px-5 py-2.5 font-medium text-gray-700 transition hover:bg-gray-300 active:scale-95"
+            >
+              - Decrementar
+            </button>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+            <button
+              type="button"
+              onClick={() => setCount(0)}
+              className="rounded-lg border border-gray-300 px-5 py-2.5 font-medium text-gray-600 transition hover:bg-gray-100"
+            >
+              Reset
+            </button>
+          </div>
+        </section>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+        {/* Saludo */}
+        <section className="rounded-2xl bg-white p-6 shadow-sm">
+          <h2 className="mb-4 text-xl font-semibold text-gray-900">
+            Saludo personalizado
+          </h2>
+
+          <input
+            type="text"
+            value={saludo}
+            onChange={(evt) => setSaludo(evt.target.value)}
+            placeholder="Escribe tu saludo..."
+            className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none transition placeholder:text-gray-400 focus:border-purple-500 focus:ring-2 focus:ring-purple-100"
+          />
+
+          <h4 className="mt-4 text-lg font-medium text-purple-600">{saludo}</h4>
+        </section>
+
+        {/* Calculadora */}
+        <section className="rounded-2xl bg-white p-6 shadow-sm">
+          <h2 className="mb-4 text-xl font-semibold text-gray-900">
+            Calculadora
+          </h2>
+          <Calculator />
+        </section>
+      </div>
+    </main>
   );
 }
 
