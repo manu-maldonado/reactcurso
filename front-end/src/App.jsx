@@ -3,7 +3,7 @@ import heroImg from './assets/hero.png'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import './App.css'
-import { allProducts }  from './productosMock.js'
+import { allProducts } from './productosMock.js'
 import { Catalogo } from './Catalogo.jsx'
 import { UseEffectSinArreglo } from './UseEffectSinArreglo.jsx'
 import { UseEffectArregloVacio } from './UseEffectArregloVacio.jsx'
@@ -13,6 +13,16 @@ import { SearchTermBox } from './SearchTermBox.jsx'
 import { SearchProduct } from "./SearchProduct"
 import { Calculadora } from "./Calculadora.jsx"
 import { MisComponentes } from './mio/MisComponentes.jsx'
+import { JSONPlaceholder_get } from './JSONPlaceholder_get.jsx'
+import { JSONPlaceholder_list } from './JSONPlaceholder_list.jsx'
+import { JSONPlaceholder_create } from './JSONPlaceholder_create.jsx'
+import { JSONPlaceholder_update } from './JSONPlaceholder_update.jsx'
+import { JSONPlaceholder_delete } from './JSONPlaceholder_delete.jsx'
+import { JSONPlaceholder_filter } from './JSONPlaceholder_filter.jsx'
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { Home } from './home.jsx'
+import { DetallePlaceHolder } from './DetallePlaceHolder.jsx'
+import { NoEncontrado } from './NoEncontrado.jsx'
 
 function App() {
   const [count, setCount] = useState(0);
@@ -20,144 +30,164 @@ function App() {
 
   return (
     <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          {/* <img src={reactLogo} className="framework" alt="React logo" />
+      <BrowserRouter>
+        <nav>
+          <Link to="/"> HOME</Link>
+        </nav>
+
+        <main>
+          <Routes>
+            <Route path='/' element={<Home/>}></Route>
+            <Route path='/detalle/:id' element={<DetallePlaceHolder/>}></Route>
+                        <Route path='*' element={<NoEncontrado/>}></Route>
+          </Routes>
+
+          <section id="center">
+            <div className="hero">
+              <img src={heroImg} className="base" width="170" height="179" alt="" />
+              {/* <img src={reactLogo} className="framework" alt="React logo" />
           <img src={viteLogo} className="vite" alt="Vite logo" /> */}
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <h3>Call Api search</h3>
-          <SearchTermBox/>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-          <UseEffectSinArreglo/>
-          <UseEffectArregloVacio/>
-          <UseEffectVariables/>
-          <UseEffectCleanup/>
-        </div>
-        <Calculadora />
-        <SearchProduct products={allProducts} />
-        <label>Count is {count}</label>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          +
-        </button>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count - 1)}
-        >
-          -
-        </button>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount(() => 0)}
-        >
-          {" "}
-          reset
-        </button>
-      </section>
+            </div>
+            <div>
+              <h1>Get started</h1>
+              <h3>Call Api search</h3>
+              <SearchTermBox />
+              <JSONPlaceholder_get id={1} />
+              <JSONPlaceholder_create />
+              <JSONPlaceholder_update id={1} />
+              <JSONPlaceholder_delete />
+              <JSONPlaceholder_filter />
+              <JSONPlaceholder_list />
+              <p>
+                Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
+              </p>
+              <UseEffectSinArreglo />
+              <UseEffectArregloVacio />
+              <UseEffectVariables />
+              <UseEffectCleanup />
+            </div>
+            <Calculadora />
+            {/* <SearchProduct products={allProducts} /> */}
+            <label>Count is {count}</label>
+            <button
+              type="button"
+              className="counter"
+              onClick={() => setCount((count) => count + 1)}
+            >
+              +
+            </button>
+            <button
+              type="button"
+              className="counter"
+              onClick={() => setCount((count) => count - 1)}
+            >
+              -
+            </button>
+            <button
+              type="button"
+              className="counter"
+              onClick={() => setCount(() => 0)}
+            >
+              {" "}
+              reset
+            </button>
+          </section>
 
-      <input
-        onInput={(evt) => {
-          setSaludo(evt.target.value);
-        }}
-      ></input>
+          <input
+            onInput={(evt) => {
+              setSaludo(evt.target.value);
+            }}
+          ></input>
 
-      <h4>{saludo}</h4>
-      <div className="ticks"></div>
-      <Catalogo products={allProducts}/>
-      <MisComponentes />
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+          <h4>{saludo}</h4>
+          <div className="ticks"></div>
+          {/* <Catalogo products={allProducts}/> */}
+          <MisComponentes />
+          <section id="next-steps">
+            <div id="docs">
+              <svg className="icon" role="presentation" aria-hidden="true">
+                <use href="/icons.svg#documentation-icon"></use>
+              </svg>
+              <h2>Documentation</h2>
+              <p>Your questions, answered</p>
+              <ul>
+                <li>
+                  <a href="https://vite.dev/" target="_blank">
+                    <img className="logo" src={viteLogo} alt="" />
+                    Explore Vite
+                  </a>
+                </li>
+                <li>
+                  <a href="https://react.dev/" target="_blank">
+                    <img className="button-icon" src={reactLogo} alt="" />
+                    Learn more
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div id="social">
+              <svg className="icon" role="presentation" aria-hidden="true">
+                <use href="/icons.svg#social-icon"></use>
+              </svg>
+              <h2>Connect with us</h2>
+              <p>Join the Vite community</p>
+              <ul>
+                <li>
+                  <a href="https://github.com/vitejs/vite" target="_blank">
+                    <svg
+                      className="button-icon"
+                      role="presentation"
+                      aria-hidden="true"
+                    >
+                      <use href="/icons.svg#github-icon"></use>
+                    </svg>
+                    GitHub
+                  </a>
+                </li>
+                <li>
+                  <a href="https://chat.vite.dev/" target="_blank">
+                    <svg
+                      className="button-icon"
+                      role="presentation"
+                      aria-hidden="true"
+                    >
+                      <use href="/icons.svg#discord-icon"></use>
+                    </svg>
+                    Discord
+                  </a>
+                </li>
+                <li>
+                  <a href="https://x.com/vite_js" target="_blank">
+                    <svg
+                      className="button-icon"
+                      role="presentation"
+                      aria-hidden="true"
+                    >
+                      <use href="/icons.svg#x-icon"></use>
+                    </svg>
+                    X.com
+                  </a>
+                </li>
+                <li>
+                  <a href="https://bsky.app/profile/vite.dev" target="_blank">
+                    <svg
+                      className="button-icon"
+                      role="presentation"
+                      aria-hidden="true"
+                    >
+                      <use href="/icons.svg#bluesky-icon"></use>
+                    </svg>
+                    Bluesky
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </section>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
+          <div className="ticks"></div>
+          <section id="spacer"></section>
+        </main>
+      </BrowserRouter>
     </>
   );
 }
