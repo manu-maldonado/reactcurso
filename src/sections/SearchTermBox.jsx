@@ -8,12 +8,12 @@ export function SearchTermBox() {
     []
   );
 
-  if (loading) return <p>⏳ Buscando...</p>;
+  if (loading) return <p className="text-muted-foreground">Buscando...</p>;
   if (error) return <ErrorPanel error={error} onRetry={recargar} />;
-  if (!data?.length) return <p>Sin resultados.</p>;
+  if (!data?.length) return <p className="text-muted-foreground">Sin resultados</p>;
 
   return (
-    <table className="mag-table">
+    <table>
       <thead>
         <tr>
           <th>#</th>
@@ -32,7 +32,9 @@ export function SearchTermBox() {
               </a>
             </td>
             <td>
-              <code>{r.engine}</code>
+              <code className="rounded bg-muted px-1.5 py-0.5 text-foreground">
+                {r.engine}
+              </code>
             </td>
             <td>{r.snippet}</td>
           </tr>

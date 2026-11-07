@@ -21,7 +21,9 @@ export function Calculator() {
 
   return (
     <div className="flex flex-col gap-2">
-      <p>Inserta dos numeros y selecciona un operador :)) </p>
+      <p className="text-muted-foreground">
+        Inserta dos numeros y selecciona un operador :))
+      </p>
       <br />
       <div className="flex items-center gap-2">
         <input type="number" value={a} onChange={(e) => setA(e.target.value)} />

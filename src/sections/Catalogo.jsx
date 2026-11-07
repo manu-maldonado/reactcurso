@@ -13,7 +13,6 @@ export function Catalogo() {
   const [editId, setEditId] = useState(null);
   const [selectedId, setSelectedId] = useState(null);
 
-  // aqui renderiza
   useEffect(() => {
     setTimeout(() => {
       setProducts(allProducts);
@@ -21,7 +20,6 @@ export function Catalogo() {
     }, 1000);
   }, []);
 
-  // crear
   const addProduct = (e) => {
     e.preventDefault();
 
@@ -42,7 +40,6 @@ export function Catalogo() {
     clearForm();
   };
 
-  // editar
   const updateProduct = (e) => {
     e.preventDefault();
 
@@ -68,7 +65,6 @@ export function Catalogo() {
     clearForm();
   };
 
-  // borro el que elegí en la tabla
   const deleteProduct = () => {
     if (selectedId === null) return;
 
@@ -76,7 +72,6 @@ export function Catalogo() {
     setSelectedId(null);
   };
 
-  // cargo los datos del seleccionado al formulario
   const editProduct = () => {
     const product = products.find((product) => product.id === selectedId);
 
@@ -88,7 +83,6 @@ export function Catalogo() {
     setPrecio(product.precio);
   };
 
-  // limpio
   const clearForm = () => {
     setNombre("");
     setCategoria("");
@@ -98,7 +92,6 @@ export function Catalogo() {
 
   return (
     <div>
-      {/* formulario */}
       <form
         className="flex gap-3"
         onSubmit={editId !== null ? updateProduct : addProduct}
@@ -148,7 +141,7 @@ export function Catalogo() {
       <br />
 
       {isLoading ? (
-        <p>Cargando...</p>
+        <p className="text-muted-foreground">Cargando...</p>
       ) : (
         <GetAllProducts
           products={products}

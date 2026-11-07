@@ -8,116 +8,124 @@ import { UseEffectVariebles } from "./sections/UseEffectVariables.jsx";
 import { SearchBox } from "./sections/SearchBox.jsx";
 import { PostViewer } from "./JSONPlaceholder/PostViewer.jsx";
 import { SearchTermBox } from "./sections/SearchTermBox.jsx";
+import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
+import { Home } from "./pages/Home.jsx";
+import { DetallePlaceHolder } from "./pages/DetallePlaceHoldeer.jsx";
 
 function App() {
   const [count, setCount] = useState(0);
   const [saludo, setSaludo] = useState("Hola desconocido");
 
   return (
-    <main className="min-h-screen bg-background px-4 py-10 text-gray-800 sm:px-8">
-      <div className="mx-auto max-w-6xl space-y-8">
-        {/* Encabezado */}
-        <header>
-          <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-            Cuaderno de Karla :)))
-          </h1>
-        </header>
+    <BrowserRouter>
+      <nav className="border-b border-border bg-background px-4 py-3 sm:px-8">
+        <Link to="/">Home</Link>
+      </nav>
 
-        <h3>Call Api search</h3>
-        <SearchTermBox />
+      <main className="min-h-screen bg-background px-4 py-10 text-foreground sm:px-8">
+        <Routes>
+          <Route path="/" element={<Home />}></Route>
+          <Route path="/detalle/:id" element={<DetallePlaceHolder />}></Route>
+        </Routes>
+        <div className="mx-auto max-w-6xl space-y-8">
+          <header>
+            <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+              Cuaderno de Karla :)))
+            </h1>
+          </header>
 
-        {/* JSONPlaceholder */}
-        <section className="rounded-2xl bg-white p-6 shadow-sm">
-          <h2 className="mb-4 text-xl font-semibold text-gray-900">
-            JSONPlaceholder
-          </h2>
-          <PostViewer />
-        </section>
+          <h3>Call Api search</h3>
+          <SearchTermBox />
 
-        {/* Tabla de productos */}
-        <section className="rounded-2xl bg-white p-6 shadow-sm">
-          <h2 className="mb-4 text-xl font-semibold text-gray-900">
-            Productos
-          </h2>
-          <SearchProduct allProducts={allProducts} />
-        </section>
+          <section className="rounded-2xl border border-border bg-card p-6 text-card-foreground shadow-sm">
+            <h2 className="mb-4 text-xl font-semibold text-card-foreground">
+              JSONPlaceholder
+            </h2>
+            <PostViewer />
+          </section>
 
-        {/* Hooks */}
-        <section className="grid gap-6 md:grid-cols-2">
-          <div className="rounded-2xl bg-white p-6 shadow-sm">
-            <UseEffectVariebles />
-          </div>
+          <section className="rounded-2xl border border-border bg-card p-6 text-card-foreground shadow-sm">
+            <h2 className="mb-4 text-xl font-semibold text-card-foreground">
+              Productos
+            </h2>
+            <SearchProduct allProducts={allProducts} />
+          </section>
 
-          <div className="rounded-2xl bg-white p-6 shadow-sm">
-            <UseEffectCleanup />
-          </div>
-        </section>
+          <section className="grid gap-6 md:grid-cols-2">
+            <div className="rounded-2xl border border-border bg-card p-6 text-card-foreground shadow-sm">
+              <UseEffectVariebles />
+            </div>
 
-        {/* Catálogo */}
-        <section className="rounded-2xl bg-white p-6 shadow-sm">
-          <h2 className="mb-4 text-xl font-semibold text-gray-900">Catálogo</h2>
-          <Catalogo allProducts={allProducts} />
-        </section>
+            <div className="rounded-2xl border border-border bg-card p-6 text-card-foreground shadow-sm">
+              <UseEffectCleanup />
+            </div>
+          </section>
 
-        {/* Contador */}
-        <section className="rounded-2xl bg-white p-6 shadow-sm">
-          <h2 className="mb-4 text-xl font-semibold text-gray-900">Contador</h2>
+          <section className="rounded-2xl border border-border bg-card p-6 text-card-foreground shadow-sm">
+            <h2 className="mb-4 text-xl font-semibold text-card-foreground">
+              Catálogo
+            </h2>
+            <Catalogo allProducts={allProducts} />
+          </section>
 
-          <p className="mb-5 text-4xl font-bold text-purple-600">{count}</p>
+          <section className="rounded-2xl border border-border bg-card p-6 text-card-foreground shadow-sm">
+            <h2 className="mb-4 text-xl font-semibold text-card-foreground">
+              Contador
+            </h2>
 
-          <div className="flex flex-wrap gap-3">
-            <button
-              type="button"
-              onClick={() => setCount((count) => count + 1)}
-              className="rounded-lg bg-purple-600 px-5 py-2.5 font-medium text-white transition hover:bg-purple-700 active:scale-95"
-            >
-              + Incrementar
-            </button>
+            <p className="mb-5 text-4xl font-bold text-primary">{count}</p>
 
-            <button
-              type="button"
-              onClick={() => setCount((count) => count - 1)}
-              className="rounded-lg bg-gray-200 px-5 py-2.5 font-medium text-gray-700 transition hover:bg-gray-300 active:scale-95"
-            >
-              - Decrementar
-            </button>
+            <div className="flex flex-wrap gap-3">
+              <button
+                type="button"
+                onClick={() => setCount((count) => count + 1)}
+                className="bg-primary text-primary-foreground hover:bg-primary/90"
+              >
+                + Incrementar
+              </button>
 
-            <button
-              type="button"
-              onClick={() => setCount(0)}
-              className="rounded-lg border border-gray-300 px-5 py-2.5 font-medium text-gray-600 transition hover:bg-gray-100"
-            >
-              Reset
-            </button>
-          </div>
-        </section>
+              <button
+                type="button"
+                onClick={() => setCount((count) => count - 1)}
+              >
+                - Decrementar
+              </button>
 
-        {/* Saludo */}
-        <section className="rounded-2xl bg-white p-6 shadow-sm">
-          <h2 className="mb-4 text-xl font-semibold text-gray-900">
-            Saludo personalizado
-          </h2>
+              <button
+                type="button"
+                onClick={() => setCount(0)}
+                className="border border-input bg-background text-foreground hover:bg-accent hover:text-accent-foreground"
+              >
+                Reset
+              </button>
+            </div>
+          </section>
 
-          <input
-            type="text"
-            value={saludo}
-            onChange={(evt) => setSaludo(evt.target.value)}
-            placeholder="Escribe tu saludo..."
-            className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none transition placeholder:text-gray-400 focus:border-purple-500 focus:ring-2 focus:ring-purple-100"
-          />
+          <section className="rounded-2xl border border-border bg-card p-6 text-card-foreground shadow-sm">
+            <h2 className="mb-4 text-xl font-semibold text-card-foreground">
+              Saludo
+            </h2>
 
-          <h4 className="mt-4 text-lg font-medium text-purple-600">{saludo}</h4>
-        </section>
+            <input
+              type="text"
+              value={saludo}
+              onChange={(evt) => setSaludo(evt.target.value)}
+              placeholder="Escribe tu saludo..."
+              className="w-full"
+            />
 
-        {/* Calculadora */}
-        <section className="rounded-2xl bg-white p-6 shadow-sm">
-          <h2 className="mb-4 text-xl font-semibold text-gray-900">
-            Calculadora
-          </h2>
-          <Calculator />
-        </section>
-      </div>
-    </main>
+            <h4 className="mt-4 text-lg font-medium text-primary">{saludo}</h4>
+          </section>
+
+          <section className="rounded-2xl border border-border bg-card p-6 text-card-foreground shadow-sm">
+            <h2 className="mb-4 text-xl font-semibold text-card-foreground">
+              Calculadora
+            </h2>
+            <Calculator />
+          </section>
+        </div>
+      </main>
+    </BrowserRouter>
   );
 }
 
