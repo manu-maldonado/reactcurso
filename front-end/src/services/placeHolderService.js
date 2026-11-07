@@ -18,9 +18,9 @@ const responseUnpack = (res) => {
 };
 
 export const placeHolderService = {
-  async get(query, signal) {
+  async get(id, signal) {
     // haciendo una nueva instancia
-    const resGet = await clients.jsonPlaceHolder.get('/posts/1', {});
+    const resGet = await clients.jsonPlaceHolder.get(`/posts/${id}`, {});
     // const resList = await clients.jsonPlaceHolder.get('/posts', {});
     return responseUnpack(resGet);
   },
