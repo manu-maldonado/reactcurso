@@ -17,6 +17,8 @@ import { PlaceHolder } from './placeHolder.jsx'
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { Home } from './Home.jsx'
 import { DetallePlaceHolder } from './DetallePlaceHolder.jsx'
+import { UsuariosAPI } from "./UsuariosAPI.jsx";
+import { PostsAPI } from "./PostsAPI.jsx";
 
 function App() {
   const [count, setCount] = useState(0)
@@ -73,7 +75,8 @@ function App() {
           <h3>Call Api search</h3>
           {/*<SearchTermBox></SearchTermBox>*/}
           <SearchTermBox/>
-          
+          <UsuariosAPI />
+          <PostsAPI />
           <p>
             Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
           </p>
