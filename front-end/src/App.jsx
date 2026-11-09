@@ -19,6 +19,7 @@ import { Home } from './Home.jsx'
 import { DetallePlaceHolder } from './DetallePlaceHolder.jsx'
 import { UsuariosAPI } from "./UsuariosAPI.jsx";
 import { PostsAPI } from "./PostsAPI.jsx";
+import { MiniCatalogo } from "./entregables/MiniCatalogo";
 
 function App() {
   const [count, setCount] = useState(0)
@@ -77,6 +78,10 @@ function App() {
           <SearchTermBox/>
           <UsuariosAPI />
           <PostsAPI />
+
+          <section>
+              <MiniCatalogo />
+          </section>
           <p>
             Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
           </p>
