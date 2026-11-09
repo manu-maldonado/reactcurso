@@ -14,12 +14,27 @@ import { UseEffectVariables } from './UseEffectVariables.jsx'
 import { UseEffectCleanup } from './UseEffectCleanup.jsx'
 import { SearchTermBox } from './SearchTermBox.jsx'
 import { PlaceHolder } from './placeHolder.jsx'
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
 import { Home } from './Home.jsx'
 import { DetallePlaceHolder } from './DetallePlaceHolder.jsx'
 import { UsuariosAPI } from "./UsuariosAPI.jsx";
 import { PostsAPI } from "./PostsAPI.jsx";
 import { MiniCatalogo } from "./entregables/MiniCatalogo";
+import { DetalleProducto } from "./entregables/pages/DetalleProducto";
+import { CatalogoJoyeria } from "./entregables/CatalogoJoyeria"; 
+import { Pagina404 } from "./entregables/pages/Pagina404";
+
+
+function MostrarEjercicios({ children }) {
+    const location = useLocation();
+
+    // Mostrar los ejercicios anteriores únicamente en la página principal
+    if (location.pathname !== "/") {
+        return null;
+    }
+
+    return children;
+}
 
 function App() {
   const [count, setCount] = useState(0)
@@ -56,13 +71,22 @@ function App() {
     <>
     <BrowserRouter>
     <nav>
-      <Link to="/">Home</Link>
+        <Link to="/">Home</Link>
+        {" | "}
+        <Link to="/joyeria">Catálogo de joyería</Link>
     </nav>
     <main>
       <Routes>
         <Route path="/" element={<Home/>}> </Route>
         <Route path="/detalle/:id" element={<DetallePlaceHolder/>}> </Route>
+        {/* Rutas del catálogo de joyería */}
+        {/* <Route path="/joyeria" element={<MiniCatalogo />} />
+        <Route path="/joyeria/:id" element={<DetalleProducto />} /> */}
+        <Route path="/joyeria/*" element={<CatalogoJoyeria />} />
+        <Route path="*" element={<Pagina404 />} />
       </Routes>
+
+      <MostrarEjercicios>
     
       <section id="center">
         {/* <PlaceHolder/> */}
@@ -79,9 +103,9 @@ function App() {
           <UsuariosAPI />
           <PostsAPI />
 
-          <section>
+          {/* <section>
               <MiniCatalogo />
-          </section>
+          </section> */}
           <p>
             Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
           </p>
@@ -225,6 +249,7 @@ function App() {
 
       <div className="ticks"></div>
       <section id="spacer"></section>
+      </MostrarEjercicios>
       </main>
       </BrowserRouter>
     </>

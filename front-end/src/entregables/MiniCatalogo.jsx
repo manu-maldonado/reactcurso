@@ -1,12 +1,13 @@
 import { useState } from "react";
-import { productosIniciales } from "./data/productos";
+//import { productosIniciales } from "./data/productos";
 import { FormularioProducto } from "./components/FormularioProducto";
+import { Link } from "react-router-dom";
+import { productosIniciales } from "./data/productos";
 
-
-export function MiniCatalogo() {
+export function MiniCatalogo({ productos, onAgregar }) {
 
     // Estado para almacenar los productos del catálogo
-    const [productos, setProductos] = useState(productosIniciales);
+    //const [productos, setProductos] = useState(productosIniciales);
     // Estado para almacenar el texto de búsqueda
     const [busqueda, setBusqueda] = useState("");
     // Filtrar productos por nombre
@@ -15,23 +16,23 @@ export function MiniCatalogo() {
     );
 
         // Agregar un nuevo producto al catálogo
-    function agregarProducto(datosProducto) {
+    // function agregarProducto(datosProducto) {
 
-        setProductos((anteriores) => {
+    //     setProductos((anteriores) => {
 
-            // Generar un ID único a partir del mayor ID existente
-            const nuevoId = anteriores.length > 0
-                ? Math.max(...anteriores.map((producto) => producto.id)) + 1
-                : 1;
+    //         // Generar un ID único a partir del mayor ID existente
+    //         const nuevoId = anteriores.length > 0
+    //             ? Math.max(...anteriores.map((producto) => producto.id)) + 1
+    //             : 1;
 
-            const nuevoProducto = {
-                id: nuevoId,
-                ...datosProducto
-            };
+    //         const nuevoProducto = {
+    //             id: nuevoId,
+    //             ...datosProducto
+    //         };
 
-            return [...anteriores, nuevoProducto];
-        });
-    }
+    //         return [...anteriores, nuevoProducto];
+    //     });
+    // }
 
     return (
         <div>
@@ -64,6 +65,7 @@ export function MiniCatalogo() {
                         <th>Precio</th>
                         <th>Stock</th>
                         <th>Categoría</th>
+                        <th>Acción</th>
                     </tr>
                 </thead>
 
@@ -75,12 +77,18 @@ export function MiniCatalogo() {
                             <td>${producto.precio}</td>
                             <td>{producto.stock}</td>
                             <td>{producto.categoria}</td>
+                            <td>
+                                <Link to={`/joyeria/${producto.id}`}>
+                                    Ver detalle
+                                </Link>
+                            </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
 
-            <FormularioProducto onAgregar={agregarProducto} />
+           
+            <FormularioProducto onAgregar={onAgregar} />
         </div>
     );
 }
