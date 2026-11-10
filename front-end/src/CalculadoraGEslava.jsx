@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export function Calculadora() {
+export function CalculadoraGEslava() {
     const [num1, darNum1] = useState("");
     const [num2, darNum2] = useState("");
     const [resultado, calculaResultado] = useState(0);
@@ -30,7 +30,6 @@ export function Calculadora() {
     }
     return (
         <div>
-            <h4>Mi versión de calculadora</h4>
             <input
                 type="number"
                 value={num1}

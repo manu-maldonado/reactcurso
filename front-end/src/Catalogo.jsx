@@ -1,17 +1,23 @@
 import { useEffect, useState } from "react";
-
+import "./form.css";
+import { ProductForm } from "./ProductForm";
+import { GetAllProducts } from "./ProductList";
 export function Catalogo({ products }) {
 
     const [productos, setProductos] = useState([]);
     const [isLoading, setLoading] = useState(true);
-    const [idEditar, setIdEditar] = useState(null);
-
-    const [nombre, setNombre] = useState("");
-    const [precio, setPrecio] = useState("");
-    const [stock, setStock] = useState("");
-    const [categoria, setCategoria] = useState("");
-
+   
+     //Controlar si el formulario esta siendo abierto o si se esta edi>
+    const [showForm, setShowForm] = useState(false);
+    const [productSeleccionado, setProductSeleccionado] = useState(null);
+    
     useEffect(() => {
+         /*
+        La función setTimeout() programa la ejecución de una función >
+        tras un cierto retraso. El primer argumento es la función que>
+        El segundo argumento es el retraso, expresado en milisegundos>
+        equivale a 1000 milisegundos.
+        */
         const timer = setTimeout(() => {
             setProductos(products);
             setLoading(false);
@@ -20,59 +26,65 @@ export function Catalogo({ products }) {
         return () => clearTimeout(timer);
     }, [products]);
 
-    const agregarProducto = () => {
-
-        const nuevoProducto = {
-            id: `p${productos.length + 1}`,
-            nombre,
-            precio: Number(precio),
-            stock: Number(stock),
-            categoria
-        };
-
-        setProductos([...productos, nuevoProducto]);
-
-        setNombre("");
-        setPrecio("");
-        setStock("");
-        setCategoria("");
+     //*******crud: create, read, update, delete ****************** */
+    const handlerSaveProduct = (nuevoOActualizado) => {
+        if (productSeleccionado) {
+            // Update: reemplazar el producto seleccionado con el id
+            setProductos(prev =>
+                prev.map(producto => {
+                    if (producto.id === nuevoOActualizado.id) {
+                        return nuevoOActualizado;
+                    }
+                    return producto;
+                })
+            );
+        } else {
+            // CREA: agregar producto nuevo
+            const nuevoProducto = {
+                ...nuevoOActualizado,
+                id: `p${Date.now()}`
+            };
+            setProductos(prev => [...prev, nuevoProducto]);
+        }
+        //cerrar formulario y limpiarlo
+        setShowForm(false);
+        setProductSeleccionado(null);
     };
 
-    const editarProducto = (producto) => {
-        setIdEditar(producto.id);
-        setNombre(producto.nombre);
-        setPrecio(producto.precio);
-        setStock(producto.stock);
-        setCategoria(producto.categoria);
-    };
+    // DELETE: eliminar producto
+    const handlerRemoveProduct = (id) => {
+        // Elimine, filtre o saque de productos el id seleccionado
+        // podríamos eliminar con filter, o con slice
+        const confirmar = window.confirm(
+            "¿Estas seguro que deseas eliminar este producto?"
+        );
+        if (confirmar) {
+            setProductos(prev =>
+                prev.filter(producto => producto.id !== id)
+            );
 
-    //*********************************************** */
-    const actualizarProducto = () => {
-
-        const productosActualizados = productos.map((producto) => {
-
-            if (producto.id === idEditar) {
-                return {
-                    ...producto,
-                    nombre,
-                    precio: Number(precio),
-                    stock: Number(stock),
-                    categoria
-                };
+            // Cerrar formulario si estaba abierto
+            if (productSeleccionado?.id === id) {
+                setShowForm(false);
+                setProductSeleccionado(null);
             }
+            alert("Producto eliminado correctamente");
+        }
 
-            return producto;
-        });
-
-        setProductos(productosActualizados);
-
-        setIdEditar(null);
-
-        setNombre("");
-        setPrecio("");
-        setStock("");
-        setCategoria("");
     };
+    // EDITAR: abrir formulario con datos
+    const handlerIniciarEdition = (producto) => {
+        console.log("", producto);
+        setProductSeleccionado(producto);
+        setShowForm(true);
+    };
+
+    // AGREGAR: abrir formulario vacío
+    const handlerIniciarAlta = () => {
+        setProductSeleccionado(null);
+        setShowForm(true);
+    };
+    
     //******************************************
 
     if (isLoading) {
@@ -82,64 +94,38 @@ export function Catalogo({ products }) {
     return (
         <div>
 
-            <h2>Alta de Productos</h2>
+            <h2>Catálogo de productos</h2>
+            {isLoading ? (
+                <h4>Está cargando....</h4>
+            ) : (
+                <>
+                    <GetAllProducts
+                        products={productos}
+                        onEdit={handlerIniciarEdition}
+                        onRemove={handlerRemoveProduct}
+                    />
 
-            <input
-                type="text"
-                placeholder="Nombre"
-                value={nombre}
-                onChange={(e) => setNombre(e.target.value)}
-            />
+                    <div className="mag-btns">
+                        <button
+                            onClick={handlerIniciarAlta}
+                            className="mag-btn mag-btn-primary"
+                        >
+                            Agregar producto
+                        </button>
+                    </div>
+                     {showForm && (
+                <ProductForm
+                    productAEditar={productSeleccionado}
+                    onSave={handlerSaveProduct}
+                    onCancel={() => {
+                        setShowForm(false)
+                        setProductSeleccionado(null)
 
-            <input
-                type="number"
-                placeholder="Precio"
-                value={precio}
-                onChange={(e) => setPrecio(e.target.value)}
-            />
-
-            <input
-                type="number"
-                placeholder="Stock"
-                value={stock}
-                onChange={(e) => setStock(e.target.value)}
-            />
-
-            <input
-                type="text"
-                placeholder="Categoría"
-                value={categoria}
-                onChange={(e) => setCategoria(e.target.value)}
-            />
-
-            {
-                idEditar === null ? (
-                    <button onClick={agregarProducto}>
-                        Agregar
-                    </button>
-                ) : (
-                    <button onClick={actualizarProducto}>
-                        Actualizar
-                    </button>
-                )
-            }
-
-            <h2>Catálogo</h2>
-
-            {productos.map((producto) => (
-                <div key={producto.id}>
-                    {producto.id} - 
-                    {producto.nombre} - $
-                    {producto.precio} - Stock:
-                    {producto.stock} - {producto.categoria}
-
-                    <button onClick={() => editarProducto(producto)}
-                        style={{ marginLeft: "10px" }}
-                    >
-                        Editar
-                    </button>
-                </div>
-            ))}
+                    }}
+                />
+            )}
+                </>
+            )}
 
         </div>
     );

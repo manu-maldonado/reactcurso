@@ -8,8 +8,8 @@ export function ProductList({ products }) {
   const [textoBusqueda, setTextoBusqueda] = useState("");
 
   const productosFiltrados = products.filter(producto => producto.nombre
-      .toLowerCase()
-      .includes(textoBusqueda.toLowerCase())
+    .toLowerCase()
+    .includes(textoBusqueda.toLowerCase())
   );
 
   return (
@@ -35,12 +35,10 @@ export function ProductList({ products }) {
   );
 }
 
-export function GetAllProducts({ products }) {
+export function GetAllProducts({ products, onEdit, onRemove }) {
   // {products} --- props
   const [ascendente, setAscendente] = useState(true);
   const [campoOrden, setCampoOrden] = useState("nombre");
-
-
 
   const productosOrdenados = [...products].sort((a, b) => {
 
@@ -49,7 +47,6 @@ export function GetAllProducts({ products }) {
     }
     if (campoOrden === "precio") {
       return ascendente ? a.precio - b.precio : b.precio - a.precio;
-
     }
     if (campoOrden === "stock") {
       return ascendente ? a.stock - b.stock : b.stock - a.stock;
@@ -57,8 +54,6 @@ export function GetAllProducts({ products }) {
     if (campoOrden === "categoria") {
       return ascendente ? a.categoria.localeCompare(b.categoria) : b.categoria.localeCompare(a.categoria);
     }
-
-
     return b.nombre.localeCompare(a.nombre);
   });
 
@@ -101,7 +96,9 @@ export function GetAllProducts({ products }) {
       <table border="1">
         <thead>
           <tr>
-            <th>#</th>
+            <th>Editar</th>
+            <th>Eliminar</th>
+            <th>Identificador</th>
             <th
               onClick={ordenarPorNombre}
               style={{ cursor: "pointer" }}
@@ -131,6 +128,8 @@ export function GetAllProducts({ products }) {
               key={producto.id}
               id={producto.id}
               producto={producto}
+              onEdit={onEdit}
+              onRemove={onRemove}
             /> // { id: 323123 , producto:{ name:"dasdas"}}
           ))}
         </tbody>

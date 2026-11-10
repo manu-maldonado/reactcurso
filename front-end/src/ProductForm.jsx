@@ -2,190 +2,180 @@
 import { useEffect, useState } from "react";
 import "./form.css";
 
-export function ProductForm({ products = [] }) {
-
-  // Estado para almacenar los productos
-  const [productos, setProductos] = useState(products);
-
-  // Estado para controlar la carga
-  const [isLoading, setLoading] = useState(true);
-
+export function ProductForm({ productAEditar, onSave, onCancel }) {
+  
+  // Datos iniciales para un producto nuevo
+    const newProduct = {
+        id: "",
+        nombre: "",
+        precio: 0,
+        stock: 0,
+        categoria: "",
+    };
   // Estado para los datos del formulario
-  const [formData, setFormData] = useState({
-    id: "",
-    nombre: "",
-    precio: 0,
-    stock: 0,
-    categoria: "",
-  });
+  const [formData, setFormData] = useState(newProduct);
 
-  // Capturar los cambios de los campos
-  const handleChange = (evt) => {
-
-    const { name, value, type, checked } = evt.target;
-
-    setFormData({
-      ...formData,
-      [name]: type == "checkbox" ? checked : value,
-    });
-  };
-
-  // Simular carga inicial
+  // Cargar datos cuando se selecciona un producto
   useEffect(() => {
 
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 2500);
+    if (productAEditar) {
+      // Copiar los datos del producto seleccionado
+       console.log("Datos recibidos para editar:", productAEditar);
+      setFormData({ ...productAEditar });
+    } else {
+      // Limpiar el formulario para un producto nuevo
+      setFormData({ ...newProduct });
+    }
+  }, [productAEditar]);
 
-    return () => clearTimeout(timer);
+  // Capturar cambios en los campos
+  const handleChange = (evt) => {
 
-  }, []);
+    const { name, value } = evt.target;
 
-  // Enviar formulario
+    setFormData(prevData => ({
+      ...prevData,
+      [name]: value
+    }));
+  };
+
+  // Enviar información al componente Catalogo
   const handleSubmit = (evt) => {
 
     evt.preventDefault();
-    products.push(formData)
 
-    callbackSetProducts(products)
-
-    console.log("Datos estan listo para ser enviador al servidor", formData, products);
-
-    // Validar campos
-    if (
-      formData.id === "" ||
-      formData.nombre.trim() === "" ||
-      formData.precio === "" ||
-      formData.stock === "" ||
-      formData.categoria.trim() === ""
-    ) {
-      alert("Todos los campos son obligatorios");
+    if (!formData.nombre.trim()) {
+      alert("Escribe el nombre del producto");
       return;
     }
 
-    // Crear nuevo producto
-    const nuevoProducto = {
-      id: Number(formData.id),
-      nombre: formData.nombre,
+    if (formData.precio === "" || formData.stock === "") {
+      alert("Completa el precio y el stock");
+      return;
+    }
+
+    onSave({
+      ...formData,
       precio: Number(formData.precio),
-      stock: Number(formData.stock),
-      categoria: formData.categoria
-    };
-
-    // Evitar IDs repetidos
-    const existe = productos.some(
-      (producto) => producto.id === nuevoProducto.id
-    );
-
-    if (existe) {
-      alert("El ID ya existe. Utiliza otro.");
-      return;
-    }
-
-    // Agregar producto al catálogo
-    setProductos([...productos, nuevoProducto]);
-
-    alert("Producto registrado correctamente");
-
-    // Limpiar formulario
-    setFormData({
-      id: "",
-      nombre: "",
-      precio: "",
-      stock: "",
-      categoria: ""
+      stock: Number(formData.stock)
     });
   };
 
-  // Mostrar productos
-  if (isLoading) {
-    return <h3>Cargando productos...</h3>;
-  }
-
   return (
-    <>
-
-      <h2>Registro de productos</h2>
-
       <form onSubmit={handleSubmit}>
 
-        <div>
-          <label>ID:</label>
-          <input
-            type="number"
-            name="id"
-            value={formData.id}
-            onChange={handleChange}
-            min="1"
-          />
-        </div>
+        <input
+          type="radio"
+          name="step"
+          id="step1"
+          className="msf-radio"
+          defaultChecked
+        />
 
-        <div>
-          <label>Nombre:</label>
-          <input
-            type="text"
-            name="nombre"
-            value={formData.nombre}
-            onChange={handleChange}
-            placeholder="Nombre del producto"
-          />
-        </div>
+        <div className="msf-wrap">
 
-        <div>
-          <label>Precio:</label>
-          <input
-            type="number"
-            name="precio"
-            value={formData.precio}
-            onChange={handleChange}
-            min="0"
-            step="0.01"
-          />
-        </div>
+          <div className="msf-body">
 
-        <div>
-          <label>Stock:</label>
-          <input
-            type="number"
-            name="stock"
-            value={formData.stock}
-            onChange={handleChange}
-            min="0"
-            step="1"
-          />
-        </div>
+            <div className="msf-panel msf-panel-1">
 
-        <div>
-          <label>Categoría:</label>
-          <input
-            type="text"
-            name="categoria"
-            value={formData.categoria}
-            onChange={handleChange}
-            placeholder="Categoría del producto"
-          />
-        </div>
+              <h3>
+                {productAEditar
+                  ? "Editar producto"
+                  : "Alta de producto"}
+              </h3>
 
-        <button type="submit">
-          Enviar
-        </button>
+              {/* IDENTIFICADOR */}
+
+              <label>ID del producto</label>
+
+              <input
+                type="text"
+                name="id"
+                placeholder="Identificador de producto"
+                value={formData.id}
+                readOnly
+              />
+              {/* NOMBRE */}
+
+              <label>Nombre</label>
+
+              <input
+                type="text"
+                name="nombre"
+                placeholder="Nombre del producto"
+                value={formData.nombre}
+                onChange={handleChange}
+                required
+              />
+
+              {/* PRECIO */}
+
+              <label>Precio</label>
+
+              <input
+                type="number"
+                name="precio"
+                placeholder="Precio del produco"
+                value={formData.precio}
+                onChange={handleChange}
+                min="0"
+                step="0.01"
+                required
+              />
+              {/* STOCK */}
+
+              <label>Stock</label>
+
+              <input
+                type="number"
+                name="stock"
+                placeholder="Existencias"
+                value={formData.stock}
+                onChange={handleChange}
+                min="0"
+                required
+              />
+
+              {/* CATEGORIA */}
+
+              <label>Categoría</label>
+
+              <input
+                type="text"
+                name="categoria"
+                placeholder="Categoría del producto"
+                value={formData.categoria}
+                onChange={handleChange}
+                required
+              />
+              {/* BOTONES */}
+
+              <div className="msf-actions">
+
+                <button
+                  type="submit"
+                  className="msf-btn"
+                >
+                  {productAEditar
+                    ? "Actualizar"
+                    : "Guardar"}
+                </button>
+
+                <button
+                  type="button"
+                  onClick={onCancel}
+                >
+                  Cancelar
+                </button>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
 
       </form>
-
-      <h2>Catálogo de productos</h2>
-
-      <ul>
-        {productos.map((producto) => (
-          <li key={producto.id}>
-            {producto.id} -
-            {producto.nombre} -
-            ${producto.precio} -
-            Stock: {producto.stock} -
-            {producto.categoria}
-          </li>
-        ))}
-      </ul>
-
-    </>
   );
 }

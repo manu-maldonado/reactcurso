@@ -1,35 +1,38 @@
-import { useState } from "react";
+import { useState } from "react"
 
-export function miCalculadora() {
-    const [num1, darNum1] = useState("");
-    const [num2, darNum2] = useState("");
-    const [resultado, calculaResultado] = useState(0);
+export function Calculadora(){
+    const [resultado, setResultado] = useState(0)
+    // const [suma, setSuma] = useState()
+    // const [rest, setResta] = useState()
+    const [inputA, setInputA] = useState(0)
+    const [inputB, setInputB] = useState(0)
 
-    const sumar = () => {
-        calculaResultado(Number(num1) + Number(num2));
-    };
+    function operationAritmetic(a, b, operator){
+        switch(operator){
+            case "+":
+                return a + b;
+            case "-":
+                return a - b;
+            case "*":
+                return a * b;
+            case "/":
+                  if (a === 0 && b === 0) return "Indeterminado vato";
+                  if (b === 0) return "No se puede dividir mano";
+                     return a / b;                  
+        }
+    }
+
     return (
-        <div>
-            <h1>Mi versión de calculadora</h1>
-            <input
-                type="number"
-                value={num1}
-                onChange={(e) => darNum1(e.target.value)}
-                placeholder="Número 1"
-            />
-            <input
-                type="number"
-                value={num2}
-                onChange={(e) => darNum2(e.target.value)}
-                placeholder="Número 2"
-            />
-            <button onClick={sumar}>
-                +
-            </button>
-
-            <h2>Resultado: {resultado}</h2>
-
-        </div>
+        <>
+        <input type="text" onChange={(e)=> setInputA(+e.target.value)}/>
+        <select name="" id="" onClick={(evt)=> setResultado(operationAritmetic(inputA, inputB, evt.target.value))}>
+            <option value="+">+</option>
+            <option value="-">-</option>
+            <option value="*">*</option>
+            <option value="/">/</option>
+        </select>
+        <input type="text" onChange={(e)=> setInputB(+e.target.value)} />
+        <label htmlFor="">{resultado}</label>
+        </>
     )
-
 }
