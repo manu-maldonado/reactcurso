@@ -3,8 +3,6 @@ import { placeHolderListServices } from "./services/placeHolderListService";
 import { ErrorPanel } from "./components/ErrorPanel";
 
 export function PlaceHolderList() {
-  
-
   //Consultar una lista de elementos
   const { data, loading, error, recargar} 
   = useAsync((signal) => placeHolderListServices.getList(signal),[] );

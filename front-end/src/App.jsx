@@ -16,13 +16,22 @@ import { Calculadora } from "./Calculadora.jsx"
 import { ProductList } from "./ProductList"
 import { ProductForm } from "./ProductForm.jsx";
 import { PlaceHolder } from './placeHolder.jsx'
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+
 import { PlaceHolderList } from './placeHolderList.jsx'
 import { PlaceHolderCreate } from './placeHolderCreate.jsx'
 import { PlaceHolderUpdate } from './placeHolderUpdate.jsx'
 import { PlaceHolderDelete } from './placeHolderDelete.jsx'
 import { CalculadoraGEslava } from './CalculadoraGEslava.jsx'
 import { FormularioGEslava } from './FormularioGEslava.jsx'
+import { PlaceHolderFilter } from './placeHolderFilter.jsx'
+import { MiniCatalogoGEslava } from './MiniCatalogoGEslava.jsx'
+
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { ListaProductos } from "./ListaProductos.jsx";
+import { DetalleProducto } from "./DetalleProducto.jsx";
+import { NoEncontrado404 } from "./NoEncontrado404.jsx";
+
+
 
 function App() {
   const [count, setCount] = useState(0);
@@ -30,6 +39,7 @@ function App() {
 
   return (
     <>
+      {/* El componente BrowserRouter envuelve toda la aplicación y permite la navegación entre páginas sin recargar todo el documento. */}
       <BrowserRouter>
         <section id="center">
           <h3>get</h3>
@@ -46,6 +56,46 @@ function App() {
 
           <h3>delete</h3>
           <PlaceHolderDelete />
+
+          <h3>filter</h3>
+          <PlaceHolderFilter />
+
+          <div>
+            <hr />
+            <h2>Ejercicio: Mini-Catálogo de Productos </h2>
+            <h3>Utiliza: useState - useEffect - filtros </h3>
+            <hr />
+            <MiniCatalogoGEslava />
+          </div>
+
+          <div>
+            <h1>Mi aplicación React</h1>
+
+            {/*Routes agrupa las rutas de la aplicación.*/}
+            <Routes> 
+
+              {/* Route-Define una dirección y el componente que debe mostrar. */}
+              <Route
+                path="/catalogo"
+                element={<ListaProductos />}
+              />
+
+              {/* Ruta para mostrar el detalle */}
+              <Route
+                path="/catalogo/:id"
+                element={<DetalleProducto />}
+              />
+
+              {/* Ruta para cualquier dirección no definida */}
+              <Route
+                path="*"
+                element={<NoEncontrado404 />}
+              />
+
+            </Routes>
+          </div>
+
+
 
           <div className="hero">
             <img src={heroImg} className="base" width="170" height="179" alt="" />
@@ -104,7 +154,7 @@ function App() {
             {" "}
             reset
           </button>
-          
+
 
           <input
             onInput={(evt) => {
@@ -124,10 +174,12 @@ function App() {
 
           <FormularioGEslava />
 
+
+
         </section>
 
-      
-        
+
+
         <section id="next-steps">
           <div id="docs">
             <svg className="icon" role="presentation" aria-hidden="true">
