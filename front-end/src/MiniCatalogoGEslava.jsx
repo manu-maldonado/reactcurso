@@ -11,7 +11,7 @@ export function MiniCatalogoGEslava() {
     const [categoria, setCategoria] = useState("Todas");
     const [disponibilidad, setDisponibilidad] = useState("Todos");
 
-    // Estado para mostrar u ocultar el formulario
+    // Estado inidca se se ve o no el formulario
     const [mostrarFormulario, setMostrarFormulario] = useState(false);
 
     // Estado para almacenar los datos del nuevo producto
@@ -22,7 +22,7 @@ export function MiniCatalogoGEslava() {
         categoria: ""
     });
 
-    // Obtener las categorías disponibles
+    // Obtener las categorías de los productos existentes
     const categorias = [
         ...new Set(productos.map(producto => producto.categoria))
     ];
@@ -45,8 +45,8 @@ export function MiniCatalogoGEslava() {
             (disponibilidad === "Agotados" && producto.stock === 0);
 
         return coincideNombre &&
-               coincideCategoria &&
-               coincideDisponibilidad;
+            coincideCategoria &&
+            coincideDisponibilidad;
     });
 
     // Capturar los datos del formulario
