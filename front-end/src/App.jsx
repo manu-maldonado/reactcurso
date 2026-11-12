@@ -23,6 +23,10 @@ import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { Home } from './home.jsx'
 import { DetallePlaceHolder } from './DetallePlaceHolder.jsx'
 import { NoEncontrado } from './NoEncontrado.jsx'
+import { CatalogoEstatico } from './tienda/CatalogoEstatico.jsx'
+import { ProductosLista } from './tienda/ProductosLista.jsx'
+import { ProductoDetalle } from './tienda/ProductoDetalle.jsx'
+import { SoloEnInicio } from './tienda/SoloEnInicio.jsx'
 
 function App() {
   const [count, setCount] = useState(0);
@@ -32,16 +36,20 @@ function App() {
     <>
       <BrowserRouter>
         <nav>
-          <Link to="/"> HOME</Link>
+          <Link to="/">HOME</Link> | <Link to="/catalogo">Mini-catálogo</Link> | <Link to="/productos">Productos</Link>
         </nav>
 
         <main>
           <Routes>
             <Route path='/' element={<Home/>}></Route>
             <Route path='/detalle/:id' element={<DetallePlaceHolder/>}></Route>
-                        <Route path='*' element={<NoEncontrado/>}></Route>
+            <Route path='/catalogo' element={<CatalogoEstatico/>}></Route>
+            <Route path='/productos' element={<ProductosLista/>}></Route>
+            <Route path='/productos/:id' element={<ProductoDetalle/>}></Route>
+            <Route path='*' element={<NoEncontrado/>}></Route>
           </Routes>
 
+          <SoloEnInicio>
           <section id="center">
             <div className="hero">
               <img src={heroImg} className="base" width="170" height="179" alt="" />
@@ -186,6 +194,7 @@ function App() {
 
           <div className="ticks"></div>
           <section id="spacer"></section>
+          </SoloEnInicio>
         </main>
       </BrowserRouter>
     </>
