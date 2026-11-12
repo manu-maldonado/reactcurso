@@ -1,17 +1,18 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 export const TablaProductos = ({ productos }) => {
-  const [busqueda, setBusqueda] = useState('');
+  const [busqueda, setBusqueda] = useState("");
 
-  const productosFiltrados = productos.filter((p) =>
-    p.nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
-    p.modelo.toLowerCase().includes(busqueda.toLowerCase())
+  const productosFiltrados = productos.filter(
+    (p) =>
+      p.nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
+      p.modelo.toLowerCase().includes(busqueda.toLowerCase()),
   );
 
   return (
     <div>
       <h2>Catálogo de Joyería</h2>
-      
       <input
         type="text"
         placeholder="Buscar por nombre o modelo..."
@@ -27,6 +28,7 @@ export const TablaProductos = ({ productos }) => {
             <th>Descripción</th>
             <th>Precio</th>
             <th>Stock</th>
+            <th>Acciones</th> 
           </tr>
         </thead>
         <tbody>
@@ -38,11 +40,16 @@ export const TablaProductos = ({ productos }) => {
                 <td>{item.descripcion}</td>
                 <td>${item.precio.toFixed(2)}</td>
                 <td>{item.stock}</td>
+                <td>
+                  <Link to={`/producto/${item.modelo}`}>Ver detalle</Link>
+                </td>
               </tr>
             ))
           ) : (
             <tr>
-              <td colSpan="5">No se encontraron productos que coincidan con la búsqueda.</td>
+              <td colSpan="6">
+                No se encontraron productos que coincidan con la búsqueda.
+              </td>
             </tr>
           )}
         </tbody>
