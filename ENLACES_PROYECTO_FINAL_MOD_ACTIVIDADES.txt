@@ -1,0 +1,4 @@
+Enlaces a los proyectos
+Catalogo hardcodeado : https://react-app-catalogojcsv.netlify.app/
+Catalogo consumo API : https://react-app-catalogoapijcsv.netlify.app/
+consumo de API JSONplaceholder : https://ejerciciojsonplaceholderjcsv.netlify.app/
