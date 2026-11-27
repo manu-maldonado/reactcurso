@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 
+
 export function Home() {
   return (
     <section className="tutoria-card">
