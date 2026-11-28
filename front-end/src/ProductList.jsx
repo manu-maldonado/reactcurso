@@ -57,6 +57,7 @@ export function GetAllProducts({ products, onEdit, onRemove }) {
           ))}
         </tbody>
       </table>
+      </table>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import { use, useEffect, useState } from "react"
 import { ProductForm } from "./ProductForm";
 import { GetAllProducts } from "./ProductList";
+import { dummyJsonService } from "./services/dummyJsonService";
 
 export function Catalogo({ products }) {
     //definir estado para catalogo, cargando
@@ -14,25 +15,45 @@ export function Catalogo({ products }) {
 
 
 
-    useEffect(() => {
-        setTimeout(() => {
-            setLoading(false)
-            setProductos(products)
-        }, 1500);
-    },[])
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setLoading(false);
+  //     setProductos(products);
+  //   }, 2500);
+  // }, []);
+useEffect(() => {
+  const cargarProductos = async () => {
+    try {
+      setLoading(true);
+     const resultado = await dummyJsonService.getAll("");
 
-  
-//CRUD
+      setProductos(resultado);
 
-    const handlerSaveProduct = (nuevoOActualizado)=>{
-        //update:remplazar el producto seleccionado con el id
-        if(productoSelecionado){
-            //reemplacemos el product que coincida con el id
-            setProductos(prev=>prev.map(p=> p.id == productoSelecionado.id ? nuevoOActualizado : p))
-        }else{
-            //agrega nuevo elemento
-             setProductos(prev=>[...prev,{...nuevoOActualizado, id:`p${Date.now()}`}])
-        }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  cargarProductos();
+}, []);
+
+
+  //crud -create, read, update, delete
+  const handlerSaveProduct = (nuevoOActualizado) => {
+    // update: reemplazar el producto seleccionado con el id
+    if (productSeleccionado) {
+      //reemplacemos el product que coincida con el id
+      setProductos(prev=> prev.map(p=> p.id == productSeleccionado.id? nuevoOActualizado: p))      
+    }
+    else{
+      // agrega un nuevo elemento
+      setProductos((prev) => [
+        ...prev,
+        { ...nuevoOActualizado, id: `p${Date.now()}` },
+      ]);
+    }
 
         //cerrar formulario y limpiarlo
         setShowForm(false)
@@ -57,18 +78,20 @@ export function Catalogo({ products }) {
 
     }
 
-    return (
-        <>
-        <div>
-            {isLoading ? (
-                 <h4>Esta cargando</h4>
-                ) : (
-                <GetAllProducts products={productos}
-                onEdit= {handleInicarEdicion}
-                onRemove= {handleRemoveProduct}
-                
-                />
-                )}
+  return (
+    <>
+      <div>
+        
+        {isLoading ? (
+          <h4>Cargando...</h4>
+        ) : (          
+          <GetAllProducts
+            products={productos}
+            onEdit = {handlerIniciarEdicion}
+            onRemove = {handlerRemoveProduct}
+          />
+        )}
+
         <div class="mag-btns">
             <button onClick={()=>{
                 setProductSeleccionado(null)
