@@ -43,9 +43,9 @@ useEffect(() => {
   //crud -create, read, update, delete
   const handlerSaveProduct = (nuevoOActualizado) => {
     // update: reemplazar el producto seleccionado con el id
-    if (productSeleccionado) {
+    if (productoSelecionado) {
       //reemplacemos el product que coincida con el id
-      setProductos(prev=> prev.map(p=> p.id == productSeleccionado.id? nuevoOActualizado: p))      
+      setProductos(prev=> prev.map(p=> p.id == productoSelecionado.id? nuevoOActualizado: p))      
     }
     else{
       // agrega un nuevo elemento
@@ -87,8 +87,8 @@ useEffect(() => {
         ) : (          
           <GetAllProducts
             products={productos}
-            onEdit = {handlerIniciarEdicion}
-            onRemove = {handlerRemoveProduct}
+            onEdit = {handleInicarEdicion}
+            onRemove = {handleRemoveProduct}
           />
         )}
 

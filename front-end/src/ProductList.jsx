@@ -39,7 +39,7 @@ export function GetAllProducts({ products, onEdit, onRemove }) {
 
   return (
     <div>
-      <SearchBox value={search} onInputChange={setSearch} />
+      {/* <SearchBox value={search} onInputChange={setSearch} /> */}
       <table>
         <thead>
           <tr>
@@ -52,12 +52,26 @@ export function GetAllProducts({ products, onEdit, onRemove }) {
           </tr>
         </thead>
         <tbody>
-          {sorterProductsG.map((producto) => (
-            <ProductItem id={producto.id} producto={producto} onEdit={onEdit} onRemove={onRemove}  /> // { id: 323123 , producto:{ name:"dasdas"}}
-          ))}
-        </tbody>
+  {sorterProductsG.length === 0 ? (
+    <tr>
+      <td colSpan="5">
+        No se encontraron productos.
+      </td>
+    </tr>
+  ) : (
+    sorterProductsG.map((producto) => (
+      <ProductItem
+        key={producto.id}
+        id={producto.id}
+        producto={producto}
+        onEdit={onEdit}
+        onRemove={onRemove}
+      />
+    ))
+  )}
+</tbody>
       </table>
-      </table>
+      
     </div>
   );
 }

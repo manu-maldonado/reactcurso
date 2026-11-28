@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react"
 
-export function ProductForm({ produdctAEditar, onSave, onCancel }){
+export function ProductForm({ productAEditar, onSave, onCancel }){
     let newProduct ={
          id:0,
         nombre:"",
         stock:0,
         categoria:""
     };
-        const [formData,setFormData] = useState(produdctAEditar || newProduct);
+        const [formData,setFormData] = useState(productAEditar || newProduct);
         //const [formData,setFormData] = useState(newProduct);
 
 //Si nosotros pasamos un producto, estariamos cargando sus datos en el estado del form local
@@ -43,7 +43,7 @@ const handleSubmit=(evt)=>{
 <form class="card bg-surface-100-900 p-4 w-full max-w-md mx-auto space-y-4" onSubmit={handleSubmit}>
                 <header>
                     <h3 class="h3">Producto</h3>
-                    <h3>{produdctAEditar ? "Editar Producto" : "Nuevo Producto"}</h3>
+                    <h3>{productAEditar ? "Editar Producto" : "Nuevo Producto"}</h3>
                 </header>
                 <fieldset class="fieldset space-y-2">
                     <legend class="legend">Detalles del Producto</legend>
@@ -78,7 +78,7 @@ const handleSubmit=(evt)=>{
                     </label>
                 </fieldset>
                 <footer class="flex justify-end">
-                    <button type="submit" class="btn preset-filled">{produdctAEditar ? "Actualizar" : "Guardar"}</button>
+                    <button type="submit" class="btn preset-filled">{productAEditar ? "Actualizar" : "Guardar"}</button>
                     <button type="button" onClick={onCancel}>Cancelar</button>
                 </footer>
             </form>
